@@ -1,0 +1,20 @@
+{
+   "background": {
+      "persistent": false,
+      "scripts": [ "focusclimb2.js" ]
+   },
+   "browser_action": {
+      "default_title": "Focus Climb"
+   },
+   "chrome_url_overrides": {
+      "newtab": "dashboard.html"
+   },
+   "manifest_version" : 2,
+   "content_security_policy": "script-src 'self'; object-src 'self'",
+   "description": "Replace new tab page with a personal dashboard featuring to-do, weather, and inspiration.",
+   "name": "Focus Climb",
+   "offline_enabled": true,
+   "optional_permissions": [ "geolocation", "bookmarks", "topSites", "chrome://favicon/" ],
+   "short_name": "FocusClimb",
+   "version": "0.0.1"
+}
