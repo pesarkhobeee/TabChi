@@ -1,7 +1,7 @@
 {
    "background": {
       "persistent": false,
-      "scripts": [ "focusclimb2.js" ]
+      "scripts": [ "focusclimb.js" ]
    },
    "browser_action": {
       "default_title": "Focus Climb"
