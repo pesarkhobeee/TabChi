@@ -1,6 +1,11 @@
 elements = []
 elements_index = 0;
 
+var focusClimbSearchTerm = localStorage.getItem("focusClimbSearchTerm");
+if(focusClimbSearchTerm){
+    $("#background").val(focusClimbSearchTerm); 
+}
+
 function changebackground(searchTerm){
 
   var number = 1 + Math.floor(Math.random() * 200);
@@ -58,6 +63,7 @@ changebackground(background);
 $( "#background" ).focusout(function() {
 var background = $("#background").val();
   changebackground(background);
+  localStorage.setItem("focusClimbSearchTerm", background);
 })
 
 $( "#changebackground" ).click(function() {
