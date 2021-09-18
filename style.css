@@ -119,3 +119,17 @@ section{
 section:last-child{
 	margin-bottom: 30px;
 }
+
+.digital-clock {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 400px;
+  height: 120px;
+  color: #ffffff;
+  text-align: center;
+  font: 100px/120px 'DIGITAL', Helvetica;
+}
