@@ -32,7 +32,9 @@ function changebackground(searchTerm){
       } catch (error) {
         changebackground(searchTerm);
       }
-    }
+    },
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    $("body").css("background-image", "url('mountain.jpg')");
   });
 }
 
