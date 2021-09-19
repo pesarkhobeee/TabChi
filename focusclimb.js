@@ -24,10 +24,14 @@ function changebackground(searchTerm){
     success: function( result ) {
       console.log(result);
       elements.push(result)
-      elements_index = elements.length - 1;
-      var bg = result['photos'][0]['src']['large2x'];
-      console.log(bg);
-       $("body").css("background-image", "url('" + bg + "')");
+      try {
+        var bg = result['photos'][0]['src']['large2x'];
+        elements_index = elements.length - 1;
+        console.log(bg);
+        $("body").css("background-image", "url('" + bg + "')");
+      } catch (error) {
+        changebackground(searchTerm);
+      }
     }
   });
 }
