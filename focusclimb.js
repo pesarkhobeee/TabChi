@@ -1,9 +1,16 @@
 elements = []
 elements_index = 0;
+background_retry_count = 1;
 
 var focusClimbSearchTerm = localStorage.getItem("focusClimbSearchTerm");
 if(focusClimbSearchTerm){
     $("#background").val(focusClimbSearchTerm); 
+}
+
+function message(content){
+  $("#message").text(content);
+  $("#message").fadeIn("slow");
+  $("#message").delay(3000).fadeOut("slow");
 }
 
 function changebackground(searchTerm){
@@ -30,7 +37,14 @@ function changebackground(searchTerm){
         console.log(bg);
         $("body").css("background-image", "url('" + bg + "')");
       } catch (error) {
-        changebackground(searchTerm);
+        if(background_retry_count < 3) {
+            background_retry_count += 1;
+            changebackground(searchTerm);
+        } else {
+            $("body").css("background-image", "url('mountain.jpg')");
+            background_retry_count = 1;
+            message("Couldn't find anything related to your search term!");
+        }
       }
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -134,7 +148,7 @@ $(document).ready(function() {
 
 function clockUpdate() {
   var date = new Date();
-  $('.digital-clock').css({'color': '#fff', 'text-shadow': '0 0 6px #ff0'});
+  $('#digital-clock').css({'color': '#fff', 'text-shadow': '0 0 6px #ff0'});
   function addZero(x) {
     if (x < 10) {
       return x = '0' + x;
@@ -157,5 +171,5 @@ function clockUpdate() {
   var m = addZero(date.getMinutes());
   var s = addZero(date.getSeconds());
 
-  $('.digital-clock').text(h + ':' + m)
+  $('#digital-clock').text(h + ':' + m)
 }

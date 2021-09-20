@@ -120,7 +120,7 @@ section:last-child{
 	margin-bottom: 30px;
 }
 
-.digital-clock {
+#digital-clock {
   margin: auto;
   position: absolute;
   top: 0;
@@ -132,4 +132,18 @@ section:last-child{
   color: #ffffff;
   text-align: center;
   font: 100px/120px 'DIGITAL', Helvetica;
+}
+
+#message {
+  margin: auto;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 40px;
+  font-size: 25px;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: rgb(255 255 0) 0px 0px 6px;
+  display: none;
 }
