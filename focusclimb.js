@@ -41,7 +41,6 @@ function changebackground(searchTerm){
             background_retry_count += 1;
             changebackground(searchTerm);
         } else {
-            $("body").css("background-image", "url('mountain.jpg')");
             background_retry_count = 1;
             message("Couldn't find anything related to your search term!");
         }
