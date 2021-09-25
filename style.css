@@ -1,3 +1,7 @@
+input{
+        width: 100%;
+}
+
 #menu-btn{
 	position: relative;
 	float: right;
@@ -82,7 +86,6 @@
 	margin-top: 10px;
 }
 
-
 #digital-clock {
   margin: auto;
   position: absolute;
@@ -110,6 +113,7 @@
   text-shadow: rgb(255 255 0) 0px 0px 6px;
   display: none;
 }
+
  #photographer_link {
    color: #ffffff;
    font-size: 20px;
