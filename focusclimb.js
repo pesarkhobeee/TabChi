@@ -3,8 +3,14 @@ elements_index = 0;
 background_retry_count = 1;
 
 var focusClimbSearchTerm = localStorage.getItem("focusClimbSearchTerm");
+console.log(focusClimbSearchTerm);
 if(focusClimbSearchTerm){
     $("#background").val(focusClimbSearchTerm); 
+}
+
+var focusClimbPexelsToken = localStorage.getItem("focusClimbPexelsToken");
+if(focusClimbPexelsToken){
+    $("#focusClimbPexelsToken").val(focusClimbPexelsToken); 
 }
 
 function message(content){
@@ -34,7 +40,6 @@ function changebackground(searchTerm){
       try {
         var bg = result['photos'][0]['src']['large2x'];
         elements_index = elements.length - 1;
-        console.log(bg);
         $("body").css("background-image", "url('" + bg + "')");
       } catch (error) {
         if(background_retry_count < 3) {
@@ -76,18 +81,25 @@ var slider = $("#menu-bar").slideReveal({
   }
 });
 
-var background = $("#background").val();
-changebackground(background);
+function updateBackground() {
+  var background = $("#background").val();
+  changebackground(background);
+}
+
+$( "#focusClimbPexelsToken" ).focusout(function() {
+  var pexels = $("#focusClimbPexelsToken").val();
+  localStorage.setItem("focusClimbPexelsToken", pexels);
+  updateBackground();
+})
 
 $( "#background" ).focusout(function() {
-var background = $("#background").val();
-  changebackground(background);
+  var background = $("#background").val();
   localStorage.setItem("focusClimbSearchTerm", background);
+  updateBackground();
 })
 
 $( "#changebackground" ).click(function() {
-var background = $("#background").val();
-  changebackground(background);
+  updateBackground();
 })
 
 $( "#previous" ).click(function() {
@@ -123,8 +135,7 @@ window.addEventListener("keydown", function (event) {
 
   switch (event.key) {
     case "B":
-        var background = $("#background").val();
-      changebackground(background);
+      updateBackground();
       break;
     case "N":
       next();
@@ -141,6 +152,7 @@ window.addEventListener("keydown", function (event) {
 }, true);
 
 $(document).ready(function() {
+  updateBackground();
   clockUpdate();
   setInterval(clockUpdate, 1000);
 })
