@@ -3,9 +3,8 @@ elements_index = 0;
 background_retry_count = 1;
 
 var focusClimbSearchTerm = localStorage.getItem("focusClimbSearchTerm");
-console.log(focusClimbSearchTerm);
 if(focusClimbSearchTerm){
-    $("#background").val(focusClimbSearchTerm); 
+    $("#focusClimbSearchTerm").val(focusClimbSearchTerm); 
 }
 
 var focusClimbPexelsToken = localStorage.getItem("focusClimbPexelsToken");
@@ -13,13 +12,24 @@ if(focusClimbPexelsToken){
     $("#focusClimbPexelsToken").val(focusClimbPexelsToken); 
 }
 
-function message(content){
+$(document).ready(function() {
+  updateBackground();
+  clockUpdate();
+  setInterval(clockUpdate, 1000);
+})
+
+function updateBackground() {
+  var background = $("#focusClimbSearchTerm").val();
+  changeBackground(background);
+}
+
+function showMessage(content){
   $("#message").text(content);
   $("#message").fadeIn("slow");
   $("#message").delay(3000).fadeOut("slow");
 }
 
-function changebackground(searchTerm){
+function changeBackground(searchTerm){
 
   var number = 1 + Math.floor(Math.random() * 200);
   $.getJSON({
@@ -44,10 +54,10 @@ function changebackground(searchTerm){
       } catch (error) {
         if(background_retry_count < 3) {
             background_retry_count += 1;
-            changebackground(searchTerm);
+            changeBackground(searchTerm);
         } else {
             background_retry_count = 1;
-            message("Couldn't find anything related to your search term!");
+            showMessage("Couldn't find anything related to your search term!");
         }
       }
     },
@@ -81,19 +91,14 @@ var slider = $("#menu-bar").slideReveal({
   }
 });
 
-function updateBackground() {
-  var background = $("#background").val();
-  changebackground(background);
-}
-
 $( "#focusClimbPexelsToken" ).focusout(function() {
   var pexels = $("#focusClimbPexelsToken").val();
   localStorage.setItem("focusClimbPexelsToken", pexels);
   updateBackground();
 })
 
-$( "#background" ).focusout(function() {
-  var background = $("#background").val();
+$( "#focusClimbSearchTerm" ).focusout(function() {
+  var background = $("#focusClimbSearchTerm").val();
   localStorage.setItem("focusClimbSearchTerm", background);
   updateBackground();
 })
@@ -114,7 +119,6 @@ function next(){
   if(elements_index < (elements.length - 1)){
     elements_index += 1;
     var bg = elements[elements_index]['photos'][0]['src']['large2x'];
-    console.log(bg);
     $("body").css("background-image", "url('" + bg + "')");
   }
 }
@@ -123,7 +127,6 @@ function previous(){
   if(elements_index > 0){
     elements_index -= 1;
     var bg = elements[elements_index]['photos'][0]['src']['large2x'];
-    console.log(bg);
     $("body").css("background-image", "url('" + bg + "')");
   }
 }
@@ -150,12 +153,6 @@ window.addEventListener("keydown", function (event) {
       return; // Quit when this doesn't handle the key event.
   }
 }, true);
-
-$(document).ready(function() {
-  updateBackground();
-  clockUpdate();
-  setInterval(clockUpdate, 1000);
-})
 
 function clockUpdate() {
   var date = new Date();
