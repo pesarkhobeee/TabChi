@@ -110,3 +110,12 @@
   text-shadow: rgb(255 255 0) 0px 0px 6px;
   display: none;
 }
+ #photographer_link {
+   color: #ffffff;
+   font-size: 20px;
+   text-decoration: none;
+ }
+
+ #photographer_link:hover {
+  text-decoration: underline;
+ }

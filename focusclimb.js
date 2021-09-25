@@ -23,10 +23,10 @@ function updateBackground() {
   changeBackground(background);
 }
 
-function showMessage(content){
-  $("#message").text(content);
+function showMessage(content, fade_out_speed = 3000){
+  $("#message").html(content);
   $("#message").fadeIn("slow");
-  $("#message").delay(3000).fadeOut("slow");
+  $("#message").delay(fade_out_speed).fadeOut("slow");
 }
 
 function changeBackground(searchTerm){
@@ -45,12 +45,17 @@ function changeBackground(searchTerm){
       page: number
     },
     success: function( result ) {
-      console.log(result);
       elements.push(result)
       try {
         var bg = result['photos'][0]['src']['large2x'];
+        console.log(bg);
         elements_index = elements.length - 1;
         $("body").css("background-image", "url('" + bg + "')");
+        var photographer = result['photos'][0]['photographer'];
+        var photographer_url = result['photos'][0]['photographer_url'];
+        var photographer_link = "<a id='photographer_link' href='" + photographer_url + "' target='_blank' >" + photographer + "</a>"
+        console.log(photographer_link);
+        showMessage(photographer_link, 5000);
       } catch (error) {
         if(background_retry_count < 3) {
             background_retry_count += 1;
