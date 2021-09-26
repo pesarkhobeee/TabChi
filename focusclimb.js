@@ -129,13 +129,7 @@ $( "#next" ).click(function() {
 })
 
 $( "#clock" ).click(function() {
-  $("#digital-clock").toggle();
-  if (focus_climb_clock == "show") {
-    focus_climb_clock = "hide";
-  } else {
-    focus_climb_clock = "show";
-  }
-  localStorage.setItem("focusClimbClock", focus_climb_clock);
+  toggleClock();
 })
 
 function next(){
@@ -144,6 +138,16 @@ function next(){
     var bg = elements[elements_index]['photos'][0]['src']['large2x'];
     $("body").css("background-image", "url('" + bg + "')");
   }
+}
+
+function toggleClock(){
+  $("#digital-clock").toggle();
+  if (focus_climb_clock == "show") {
+    focus_climb_clock = "hide";
+  } else {
+    focus_climb_clock = "show";
+  }
+  localStorage.setItem("focusClimbClock", focus_climb_clock);
 }
 
 function previous(){
@@ -160,14 +164,17 @@ window.addEventListener("keydown", function (event) {
   }
 
   switch (event.key) {
-    case "B":
+    case "V":
       updateBackground();
       break;
     case "N":
       next();
       break;
-    case "P":
+    case "B":
       previous();
+      break;
+    case "C":
+      toggleClock();
       break;
     case "M":
       $('.handle').trigger('click');
