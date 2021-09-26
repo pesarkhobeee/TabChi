@@ -1,6 +1,7 @@
 elements = []
 elements_index = 0;
 background_retry_count = 1;
+focus_climb_clock = "show";
 
 var focusClimbSearchTerm = localStorage.getItem("focusClimbSearchTerm");
 if(focusClimbSearchTerm){
@@ -10,6 +11,13 @@ if(focusClimbSearchTerm){
 var focusClimbPexelsToken = localStorage.getItem("focusClimbPexelsToken");
 if(focusClimbPexelsToken){
     $("#focusClimbPexelsToken").val(focusClimbPexelsToken); 
+}
+
+var focus_climb_clock = localStorage.getItem("focusClimbClock");
+if(focus_climb_clock && focus_climb_clock == "hide"){
+  $("#digital-clock").hide();
+} else {
+  $("#digital-clock").show();
 }
 
 $(document).ready(function() {
@@ -118,6 +126,16 @@ $( "#previous" ).click(function() {
 
 $( "#next" ).click(function() {
   next();
+})
+
+$( "#clock" ).click(function() {
+  $("#digital-clock").toggle();
+  if (focus_climb_clock == "show") {
+    focus_climb_clock = "hide";
+  } else {
+    focus_climb_clock = "show";
+  }
+  localStorage.setItem("focusClimbClock", focus_climb_clock);
 })
 
 function next(){
