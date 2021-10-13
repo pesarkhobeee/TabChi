@@ -37,9 +37,14 @@ function showMessage(content, fade_out_speed = 3000){
   $("#message").delay(fade_out_speed).fadeOut("slow");
 }
 
-function changeBackground(searchTerm){
+function changeBackground(searchTerm, searchLimit=0){
 
-  var number = 1 + Math.floor(Math.random() * 200);
+  if(!searchLimit) {
+    var number = 1 + Math.floor(Math.random() * 200);
+  } else {
+    var number = 1 + Math.floor(Math.random() * searchLimit);
+  }
+
   $.getJSON({
     url: "https://api.pexels.com/v1/search",
     headers: {
@@ -55,6 +60,7 @@ function changeBackground(searchTerm){
     success: function( result ) {
       elements.push(result)
       try {
+        var total_results = result['total_results'];
         var bg = result['photos'][0]['src']['large2x'];
         console.log(bg);
         elements_index = elements.length - 1;
@@ -67,7 +73,11 @@ function changeBackground(searchTerm){
       } catch (error) {
         if(background_retry_count < 3) {
             background_retry_count += 1;
-            changeBackground(searchTerm);
+            if(total_results) {
+                changeBackground(searchTerm, total_results);
+            } else {
+                changeBackground(searchTerm);
+            }
         } else {
             background_retry_count = 1;
             showMessage("Couldn't find anything related to your search term!");
