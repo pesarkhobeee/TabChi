@@ -85,7 +85,8 @@ function changeBackground(searchTerm, searchLimit=0){
       }
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    $("body").css("background-image", "url('mountain.jpg')");
+    var local_background_image = 'images/' + ( 1 + Math.floor(Math.random() * 12) ) + '.jpg';
+    $("body").css("background-image", "url('" + local_background_image + "')");
   });
 }
 
