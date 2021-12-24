@@ -16,19 +16,7 @@
   },
   "chrome_settings_overrides": {
     "homepage": "dashboard.html"
-  },
-  "background": {
-    "scripts": [
-      "background.js"
-    ]
-  },
-  "permissions": [
-    "tabs",
-    "storage",
-    "webRequest",
-    "webRequestBlocking",
-    "<all_urls>"
-  ]
+  }
 } 
 
 

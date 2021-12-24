@@ -1,3 +1,71 @@
+body {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #4a4d52;
+}
+
+#fc-wallpaper-photo {
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  min-width: 100vw;
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  z-index: 9;
+}
+
+#fc-wallpaper-photo-blur {
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  min-width: 100vw;
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  backdrop-filter: blur(2em);
+  z-index: 10;
+}
+
+#fc-wallpaper-photo-hd {
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  min-width: 100vw;
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  content: "";
+  z-index: 11;
+  opacity:1;
+}
+
+
+#digital-clock {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 400px;
+  height: 120px;
+  color: #ffffff;
+  text-align: center;
+  font: 100px/120px 'DIGITAL', Helvetica;
+  display: none;
+  z-index: 12;
+}
+
 input{
         width: 100%;
 }
@@ -86,43 +154,31 @@ input{
 	margin-top: 10px;
 }
 
-#digital-clock {
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 400px;
-  height: 120px;
-  color: #ffffff;
-  text-align: center;
-  font: 100px/120px 'DIGITAL', Helvetica;
-  display: none;
-}
 
 #message {
   margin: auto;
   position: absolute;
-  left: 0;
+  left: 10px;
   bottom: 0;
   right: 0;
   height: 40px;
   font-size: 25px;
   color: #ffffff;
-  text-align: center;
   text-shadow: rgb(255 255 0) 0px 0px 6px;
   display: none;
+  z-index: 12;
 }
 
  #photographer_link {
    color: #ffffff;
    font-size: 20px;
    text-decoration: none;
+   opacity: 0.4;
  }
 
  #photographer_link:hover {
   text-decoration: underline;
+  opacity: 1;
  }
 
 .flex-container {
