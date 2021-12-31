@@ -155,13 +155,25 @@ input{
 }
 
 
+#pushpin {
+  margin: auto;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  height: 30px;
+  font-size: 25px;
+  color: #ffffff;
+  text-shadow: rgb(255 255 0) 0px 0px 6px;
+  z-index: 12;
+}
+
 #message {
   margin: auto;
   position: absolute;
   left: 10px;
-  bottom: 0;
+  bottom: 10px;
   right: 0;
-  height: 40px;
+  height: 30px;
   font-size: 25px;
   color: #ffffff;
   text-shadow: rgb(255 255 0) 0px 0px 6px;
@@ -169,15 +181,15 @@ input{
   z-index: 12;
 }
 
- #photographer_link {
+ .component_link {
    color: #ffffff;
    font-size: 20px;
    text-decoration: none;
    opacity: 0.4;
+   cursor:pointer;
  }
 
- #photographer_link:hover {
-  text-decoration: underline;
+ .component_link:hover {
   opacity: 1;
  }
 

@@ -3,6 +3,7 @@ elements = [];
 elements_index = 0;
 background_retry_count = 1;
 focus_climb_clock = "show";
+focus_climb_push_pin = false;
 
 var focusClimbSearchTerm = localStorage.getItem("focusClimbSearchTerm");
 if(focusClimbSearchTerm){
@@ -23,10 +24,18 @@ if(focus_climb_clock && focus_climb_clock == "hide"){
   $("#digital-clock").show();
 }
 
+var focusClimbPushPin = localStorage.getItem("focusClimbPushPin");
+if(focusClimbPushPin){
+  focus_climb_push_pin = true;
+  elements.push(JSON.parse(focusClimbPushPin));
+  elements_index = elements.length - 1;
+}
+
 $(document).ready(function() {
   updateBackground();
   clockUpdate();
   setInterval(clockUpdate, 1000);
+  changeButtonsStatus();
 })
 
 function updateBackground() {

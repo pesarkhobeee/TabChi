@@ -3,7 +3,15 @@
   }
 
   function changeButtonsStatus() {
-    if (elements_index > 1) {
+    if (focus_climb_push_pin) {
+      $('#changebackground').prop('disabled', true);
+      $('#pin').val("UnPin the current picture");
+    } else {
+      $('#changebackground').prop('disabled', false);
+      $('#pin').val("Pin the current picture");
+    }
+
+    if (elements_index > 0) {
       $('#previous').prop('disabled', false);
     } else {
       $('#previous').prop('disabled', true);
@@ -13,6 +21,12 @@
       $('#next').prop('disabled', false);
     } else {
       $('#next').prop('disabled', true);
+    }
+
+    if (focus_climb_push_pin) {
+      $("#focusClimbPushPin").css("opacity", 1);
+    } else {
+      $("#focusClimbPushPin").css("opacity", 0.4);
     }
   }
   
@@ -83,6 +97,14 @@
   $( "#clock" ).click(function() {
     toggleClock();
   })
+
+  $( "#focusClimbPushPin" ).click(function(){
+    togglePin();
+  })
+
+  $( "#pin" ).click(function(){
+    togglePin();
+  })
   
   function next(){
     if(elements_index < (elements.length - 1)){
@@ -109,6 +131,18 @@
     }
     localStorage.setItem("focusClimbClock", focus_climb_clock);
   }
+
+  function togglePin(){
+    if (focus_climb_push_pin) {
+      localStorage.removeItem("focusClimbPushPin");
+      focus_climb_push_pin = false;
+    } else {
+      var current_element = JSON.stringify(elements[elements_index]);
+      localStorage.setItem("focusClimbPushPin", current_element);
+      focus_climb_push_pin = true;
+    }
+    changeButtonsStatus();
+  }
   
   window.addEventListener("keydown", function (event) {
     if (event.defaultPrevented) {
@@ -130,6 +164,9 @@
         break;
       case "M":
         $('.handle').trigger('click');
+        break;
+      case "P":
+        togglePin();
         break;
       default:
         return; // Quit when this doesn't handle the key event.
