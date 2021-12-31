@@ -1,6 +1,10 @@
+![Screenshot1](Screenshot1.png)
+
+![Screenshot2](Screenshot2.png)
+
 # FocusClimb
 
-Replace new tab page with a personal dashboard featuring , desired pictures and inspirations.
+Replace new tab page with a personal dashboard featuring , desired pictures and inspirations. You can install the latest stable version of it via the links that you can find in [FocusClimb.com](https://focusclimb.com/) official website.
 
 ## Development
 
