@@ -1,5 +1,19 @@
-function menu() {
+  function menu() {
     $("#menu-bar").slideReveal("show");
+  }
+
+  function changeButtonsStatus() {
+    if (elements_index > 1) {
+      $('#previous').prop('disabled', false);
+    } else {
+      $('#previous').prop('disabled', true);
+    }
+
+    if (elements_index < (elements.length - 1)) {
+      $('#next').prop('disabled', false);
+    } else {
+      $('#next').prop('disabled', true);
+    }
   }
   
   $("#menu-bar a").click(function(){
@@ -59,11 +73,11 @@ function menu() {
   })
   
   $( "#previous" ).click(function() {
-    previous();
+    previous();  
   })
   
   $( "#next" ).click(function() {
-    next();
+    next();   
   })
   
   $( "#clock" ).click(function() {
@@ -74,7 +88,7 @@ function menu() {
     if(elements_index < (elements.length - 1)){
       elements_index += 1;
       changeBackground(elements_index);
-      //TODO: Add disabling next button mechanism here
+      changeButtonsStatus();
     }
   }
   
@@ -82,7 +96,7 @@ function menu() {
     if(elements_index > 0){
       elements_index -= 1;
       changeBackground(elements_index);
-      //TODO: Add disabling previous button mechanism here
+      changeButtonsStatus();
     }
   }
   

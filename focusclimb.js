@@ -17,6 +17,8 @@ function changeBackground(elements_index) {
   var photographer_link = "<a id='photographer_link' href='" + photographer_url + "' target='_blank' alt='" + photographer + "'> &#128247;</a>"
   console.log(photographer_link);
   showMessage(photographer_link);
+
+  changeButtonsStatus();
 }
 
 function fetchNewBackground(searchTerm, searchLimit=0){
