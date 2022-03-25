@@ -98,6 +98,11 @@
     toggleClock();
   })
 
+  $( "#pomodoro" ).click(function() {
+    $("#pomodoroTimer").toggle();
+    $("#pomodoroMarkers").toggle();
+  })
+
   $( "#focusClimbPushPin" ).click(function(){
     togglePin();
   })

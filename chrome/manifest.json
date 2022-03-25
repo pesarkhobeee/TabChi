@@ -11,9 +11,9 @@
    },
    "manifest_version" : 2,
    "content_security_policy": "script-src 'self'; object-src 'self'",
-   "description": "Replace new tab page with a personal dashboard featuring , desired pictures and inspiration.",
+   "description": "Replace new tab page with a personal dashboard featuring, desired pictures and pomodoro timer.",
    "name": "Focus Climb",
    "offline_enabled": true,
    "short_name": "FocusClimb",
-   "version": "0.2.0"
+   "version": "0.4.0"
 }
