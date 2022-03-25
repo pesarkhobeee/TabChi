@@ -76,12 +76,16 @@ function drawPomodoro() {
 // Define Pomodoro button and how to interact with user mouse!
 const canvas = document.getElementById('pomodoroTimer');
 canvas.onmouseenter = function(e) {
-  drawArc(xPomodoro, yPomodoro, 15, "pomodoroTimer", pomodoroRestColor);
-  document.body.style.cursor = "pointer";
+  if(clicked == false) {
+    drawArc(xPomodoro, yPomodoro, 15, "pomodoroTimer", pomodoroRestColor);
+    document.body.style.cursor = "pointer";
+  }
 }
 canvas.onmouseleave = function(e) {
-  drawArc(xPomodoro, yPomodoro, 15, "pomodoroTimer", pomodoroWorkColor);
-  document.body.style.cursor = "default";
+  if(clicked == false) {
+    drawArc(xPomodoro, yPomodoro, 15, "pomodoroTimer", pomodoroWorkColor);
+    document.body.style.cursor = "default";
+  }
 }
 canvas.addEventListener('click', function(event) {
   if (typeof intervalHandler !== 'undefined' || intervalHandler !== null) {
