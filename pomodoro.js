@@ -36,8 +36,8 @@ function drawArc(x, y, radius, canvas, color) {
   pomodoroCanvas.font = "12px Arial";
   if(radius >= 75){
     // Means we are drawing the Pomodoro timer adn not the markers :)
-    pomodoroCanvas.fillText(Math.round(currentPercent) + "% Pomodoro", 15, 20);
-    document.title = Math.round(currentPercent) + "% Pomodoro";
+    pomodoroCanvas.fillText(Math.floor(currentSecond / 60) + " Minutes Pomodoro", 15, 20);
+    document.title = Math.floor(currentSecond / 60) + " Minutes Pomodoro";
   }
 }
 
