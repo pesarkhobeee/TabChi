@@ -13,12 +13,15 @@ var pomodoroWorkTimeInSeconds = 1500;
 var pomodoroRestTimeInSeconds = 300;
 var pomodoroWorkColor = "#ffffff";
 var pomodoroRestColor = "#f3d8a1";
+var pomodoroRestSkipColor = "#cb911a";
+var skipRest = false;
 
 function resetDefaults(){
   clearInterval(intervalHandler);
   currentPercent = 0;
   currentSecond = 0;
   clicked = false;
+  skipRest = false;
 }
 
 function drawArc(x, y, radius, canvas, color) {
@@ -50,7 +53,12 @@ function drawPomodoro() {
   } else {
     // Means we are dealing with the pomodoro rest timer
     color = pomodoroRestColor;
-    currentPercent = (100/pomodoroRestTimeInSeconds) * currentSecond;
+    if(skipRest) {
+      currentPercent = percent;
+      color = pomodoroRestSkipColor;
+    } else {
+      currentPercent = (100/pomodoroRestTimeInSeconds) * currentSecond;
+    }
   }
 
   if (currentPercent < percent && clicked) {
@@ -87,17 +95,21 @@ canvas.onmouseleave = function(e) {
     document.body.style.cursor = "default";
   }
 }
-canvas.addEventListener('click', function(event) {
-  if (typeof intervalHandler !== 'undefined' || intervalHandler !== null) {
-    resetDefaults();
-  } 
-  clicked = true;
-  intervalHandler = setInterval(() => {
-    requestAnimationFrame(drawPomodoro);
-  }, 1000);
- 
+canvas.addEventListener('click', function(e) {
+    if (typeof intervalHandler !== 'undefined' || intervalHandler !== null) {
+      resetDefaults();
+    } 
+    clicked = true;
+    intervalHandler = setInterval(() => {
+      requestAnimationFrame(drawPomodoro);
+    }, 1000);
 }, false);
+canvas.addEventListener('contextmenu', e => {
+  skipRest = true;
+  drawPomodoro();
+  e.preventDefault();
+});
 
 
-drawArc(xPomodoro, yPomodoro, 15, "pomodoroTimer", "#ffffff");
+drawArc(xPomodoro, yPomodoro, 15, "pomodoroTimer", pomodoroWorkColor);
 
