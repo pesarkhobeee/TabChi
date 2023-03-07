@@ -206,18 +206,3 @@ input{
 	font-size: 1.4em;
 	font-weight: 300;
 }
-
-#pomodoroTimer {
-  margin: auto;
-  position: absolute;
-  z-index: 12;
-  display: none;
-}
-
-#pomodoroMarkers {
-  margin: auto;
-  position: absolute;
-  z-index: 12;
-  margin-top: 200px;
-  display: none;
-}
