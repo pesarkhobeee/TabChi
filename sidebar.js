@@ -57,6 +57,11 @@
     localStorage.setItem("focusClimbPexelsToken", pexels);
     updateBackground();
   });
+
+  $( "#popup_note_textarea" ).focusout(function() {
+    var notes = $("#popup_note_textarea").val();
+    localStorage.setItem("focusClimbNotePad", notes);
+  });
   
   $('#focusClimbPexelsToken').keypress(function (e) {
     var key = e.which;
@@ -105,6 +110,10 @@
   $( "#pin" ).click(function(){
     togglePin();
   })
+
+  $( "#toggleNotepad" ).click(function(){
+    toggleNotepad();
+  })
   
   function next(){
     if(elements_index < (elements.length - 1)){
@@ -130,6 +139,10 @@
       focus_climb_clock = "show";
     }
     localStorage.setItem("focusClimbClock", focus_climb_clock);
+  }
+
+  function toggleNotepad(){
+    $("#popup_note_textarea").toggle();
   }
 
   function togglePin(){
@@ -167,6 +180,9 @@
         break;
       case "P":
         togglePin();
+        break;
+      case "T":
+        toggleNotepad();
         break;
       default:
         return; // Quit when this doesn't handle the key event.

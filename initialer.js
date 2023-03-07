@@ -31,6 +31,11 @@ if(focusClimbPushPin){
   elements_index = elements.length - 1;
 }
 
+var focusClimbNotePad = localStorage.getItem("focusClimbNotePad");
+if(focusClimbNotePad){
+    $("#popup_note_textarea").val(focusClimbNotePad); 
+}
+
 $(document).ready(function() {
   updateBackground();
   clockUpdate();

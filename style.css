@@ -206,3 +206,37 @@ input{
 	font-size: 1.4em;
 	font-weight: 300;
 }
+
+#popup_note_textarea {
+    width: 90%;
+    height: 90%;
+    opacity: 0.6 ;
+    position: absolute;
+    z-index: 100;
+    margin: 2% 5%;
+    display: none;
+}
+
+#notepad {
+  margin: auto;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  height: 30px;
+  font-size: 25px;
+  color: #ffffff;
+  text-shadow: rgb(255 255 0) 0px 0px 6px;
+  z-index: 12;
+}
+
+.notepad_link {
+  color: #ffffff;
+  font-size: 20px;
+  text-decoration: none;
+  opacity: 0.4;
+  cursor:pointer;
+}
+
+.notepad_link:hover {
+  opacity: 1;
+ }
