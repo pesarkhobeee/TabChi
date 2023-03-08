@@ -156,6 +156,28 @@
     }
     changeButtonsStatus();
   }
+
+  $('#topsites-setting').on('change', function() {
+    var topsites_setting = this.value;
+    localStorage.setItem("topsites_setting", topsites_setting);
+    topsites(topsites_setting);
+  });
+
+  function topsites(topsites_setting) {
+    if (topsites_setting == "Bottom") {
+      $(".top-site-container").removeClass("top-site-container-vertical");
+      $(".top-sites").removeClass("top-sites-vertical");
+      $(".top-sites").show();
+    } else if (topsites_setting == "Left") {
+      $(".top-site-container").addClass("top-site-container-vertical");
+      $(".top-sites").addClass("top-sites-vertical");
+      $(".top-sites").show();
+    } else if (topsites_setting == "Hidden") {
+      $(".top-sites").fadeOut();
+    } else {
+      $(".top-sites").toggle();
+    }
+  }
   
   window.addEventListener("keydown", function (event) {
     if (event.defaultPrevented) {
@@ -183,6 +205,9 @@
         break;
       case "T":
         toggleNotepad();
+        break;
+      case "S":
+        topsites();
         break;
       default:
         return; // Quit when this doesn't handle the key event.

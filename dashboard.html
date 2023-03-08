@@ -30,6 +30,16 @@
                 <div><input id="clock" type="button" value="Toggle the Clock [C]"></div>
                 <div><input id="toggleNotepad" type="button" value="Toggle the NotePad [T]"></div>
                 <div><input id="pin" type="button" value="Pin the current picture [P]"></div>
+                <div>
+                        <label for="topsites-setting [S]">Top Sites:</label>
+
+                        <select name="topsites-setting" id="topsites-setting">
+                        <option value=""></option>
+                        <option value="Bottom">Bottom</option>
+                        <option value="Left">Left</option>
+                        <option value="Hidden">Hidden</option>
+                        </select>
+                </div>
                 <div><a style="font-size:0.8em; text-decoration: none;" href="https://www.pexels.com/api/new/" target="_blank">
                         pexels.com Token:
                 </a></div>
@@ -41,7 +51,8 @@
             <div id="message"></div>
             <div id="pushpin"><a id="focusClimbPushPin" class="component_link">📌</a></div>
             <div id="notepad"><a id="focusClimbNotepad" class="notepad_link">📓</a></div>
-            
+            <div class="top-site-container"><div class="top-sites"></div></div>
+              
 
             <script src="jquery-3.6.0.min.js" ></script>
             <script src="jquery.slidereveal.min.js"></script>
