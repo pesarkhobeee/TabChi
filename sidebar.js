@@ -188,32 +188,35 @@
       return; // Do nothing if the event was already processed
     }
   
-    switch (event.key) {
-      case "V":
-        updateBackground();
-        break;
-      case "N":
-        next();
-        break;
-      case "B":
-        previous();
-        break;
-      case "C":
-        toggleClock();
-        break;
-      case "M":
-        $('.handle').trigger('click');
-        break;
-      case "P":
-        togglePin();
-        break;
-      case "T":
-        toggleNotepad();
-        break;
-      case "S":
-        topsites();
-        break;
-      default:
-        return; // Quit when this doesn't handle the key event.
+    if(event.ctrlKey ) {
+      switch (event.key) {
+        case "V":
+          updateBackground();
+          break;
+        case "N":
+          next();
+          break;
+        case "B":
+          previous();
+          break;
+        case "C":
+          toggleClock();
+          break;
+        case "M":
+          $('.handle').trigger('click');
+          break;
+        case "P":
+          togglePin();
+          break;
+        case "T":
+          toggleNotepad();
+          break;
+        case "S":
+          topsites();
+          break;
+        default:
+          return; // Quit when this doesn't handle the key event.
+      }
     }
+
   }, true);
