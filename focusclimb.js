@@ -69,7 +69,7 @@ function fetchNewBackground(searchTerm, searchLimit=0){
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
     var local_background_image = 'images/' + ( 1 + Math.floor(Math.random() * 12) ) + '.jpg';
-    $("body").css("background-image", "url('" + local_background_image + "')");
+    $("#fc-wallpaper-photo-hd").css("background-image", "url('" + local_background_image + "')");
     showMessage("Something is wrong, couldn't fetch any image!");
   });
 }
