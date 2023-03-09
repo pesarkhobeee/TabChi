@@ -114,6 +114,10 @@
   $( "#toggleNotepad" ).click(function(){
     toggleNotepad();
   })
+
+  $( "#focusClimbNotepad" ).click(function(){
+    toggleNotepad();
+  })
   
   function next(){
     if(elements_index < (elements.length - 1)){
