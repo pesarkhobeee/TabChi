@@ -155,19 +155,20 @@ input {
   font-size: 25px;
   color: #ffffff;
   text-shadow: #000 0px 0px 6px;
-  z-index: 199;
+  z-index: 999;
 }
 
 #message {
   margin: auto;
   position: absolute;
   left: 10px;
-  bottom: 10px;
+  top: 10px;
   right: 0;
   height: 30px;
   font-size: 25px;
   color: #ffffff;
   text-shadow: #000 0px 0px 6px;
+  text-align: center;
   display: none;
   z-index: 20;
 }
@@ -178,7 +179,7 @@ input {
   text-decoration: none;
   opacity: 0.4;
   cursor: pointer;
-  z-index: 199;
+  z-index: 999;
 }
 
 .component_link:hover {
@@ -223,7 +224,7 @@ input {
   font-size: 25px;
   color: #ffffff;
   text-shadow: #000 0px 0px 6px;
-  z-index: 12;
+  z-index: 999;
 }
 
 .notepad_link {

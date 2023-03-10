@@ -1,6 +1,7 @@
 function showMessage(content){
   $("#message").html(content);
   $("#message").fadeIn("slow");
+  $("#message").delay(3000).fadeOut("slow");
 }
 
 function changeBackground(elements_index) {
