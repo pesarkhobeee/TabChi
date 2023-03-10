@@ -25,6 +25,8 @@ function fetchNewBackground(searchTerm, searchLimit=0){
     changeBackground(elements_index);
     return false;
   }
+  $("#focusClimbPushPin").fadeIn();
+  $("#toggleNotepad").prop("disabled",false);
 
   if(!searchLimit) {
     searchLimit = topics[searchTerm] || 8000;
@@ -72,5 +74,7 @@ function fetchNewBackground(searchTerm, searchLimit=0){
     var local_background_image = 'images/' + ( 1 + Math.floor(Math.random() * 12) ) + '.jpg';
     $("#fc-wallpaper-photo-hd").css("background-image", "url('" + local_background_image + "')");
     showMessage("Something is wrong, couldn't fetch any image!");
+    $("#focusClimbPushPin").fadeOut();
+    $("#toggleNotepad").prop("disabled",true);
   });
 }
