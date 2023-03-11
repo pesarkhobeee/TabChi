@@ -168,6 +168,7 @@
   });
 
   function topsites(topsites_setting) {
+    $('#topsites-setting').val(topsites_setting);
     if (topsites_setting == "Bottom") {
       $(".top-site-container").removeClass("top-site-container-vertical");
       $(".top-sites").removeClass("top-sites-vertical");
