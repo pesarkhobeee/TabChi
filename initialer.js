@@ -12,7 +12,64 @@ $(document).ready(function() {
   setInterval(clockUpdate, 1000);
   changeButtonsStatus();
   getTopSites();
-})
+
+// TODO: lets make a hackable plugin :)
+var test = `
+  <link rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Kenia">
+<style>
+body {
+font-family: "Kenia", serif;
+}
+#digital-clock {
+  font-family: "Kenia", serif;
+}
+input {
+  font-family: "Kenia", serif;
+}
+.site-icon {background: none;}
+.site-link {
+  background: none;
+  width: 40px;
+  height:40px;
+}
+.site-link:hover {
+  background: rgba(127, 127, 127, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+</style>
+<script  nonce="my_unique_nonce_value-3">
+$(document).ready(function() {
+  var apiKey = 'YOUR_API_KEY';
+  var url = 'https://api.openweathermap.org/data/2.5/weather?q=Berlin&appid=' + apiKey;
+  
+  $.ajax({
+    url: url,
+    dataType: 'json',
+    type: 'GET',
+    success: function(data) {
+      console.log(data); // check the console to see the full response
+      
+      var weatherDescription = data.weather[0].description;
+      var temperature = data.main.temp;
+      var humidity = data.main.humidity;
+      
+      showmessage(weatherDescription);
+      // display the weather data on the page
+      //$('.weather-description').text(weatherDescription);
+      //$('.temperature').text(temperature);
+      //$('.humidity').text(humidity);
+    },
+    error: function(error) {
+      console.log(error);
+    }
+  });
+});
+</script>
+`
+//$("head").append(test);
+});
 
 function initiateSettings(){
   var focusClimbSearchTerm = localStorage.getItem("focusClimbSearchTerm");

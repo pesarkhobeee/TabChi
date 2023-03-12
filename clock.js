@@ -19,6 +19,7 @@ function clockUpdate() {
       }
     }
   
+    //TODO: make twelveHour optional
     var h = addZero(twelveHour(date.getHours()));
     var m = addZero(date.getMinutes());
     var s = addZero(date.getSeconds());

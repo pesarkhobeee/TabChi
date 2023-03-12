@@ -183,6 +183,12 @@
       $(".top-sites").toggle();
     }
   }
+
+
+  $('#colorsPalette').on('change', function() {
+    var colorsPalette = this.value;
+    $("#fc-wallpaper-photo-hd").css({"background-color": colorsPalette, "background-image": ""});
+  });
   
   window.addEventListener("keydown", function (event) {
     if (event.defaultPrevented) {
