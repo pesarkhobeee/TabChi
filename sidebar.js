@@ -55,6 +55,7 @@
   $( "#focusClimbPexelsToken" ).focusout(function() {
     var pexels = $("#focusClimbPexelsToken").val();
     localStorage.setItem("focusClimbPexelsToken", pexels);
+    focusClimbPexelsToken = pexels;
     updateBackground();
   });
 
