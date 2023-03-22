@@ -36,19 +36,15 @@
                         
                         <div><input id="clock" type="button" value="Toggle the Clock [C]"></div>
 
-                        <div>
-                                <label for="background-setting">Background Setting:</label>
-
-                                <select name="background-setting" id="background-setting">
-                                <option value=""></option>
-                                <option value="Color">Use Color</option>
-                                <option value="Pexels">Use Pexels.com</option>
-                                </select>
-                        </div>
-
                         <fieldset>
-                                <legend>Background:</legend>
-                                <fieldset>
+                                <legend>Background Settings:</legend>
+                                <select name="background-setting" id="background-setting">
+                                        <option value=""></option>
+                                        <option value="Offline">Use Offline Pictures</option>
+                                        <option value="Color">Use Color</option>
+                                        <option value="Pexels">Use Pexels.com</option>
+                                </select>
+                                <fieldset id="fieldset-color">
                                         <legend>Color:</legend>
                                         <div>
                                                 <input id="colorsPalette" type="color" list="Palette">
@@ -71,7 +67,7 @@
                                                 </datalist>
                                         </div>
                                 </fieldset>
-                                <fieldset>
+                                <fieldset id="fieldset-pexels">
                                         <legend>pexels.com:</legend>
                                         <div>
                                                 <label>

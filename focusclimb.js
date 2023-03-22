@@ -4,6 +4,16 @@ function showMessage(content){
   $("#message").delay(3000).fadeOut("slow");
 }
 
+function changeBackgroundColor(color_code) {
+  if(color_code) {
+    localStorage.setItem("colorsPalette", color_code);
+  } else {
+    color_code = localStorage.getItem("colorsPalette");
+    $("#colorsPalette").val(color_code);
+  }
+  $("#fc-wallpaper-photo-hd").css({"background-color": color_code, "background-image": ""});
+}
+
 function changeBackground(elements_index) {
   var bg = elements[elements_index]['photos'][0]['src']['original'];
   
@@ -71,10 +81,7 @@ function fetchNewBackground(searchTerm, searchLimit=0){
       }
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    var local_background_image = 'images/' + ( 1 + Math.floor(Math.random() * 12) ) + '.jpg';
-    $("#fc-wallpaper-photo-hd").css("background-image", "url('" + local_background_image + "')");
     showMessage("Something is wrong, couldn't fetch any image!");
-    $("#focusClimbPushPin").fadeOut();
-    $("#pin").prop("disabled",true);
+    offlineBackgroundPictures();
   });
 }

@@ -8,7 +8,6 @@ focusClimbPexelsToken = "";
 
 $(document).ready(function() {
   initiateSettings();
-  updateBackground();
   clockUpdate();
   setInterval(clockUpdate, 1000);
   changeButtonsStatus();
@@ -79,6 +78,44 @@ function initiateSettings(){
   if(topsites_setting){
     topsites(topsites_setting);
   }
+
+  var background_setting = localStorage.getItem("background_setting");
+  backgroundController(background_setting)
+}
+
+function backgroundController(background_setting){
+  if(background_setting){
+    $("#background-setting").val(background_setting);
+    if(background_setting == "Color") {
+      changeBackgroundColor();
+      $("#fieldset-color").show();
+      $("#fieldset-pexels").hide();
+      $("#focusClimbPushPin").fadeOut();
+    } else if (background_setting == "Pexels") {
+      updateBackground();
+      $("#fieldset-color").hide();
+      $("#fieldset-pexels").show();
+      $("#focusClimbPushPin").fadeIn();
+    } else {
+      offlineBackgroundPictures();
+      $("#fieldset-color").hide();
+      $("#fieldset-pexels").hide();
+      $("#focusClimbPushPin").fadeOut();
+    }
+    
+  } else {
+    offlineBackgroundPictures();
+    $("#fieldset-color").hide();
+    $("#fieldset-pexels").hide();
+    $("#focusClimbPushPin").fadeOut();
+  }
+}
+
+function offlineBackgroundPictures() {
+  var local_background_image = 'images/' + ( 1 + Math.floor(Math.random() * 12) ) + '.jpg';
+  $("#fc-wallpaper-photo-hd").css("background-image", "url('" + local_background_image + "')");
+  $("#focusClimbPushPin").fadeOut();
+  $("#pin").prop("disabled",true);
 }
 
 function updateBackground() {

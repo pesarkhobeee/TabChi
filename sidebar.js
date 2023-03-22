@@ -168,6 +168,12 @@
     topsites(topsites_setting);
   });
 
+  $('#background-setting').on('change', function() {
+    var background_setting = this.value;
+    localStorage.setItem("background_setting", background_setting);
+    backgroundController(background_setting);
+  });
+
   function topsites(topsites_setting) {
     $('#topsites-setting').val(topsites_setting);
     if (topsites_setting == "Bottom") {
@@ -188,7 +194,7 @@
 
   $('#colorsPalette').on('change', function() {
     var colorsPalette = this.value;
-    $("#fc-wallpaper-photo-hd").css({"background-color": colorsPalette, "background-image": ""});
+    changeBackgroundColor(colorsPalette);
   });
   
   window.addEventListener("keydown", function (event) {

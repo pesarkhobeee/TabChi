@@ -292,3 +292,7 @@ input {
   font-weight: bold;
   margin-top: 10px;
 }
+
+#background-setting {
+  margin: 4px;
+}
