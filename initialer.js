@@ -5,6 +5,12 @@ background_retry_count = 1;
 focus_climb_clock = "show";
 focus_climb_push_pin = false;
 focusClimbPexelsToken = "";
+focusClimbSearchTerm = "";
+focus_climb_clock = "";
+focusClimbPushPin = "";
+focusClimbNotePad = "";
+topsites_setting = "";
+background_setting = "";
 
 $(document).ready(function() {
   initiateSettings();
@@ -43,7 +49,7 @@ input {
 });
 
 function initiateSettings(){
-  var focusClimbSearchTerm = localStorage.getItem("focusClimbSearchTerm");
+  focusClimbSearchTerm = localStorage.getItem("focusClimbSearchTerm");
   if(focusClimbSearchTerm){
       $("#focusClimbSearchTerm").val(focusClimbSearchTerm); 
   }
@@ -55,31 +61,31 @@ function initiateSettings(){
     focusClimbPexelsToken = '563492ad6f917000010000010b883213d49b45daaa804a8854ad452c';
   }
 
-  var focus_climb_clock = localStorage.getItem("focusClimbClock");
+  focus_climb_clock = localStorage.getItem("focusClimbClock");
   if(focus_climb_clock && focus_climb_clock == "hide"){
     $("#digital-clock").hide();
   } else {
     $("#digital-clock").show();
   }
 
-  var focusClimbPushPin = localStorage.getItem("focusClimbPushPin");
+  focusClimbPushPin = localStorage.getItem("focusClimbPushPin");
   if(focusClimbPushPin){
     focus_climb_push_pin = true;
     elements.push(JSON.parse(focusClimbPushPin));
     elements_index = elements.length - 1;
   }
 
-  var focusClimbNotePad = localStorage.getItem("focusClimbNotePad");
+  focusClimbNotePad = localStorage.getItem("focusClimbNotePad");
   if(focusClimbNotePad){
       $("#popup_note_textarea").val(focusClimbNotePad); 
   }
 
-  var topsites_setting = localStorage.getItem("topsites_setting");
+  topsites_setting = localStorage.getItem("topsites_setting");
   if(topsites_setting){
     topsites(topsites_setting);
   }
 
-  var background_setting = localStorage.getItem("background_setting");
+  background_setting = localStorage.getItem("background_setting");
   backgroundController(background_setting)
 }
 
