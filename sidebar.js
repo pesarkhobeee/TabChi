@@ -185,7 +185,7 @@
       $(".top-sites").addClass("top-sites-vertical");
       $(".top-sites").show();
     } else if (topsites_setting == "Hidden") {
-      $(".top-sites").fadeOut();
+      $(".top-sites").hide();
     } else {
       $(".top-sites").toggle();
     }
