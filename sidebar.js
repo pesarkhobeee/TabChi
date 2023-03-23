@@ -55,7 +55,13 @@
   $( "#focusClimbPexelsToken" ).focusout(function() {
     var pexels = $("#focusClimbPexelsToken").val();
     localStorage.setItem("focusClimbPexelsToken", pexels);
+    focusClimbPexelsToken = pexels;
     updateBackground();
+  });
+
+  $( "#popup_note_textarea" ).focusout(function() {
+    var notes = $("#popup_note_textarea").val();
+    localStorage.setItem("focusClimbNotePad", notes);
   });
   
   $('#focusClimbPexelsToken').keypress(function (e) {
@@ -98,17 +104,20 @@
     toggleClock();
   })
 
-  $( "#pomodoro" ).click(function() {
-    $("#pomodoroTimer").toggle();
-    $("#pomodoroMarkers").toggle();
-  })
-
   $( "#focusClimbPushPin" ).click(function(){
     togglePin();
   })
 
   $( "#pin" ).click(function(){
     togglePin();
+  })
+
+  $( "#toggleNotepad" ).click(function(){
+    toggleNotepad();
+  })
+
+  $( "#focusClimbNotepad" ).click(function(){
+    toggleNotepad();
   })
   
   function next(){
@@ -137,6 +146,10 @@
     localStorage.setItem("focusClimbClock", focus_climb_clock);
   }
 
+  function toggleNotepad(){
+    $("#popup_note_textarea").toggle();
+  }
+
   function togglePin(){
     if (focus_climb_push_pin) {
       localStorage.removeItem("focusClimbPushPin");
@@ -148,32 +161,76 @@
     }
     changeButtonsStatus();
   }
+
+  $('#topsites-setting').on('change', function() {
+    var topsites_setting = this.value;
+    localStorage.setItem("topsites_setting", topsites_setting);
+    topsites(topsites_setting);
+  });
+
+  $('#background-setting').on('change', function() {
+    var background_setting = this.value;
+    localStorage.setItem("background_setting", background_setting);
+    backgroundController(background_setting);
+  });
+
+  function topsites(topsites_setting) {
+    $('#topsites-setting').val(topsites_setting);
+    if (topsites_setting == "Bottom") {
+      $(".top-site-container").removeClass("top-site-container-vertical");
+      $(".top-sites").removeClass("top-sites-vertical");
+      $(".top-sites").show();
+    } else if (topsites_setting == "Left") {
+      $(".top-site-container").addClass("top-site-container-vertical");
+      $(".top-sites").addClass("top-sites-vertical");
+      $(".top-sites").show();
+    } else if (topsites_setting == "Hidden") {
+      $(".top-sites").fadeOut();
+    } else {
+      $(".top-sites").toggle();
+    }
+  }
+
+
+  $('#colorsPalette').on('change', function() {
+    var colorsPalette = this.value;
+    changeBackgroundColor(colorsPalette);
+  });
   
   window.addEventListener("keydown", function (event) {
     if (event.defaultPrevented) {
       return; // Do nothing if the event was already processed
     }
   
-    switch (event.key) {
-      case "V":
-        updateBackground();
-        break;
-      case "N":
-        next();
-        break;
-      case "B":
-        previous();
-        break;
-      case "C":
-        toggleClock();
-        break;
-      case "M":
-        $('.handle').trigger('click');
-        break;
-      case "P":
-        togglePin();
-        break;
-      default:
-        return; // Quit when this doesn't handle the key event.
+    if(event.ctrlKey ) {
+      switch (event.key) {
+        case "V":
+          updateBackground();
+          break;
+        case "N":
+          next();
+          break;
+        case "B":
+          previous();
+          break;
+        case "C":
+          toggleClock();
+          break;
+        case "M":
+          $('.handle').trigger('click');
+          break;
+        case "P":
+          togglePin();
+          break;
+        case "T":
+          toggleNotepad();
+          break;
+        case "S":
+          topsites();
+          break;
+        default:
+          return; // Quit when this doesn't handle the key event.
+      }
     }
+
   }, true);

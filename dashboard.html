@@ -3,8 +3,10 @@
             <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
             <meta content="utf-8" http-equiv="encoding">
             <link rel="stylesheet" type="text/css" href="style.css">
+            <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
     </head>
     <body>
+        <textarea id="popup_note_textarea">            </textarea>
 <div id="fc-wallpaper-photo">
 </div>
 <div id="fc-wallpaper-photo-blur">
@@ -15,39 +17,89 @@
             <div id="menu-bar" style="position: fixed; width: 250px; transition: all 300ms ease 0s; height: 100%; top: 0px; right: -250px;" class="">
               <div class="handle"><<<span class="glyphicon glyphicon-chevron-left"></span></div>
               <h3>
-                FocusClimb.com<br>
+                TabChi<br>
                 <small><span class="glyphicon glyphicon-info-sign"></span> Press <kbd>ESC</kbd> to close</small>
               </h3>
               <div class="flex-container">
-                <div>
-                        Background Search Term:
-                </div>
-                <div><input id="focusClimbSearchTerm" type="text" value="sunrise"></div>
-                <div><input id="changebackground" type="button" value="New Background"></div>
-                <div><input id="previous" disabled="true" type="button" value="Previous Background"></div>
-                <div><input id="next" disabled="true" type="button" value="Next Background"></div>
-                <div><input id="clock" type="button" value="Toggle Clock"></div>
-                <div><input id="pomodoro" type="button" value="Toggle Pomodoro"></div>
-                <div><input id="pin" type="button" value="Pin the current picture"></div>
-                <div><a style="font-size:0.8em; text-decoration: none;" href="https://www.pexels.com/api/new/" target="_blank">
-                        pexels.com Token:
-                </a></div>
-                <div><input id="focusClimbPexelsToken" type="text" placeholder="Please get a token"></div>
+                        <div>
+                                <label for="topsites-setting">Top Sites [S]</label>
+
+                                <select name="topsites-setting" id="topsites-setting">
+                                <option value=""></option>
+                                <option value="Bottom">Bottom</option>
+                                <option value="Left">Left</option>
+                                <option value="Hidden">Hidden</option>
+                                </select>
+                        </div>
+
+                        <div><input id="toggleNotepad" type="button" value="Toggle the NotePad [T]"></div>
+                        
+                        <div><input id="clock" type="button" value="Toggle the Clock [C]"></div>
+
+                        <fieldset>
+                                <legend>Background Settings:</legend>
+                                <select name="background-setting" id="background-setting">
+                                        <option value=""></option>
+                                        <option value="Offline">Use Offline Pictures</option>
+                                        <option value="Color">Use Color</option>
+                                        <option value="Pexels">Use Pexels.com</option>
+                                </select>
+                                <fieldset id="fieldset-color">
+                                        <legend>Color:</legend>
+                                        <div>
+                                                <input id="colorsPalette" type="color" list="Palette">
+                                                <datalist id="Palette">
+                                                <option>#A5C8E4</option>
+                                                <option>#C0ECCC</option>
+                                                <option>#F9F0C1</option>
+                                                <option>#F4CDA6</option>
+                                                <option>#F6A8A6</option>
+                                                <option>#FDF8E2</option>
+                                                <option>#FFDDD3</option>
+                                                <option>#F3BFB3</option>
+                                                <option>#5EA9BE</option>
+                                                <option>#9ACDE0</option>
+                                                <option>#CBE1EF</option>
+                                                <option>#96ceb4</option>
+                                                <option>#ffeead</option>
+                                                <option>#ffcc5c</option>
+                                                <option>#ff6f69</option>
+                                                </datalist>
+                                        </div>
+                                </fieldset>
+                                <fieldset id="fieldset-pexels">
+                                        <legend>pexels.com:</legend>
+                                        <div>
+                                                <label>
+                                                        Background Search Term:
+                                                </label>
+                                                <input id="focusClimbSearchTerm" type="text" value="sunrise">
+                                        </div>
+                                        <div><input id="changebackground" type="button" value="New Background [N]"></div>
+                                        <div><input id="previous" disabled="true" type="button" value="Previous Background [B]"></div>
+                                        <div><input id="next" disabled="true" type="button" value="Next Background [N]"></div>
+                                        <div><input id="pin" type="button" value="Pin the current picture [P]"></div>
+                                        <div><a style="font-size:0.8em; text-decoration: none;" href="https://www.pexels.com/api/new/" target="_blank">
+                                                pexels.com Token:
+                                        </a></div>
+                                        <div><input id="focusClimbPexelsToken" type="text" placeholder="Please get a token"></div>
+                                </fieldset>
+                        </fieldset>
                 </div>
             </div>
 
             <div id="digital-clock">00:00:00</div>
-            <canvas id="pomodoroTimer" width="180" height="200"></canvas>
-            <canvas id="pomodoroMarkers" width="220" height="400"></canvas>
             <div id="message"></div>
             <div id="pushpin"><a id="focusClimbPushPin" class="component_link">📌</a></div>
+            <div id="notepad"><a id="focusClimbNotepad" class="notepad_link">📓</a></div>
+            <div class="top-site-container"><div class="top-sites"></div></div>
+              
 
             <script src="jquery-3.6.0.min.js" ></script>
             <script src="jquery.slidereveal.min.js"></script>
             <script src="initialer.js" ></script>
             <script src="focusclimb.js" ></script>
             <script src="clock.js" ></script>
-            <script src="pomodoro.js" ></script>
             <script src="sidebar.js" ></script>
     </body>
 </html>

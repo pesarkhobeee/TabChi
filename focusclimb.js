@@ -1,6 +1,17 @@
 function showMessage(content){
   $("#message").html(content);
   $("#message").fadeIn("slow");
+  $("#message").delay(3000).fadeOut("slow");
+}
+
+function changeBackgroundColor(color_code) {
+  if(color_code) {
+    localStorage.setItem("colorsPalette", color_code);
+  } else {
+    color_code = localStorage.getItem("colorsPalette");
+    $("#colorsPalette").val(color_code);
+  }
+  $("#fc-wallpaper-photo-hd").css({"background-color": color_code, "background-image": ""});
 }
 
 function changeBackground(elements_index) {
@@ -24,6 +35,8 @@ function fetchNewBackground(searchTerm, searchLimit=0){
     changeBackground(elements_index);
     return false;
   }
+  $("#focusClimbPushPin").fadeIn();
+  $("#pin").prop("disabled",false);
 
   if(!searchLimit) {
     searchLimit = topics[searchTerm] || 8000;
@@ -68,8 +81,7 @@ function fetchNewBackground(searchTerm, searchLimit=0){
       }
     },
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    var local_background_image = 'images/' + ( 1 + Math.floor(Math.random() * 12) ) + '.jpg';
-    $("body").css("background-image", "url('" + local_background_image + "')");
     showMessage("Something is wrong, couldn't fetch any image!");
+    offlineBackgroundPictures();
   });
 }

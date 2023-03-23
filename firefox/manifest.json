@@ -2,8 +2,8 @@
   "manifest_version": 2,
   "name": "FocusClimb",
   "short_name": "FocusClimb",
-  "version": "0.4.0",
-  "description": "Replace new tab page with a personal dashboard featuring, desired pictures and pomodoro timer.",
+  "version": "0.2.0",
+  "description": "Replace new tab page with a personal dashboard featuring , desired pictures and inspiration.",
   "icons": {
     "48": "focusClimb-48.png",
     "96": "focusClimb-96.png"

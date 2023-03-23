@@ -4,16 +4,20 @@
       "scripts": [ "focusclimb.js" ]
    },
    "browser_action": {
-      "default_title": "Focus Climb"
+      "default_title": "TabChi"
    },
    "chrome_url_overrides": {
       "newtab": "dashboard.html"
    },
    "manifest_version" : 2,
    "content_security_policy": "script-src 'self'; object-src 'self'",
-   "description": "Replace new tab page with a personal dashboard featuring, desired pictures and pomodoro timer.",
-   "name": "Focus Climb",
+   "description": "Take charge of your new tabs page and create a personalized dashboard that's tailored to your needs.",
+   "name": "TabChi",
+   "permissions": [
+      "topSites",
+      "chrome://favicon/"
+    ],
    "offline_enabled": true,
-   "short_name": "FocusClimb",
-   "version": "0.4.0"
+   "short_name": "TabChi",
+   "version": "0.5.0"
 }
