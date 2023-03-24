@@ -204,6 +204,7 @@
     var customcss = $("#customcss_textarea").val();
     $("head").append(customcss);
     localStorage.setItem("focusClimbCustomCSS", customcss);
+    location.reload();
   });
   
   window.addEventListener("keydown", function (event) {

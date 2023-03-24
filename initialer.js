@@ -63,6 +63,7 @@ function initiateSettings(){
   focusClimbCustomCSS = localStorage.getItem("focusClimbCustomCSS");
   if(focusClimbCustomCSS){
     $("head").append(focusClimbCustomCSS);
+    $("#customcss_textarea").val(focusClimbCustomCSS);
   }
 }
 
