@@ -115,12 +115,7 @@ input {
   font-weight: 300;
 }
 #menu-bar a {
-  border-bottom: 1px solid #d8d8d8;
-  padding: 1em;
-  display: block;
-  color: #424242;
-  font-size: 1.4em;
-  font-weight: 300;
+  color: #FFF;
   text-decoration: none;
 }
 #menu-bar a:hover {
