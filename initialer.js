@@ -96,31 +96,34 @@ function backgroundController(background_setting){
       changeBackgroundColor();
       $("#fieldset-color").show();
       $("#fieldset-pexels").hide();
-      $("#focusClimbPushPin").fadeOut();
+      $("#focusClimbPushPin").hide();
+      $("#photographer").hide();
     } else if (background_setting == "Pexels") {
       updateBackground();
       $("#fieldset-color").hide();
       $("#fieldset-pexels").show();
       $("#focusClimbPushPin").fadeIn();
+      $("#photographer").fadeIn();
     } else {
       offlineBackgroundPictures();
       $("#fieldset-color").hide();
       $("#fieldset-pexels").hide();
-      $("#focusClimbPushPin").fadeOut();
+      $("#focusClimbPushPin").hide();
+      $("#photographer").hide();
     }
     
   } else {
     offlineBackgroundPictures();
     $("#fieldset-color").hide();
     $("#fieldset-pexels").hide();
-    $("#focusClimbPushPin").fadeOut();
   }
 }
 
 function offlineBackgroundPictures() {
   var local_background_image = 'images/' + ( 1 + Math.floor(Math.random() * 12) ) + '.jpg';
   $("#fc-wallpaper-photo-hd").css("background-image", "url('" + local_background_image + "')");
-  $("#focusClimbPushPin").fadeOut();
+  $("#focusClimbPushPin").hide();
+  $("#photographer").hide();
   $("#pin").prop("disabled",true);
 }
 

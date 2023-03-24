@@ -289,3 +289,27 @@ input {
 #background-setting {
   margin: 4px;
 }
+
+#photographer {
+  margin: auto;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  height: 30px;
+  font-size: 25px;
+  color: #ffffff;
+  text-shadow: #000 0px 0px 6px;
+  z-index: 999;
+}
+
+.photographer_link {
+  color: #ffffff;
+  font-size: 20px;
+  text-decoration: none;
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.photographer_link:hover {
+  opacity: 1;
+}

@@ -24,8 +24,8 @@ function changeBackground(elements_index) {
 
   var photographer = elements[elements_index]['photos'][0]['photographer'];
   var photographer_url = elements[elements_index]['photos'][0]['url'];
-  var photographer_link = "<a class='component_link' href='" + photographer_url + "' target='_blank' alt='" + photographer + "'> &#128247;</a>";
-  showMessage(photographer_link);
+  $("#photographer_link").attr("href", photographer_url);
+  $("#photographer_link").attr("alt", photographer);
 
   changeButtonsStatus();
 }
