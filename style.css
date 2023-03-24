@@ -115,19 +115,13 @@ input {
   font-weight: 300;
 }
 #menu-bar a {
-  border-bottom: 1px solid #d8d8d8;
-  padding: 1em;
-  display: block;
-  color: #424242;
-  font-size: 1.4em;
-  font-weight: 300;
+  color: #FFF;
   text-decoration: none;
 }
 #menu-bar a:hover {
   background-color: #d8d8d8;
 }
 #menu-bar .handle {
-  background-color: #2e2e2e;
   left: -40px;
   padding: 10px;
   position: absolute;
@@ -162,7 +156,6 @@ input {
   margin: auto;
   position: absolute;
   left: 10px;
-  bottom: 10px;
   right: 0;
   height: 30px;
   font-size: 25px;
@@ -295,4 +288,34 @@ input {
 
 #background-setting {
   margin: 4px;
+}
+
+#photographer {
+  margin: auto;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  height: 30px;
+  font-size: 25px;
+  color: #ffffff;
+  text-shadow: #000 0px 0px 6px;
+  z-index: 999;
+}
+
+.photographer_link {
+  color: #ffffff;
+  font-size: 20px;
+  text-decoration: none;
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.photographer_link:hover {
+  opacity: 1;
+}
+
+#customcss_textarea {
+  width: 100%;
+  min-height: 200px;
+  display: none;
 }

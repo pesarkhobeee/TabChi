@@ -18,34 +18,6 @@ $(document).ready(function() {
   setInterval(clockUpdate, 1000);
   changeButtonsStatus();
   getTopSites();
-
-// TODO: lets make a hackable plugin
-var test = `
-  <link rel="stylesheet"
-  href="https://fonts.googleapis.com/css?family=Kenia">
-<style>
-body {
-font-family: "Kenia", serif;
-}
-#digital-clock {
-  font-family: "Kenia", serif;
-}
-input {
-  font-family: "Kenia", serif;
-}
-.site-icon {background: none;}
-.site-link {
-  background: none;
-  width: 40px;
-  height:40px;
-}
-.site-link:hover {
-  background: rgba(127, 127, 127, 0.5);
-  transform: translateY(-5px);
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-`
-//$("head").append(test);
 });
 
 function initiateSettings(){
@@ -86,7 +58,13 @@ function initiateSettings(){
   }
 
   background_setting = localStorage.getItem("background_setting");
-  backgroundController(background_setting)
+  backgroundController(background_setting);
+
+  focusClimbCustomCSS = localStorage.getItem("focusClimbCustomCSS");
+  if(focusClimbCustomCSS){
+    $("head").append(focusClimbCustomCSS);
+    $("#customcss_textarea").val(focusClimbCustomCSS);
+  }
 }
 
 function backgroundController(background_setting){
@@ -96,31 +74,34 @@ function backgroundController(background_setting){
       changeBackgroundColor();
       $("#fieldset-color").show();
       $("#fieldset-pexels").hide();
-      $("#focusClimbPushPin").fadeOut();
+      $("#focusClimbPushPin").hide();
+      $("#photographer").hide();
     } else if (background_setting == "Pexels") {
       updateBackground();
       $("#fieldset-color").hide();
       $("#fieldset-pexels").show();
       $("#focusClimbPushPin").fadeIn();
+      $("#photographer").fadeIn();
     } else {
       offlineBackgroundPictures();
       $("#fieldset-color").hide();
       $("#fieldset-pexels").hide();
-      $("#focusClimbPushPin").fadeOut();
+      $("#focusClimbPushPin").hide();
+      $("#photographer").hide();
     }
     
   } else {
     offlineBackgroundPictures();
     $("#fieldset-color").hide();
     $("#fieldset-pexels").hide();
-    $("#focusClimbPushPin").fadeOut();
   }
 }
 
 function offlineBackgroundPictures() {
   var local_background_image = 'images/' + ( 1 + Math.floor(Math.random() * 12) ) + '.jpg';
   $("#fc-wallpaper-photo-hd").css("background-image", "url('" + local_background_image + "')");
-  $("#focusClimbPushPin").fadeOut();
+  $("#focusClimbPushPin").hide();
+  $("#photographer").hide();
   $("#pin").prop("disabled",true);
 }
 

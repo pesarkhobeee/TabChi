@@ -185,16 +185,26 @@
       $(".top-sites").addClass("top-sites-vertical");
       $(".top-sites").show();
     } else if (topsites_setting == "Hidden") {
-      $(".top-sites").fadeOut();
+      $(".top-sites").hide();
     } else {
       $(".top-sites").toggle();
     }
   }
 
-
   $('#colorsPalette').on('change', function() {
     var colorsPalette = this.value;
     changeBackgroundColor(colorsPalette);
+  });
+
+  $('#customcss').on('click', function() {
+    $("#customcss_textarea").toggle();
+  });
+
+  $( "#customcss_textarea" ).focusout(function() {
+    var customcss = $("#customcss_textarea").val();
+    $("head").append(customcss);
+    localStorage.setItem("focusClimbCustomCSS", customcss);
+    location.reload();
   });
   
   window.addEventListener("keydown", function (event) {
