@@ -11,7 +11,7 @@
    },
    "manifest_version" : 2,
    "content_security_policy": "script-src 'self'; object-src 'self'",
-   "description": "Take charge of your new tabs page and create a personalized dashboard that's tailored to your needs.",
+   "description": "Take charge of your new tab page and create a personalized dashboard that's tailored to your needs.",
    "name": "TabChi",
    "permissions": [
       "topSites",
@@ -19,5 +19,5 @@
     ],
    "offline_enabled": true,
    "short_name": "TabChi",
-   "version": "0.5.0"
+   "version": "0.6.0"
 }
