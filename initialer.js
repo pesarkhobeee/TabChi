@@ -18,34 +18,6 @@ $(document).ready(function() {
   setInterval(clockUpdate, 1000);
   changeButtonsStatus();
   getTopSites();
-
-// TODO: lets make a hackable plugin
-var test = `
-  <link rel="stylesheet"
-  href="https://fonts.googleapis.com/css?family=Kenia">
-<style>
-body {
-font-family: "Kenia", serif;
-}
-#digital-clock {
-  font-family: "Kenia", serif;
-}
-input {
-  font-family: "Kenia", serif;
-}
-.site-icon {background: none;}
-.site-link {
-  background: none;
-  width: 40px;
-  height:40px;
-}
-.site-link:hover {
-  background: rgba(127, 127, 127, 0.5);
-  transform: translateY(-5px);
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-`
-//$("head").append(test);
 });
 
 function initiateSettings(){
@@ -86,7 +58,12 @@ function initiateSettings(){
   }
 
   background_setting = localStorage.getItem("background_setting");
-  backgroundController(background_setting)
+  backgroundController(background_setting);
+
+  focusClimbCustomCSS = localStorage.getItem("focusClimbCustomCSS");
+  if(focusClimbCustomCSS){
+    $("head").append(focusClimbCustomCSS);
+  }
 }
 
 function backgroundController(background_setting){

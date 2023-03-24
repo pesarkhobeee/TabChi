@@ -191,10 +191,19 @@
     }
   }
 
-
   $('#colorsPalette').on('change', function() {
     var colorsPalette = this.value;
     changeBackgroundColor(colorsPalette);
+  });
+
+  $('#customcss').on('click', function() {
+    $("#customcss_textarea").toggle();
+  });
+
+  $( "#customcss_textarea" ).focusout(function() {
+    var customcss = $("#customcss_textarea").val();
+    $("head").append(customcss);
+    localStorage.setItem("focusClimbCustomCSS", customcss);
   });
   
   window.addEventListener("keydown", function (event) {
