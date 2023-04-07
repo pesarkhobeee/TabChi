@@ -134,3 +134,40 @@ function getTopSites() {
   });
 }
 
+function createListItem(parent, node) {
+  const li = $('<li>');
+  li.text(node.title);
+
+  if (node.children) {
+    const nestedList = $('<ul>', { class: 'nested' });
+    for (const child of node.children) {
+      createListItem(nestedList, child);
+    }
+    li.append(nestedList);
+    li.on('click', function (event) {
+      event.stopPropagation();
+      $('.nested').not(nestedList.parentsUntil('#bookmarksList')).not(nestedList).hide();
+      nestedList.toggle();
+    });
+  } else if (node.url) {
+    li.on('click', function () {
+      window.open(node.url, '_blank');
+    });
+  }
+
+  parent.append(li);
+}
+
+function generateBookmarks(bookmarkNodes, parent) {
+  for (const node of bookmarkNodes) {
+    createListItem(parent, node);
+  }
+}
+
+chrome.bookmarks.getTree(function (bookmarkTreeNodes) {
+  generateBookmarks(bookmarkTreeNodes[0].children, $('#bookmarksList'));
+});
+
+
+
+

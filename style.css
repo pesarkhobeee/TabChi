@@ -319,3 +319,33 @@ input {
   min-height: 200px;
   display: none;
 }
+
+#bookmarksContainer {
+  width: 300px;
+  font-family: Arial, sans-serif;
+  background-color: #f1f1f1;
+  z-index: 1111;
+  position: absolute;
+}
+#bookmarksContainer h1 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+#bookmarksList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+#bookmarksList li {
+  cursor: pointer;
+}
+#bookmarksList a {
+  color: #4285f4;
+  text-decoration: none;
+}
+#bookmarksList a:hover {
+  text-decoration: underline;
+}
+.nested {
+  display: none;
+}
