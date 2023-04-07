@@ -320,32 +320,60 @@ input {
   display: none;
 }
 
-#bookmarksContainer {
-  width: 300px;
-  font-family: Arial, sans-serif;
-  background-color: #f1f1f1;
-  z-index: 1111;
+#bookmark {
+  margin: auto;
   position: absolute;
+  top: 10px;
+  left: 50px;
+  height: 30px;
+  font-size: 25px;
+  color: #ffffff;
+  text-shadow: #000 0px 0px 6px;
+  z-index: 999; 
 }
+
+#bookmarksContainer {
+  display: none;
+  top: 80px;
+  bottom: 80px;
+  background-color: rgba(255, 255, 255, 0.8);
+  position: fixed;
+  z-index: 100;
+  padding: 8px;
+  border-radius: 8px;
+  resize: none;
+  left: 80px;
+  right: 80px;
+}
+
 #bookmarksContainer h1 {
   font-size: 20px;
   margin-bottom: 8px;
 }
+
 #bookmarksList {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
+
+#bookmarksList ul {
+  list-style-type: none;
+}
+
 #bookmarksList li {
   cursor: pointer;
 }
+
 #bookmarksList a {
   color: #4285f4;
   text-decoration: none;
 }
+
 #bookmarksList a:hover {
   text-decoration: underline;
 }
+
 .nested {
   display: none;
 }

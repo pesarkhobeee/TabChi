@@ -136,9 +136,11 @@ function getTopSites() {
 
 function createListItem(parent, node) {
   const li = $('<li>');
-  li.text(node.title);
-
+  
   if (node.children) {
+    const folderIcon = '📁 ';
+    li.text(folderIcon + node.title);
+
     const nestedList = $('<ul>', { class: 'nested' });
     for (const child of node.children) {
       createListItem(nestedList, child);
@@ -150,6 +152,9 @@ function createListItem(parent, node) {
       nestedList.toggle();
     });
   } else if (node.url) {
+    const linkIcon = '🔗 ';
+    li.text(linkIcon + node.title);
+
     li.on('click', function () {
       window.open(node.url, '_blank');
     });
@@ -157,6 +162,7 @@ function createListItem(parent, node) {
 
   parent.append(li);
 }
+
 
 function generateBookmarks(bookmarkNodes, parent) {
   for (const node of bookmarkNodes) {

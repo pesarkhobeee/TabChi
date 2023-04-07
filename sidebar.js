@@ -119,6 +119,14 @@
   $( "#focusClimbNotepad" ).click(function(){
     toggleNotepad();
   })
+
+  $( "#toggleBookmark" ).click(function(){
+    toggleBookmark();
+  })
+
+  $( "#sidebarBookmark" ).click(function(){
+    toggleBookmark();
+  })
   
   function next(){
     if(elements_index < (elements.length - 1)){
@@ -148,6 +156,10 @@
 
   function toggleNotepad(){
     $("#popup_note_textarea").toggle();
+  }
+
+  function toggleBookmark(){
+    $("#bookmarksContainer").toggle();
   }
 
   function togglePin(){
@@ -237,6 +249,9 @@
           break;
         case "S":
           topsites();
+          break;
+        case "L":
+          toggleBookmark();
           break;
         default:
           return; // Quit when this doesn't handle the key event.
