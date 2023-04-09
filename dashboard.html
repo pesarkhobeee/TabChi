@@ -12,6 +12,7 @@
                 <h1>Bookmarks</h1>
                 <ul id="bookmarksList"></ul>
         </div>
+        <div id="weather"></div>
 <div id="fc-wallpaper-photo">
 </div>
 <div id="fc-wallpaper-photo-blur">
@@ -84,6 +85,27 @@
                                                 check https://fonts.google.com/ to find more fonts :)
                                         -->
                                 </textarea>
+                        </div>
+
+                        <div class="weather-container">
+                                <div class="weather-switch">
+                                    <label for="weather-toggle">Weather Status:</label>
+                                    <input type="checkbox" id="weather-toggle">
+                                </div>
+                        
+                                <div class="weather-options" style="display: none;">
+                                    <div>
+                                        <label for="city">City Name:</label>
+                                        <input type="text" id="city">
+                                    </div>
+                                    <div>
+                                        <label for="unit">Unit:</label>
+                                        <select id="unit">
+                                            <option value="C" selected>Celsius</option>
+                                            <option value="F">Fahrenheit</option>
+                                        </select>
+                                    </div>
+                                </div>
                         </div>
 
                         <fieldset>

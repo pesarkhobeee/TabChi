@@ -189,8 +189,7 @@ input {
   border-bottom: 1px solid #d8d8d8;
   /* padding: 1em; */
   color: #424242;
-  font-size: 1.4em;
-  font-weight: 300;
+  font-weight: bold;
 }
 
 #popup_note_textarea {
@@ -376,4 +375,63 @@ input {
 
 .nested {
   display: none;
+}
+
+#weather {
+  position: absolute;
+  z-index: 1111;
+  top: 10px; /* adjust the top position as needed */
+  left: 85px; /* adjust the left position as needed */
+  width: 450px; /* adjust the width as needed */
+  height: 25px; /* set the height to 25px */
+  color: #FFF;
+  opacity: 0.4;
+  text-shadow: (0, 0, 0, 0.8) 0px 0px 4px;
+}
+
+#weather p {
+  margin: 0;
+  line-height: 1;
+}
+
+#weather .temperature {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#weather .description {
+  text-transform: capitalize;
+}
+
+#weather img {
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+#weather img {
+  vertical-align: middle;
+  margin-left: 5px;
+  height: 25px; /* adjust the height as needed */
+  filter: brightness(0) invert(1); /* set filter to make the icon appear white */
+}
+
+.weather-switch {
+  align-items: center;
+}
+
+.weather-switch label {
+  margin-right: 5px;
+}
+
+#weather-toggle {
+  width: 40%;
+}
+
+.weather-options div {
+  padding-top: 4px;
+  font-weight: lighter;
+}
+
+#city {
+  width: 90%;
 }
