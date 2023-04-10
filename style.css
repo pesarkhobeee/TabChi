@@ -64,6 +64,8 @@ body {
   display: none;
   z-index: 12;
   opacity: .8;
+  text-shadow: rgba(0, 0, 0, 0.8) 0px 0px 4px;
+  display: block;
 }
 
 input {
