@@ -345,6 +345,7 @@ input {
   resize: none;
   left: 80px;
   right: 80px;
+  overflow:auto;
 }
 
 #bookmarksContainer h1 {
