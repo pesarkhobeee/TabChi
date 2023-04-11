@@ -163,7 +163,7 @@ function createListItem(parent, node) {
     li.text(linkIcon + node.title);
 
     li.on('click', function () {
-      window.open(node.url, '_blank');
+      window.open(node.url, '_self');
     });
   }
 
