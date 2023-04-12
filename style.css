@@ -380,6 +380,11 @@ input {
   display: none;
 }
 
+/* Show the first level <ul> elements with the class 'nested' */
+#bookmarksList > li > ul.nested {
+  display: block;
+}
+
 #weather {
   position: absolute;
   z-index: 1111;
