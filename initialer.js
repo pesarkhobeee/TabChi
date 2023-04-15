@@ -13,18 +13,15 @@ topsites_setting = "";
 background_setting = "";
 
 $(document).ready(function() {
+  keyboardManager();
   initiateSettings();
   clockUpdate();
   setInterval(clockUpdate, 1000);
   changeButtonsStatus();
   getTopSites();
-
-  chrome.bookmarks.getTree(function (bookmarkTreeNodes) {
-    generateBookmarks(bookmarkTreeNodes[0].children, $('#bookmarksList'));
-  });
-
   loadWeatherOptions();
-
+  loadBookmarks();
+  main_menu_actions();
 });
 
 function initiateSettings(){
@@ -141,119 +138,39 @@ function getTopSites() {
   });
 }
 
-function createListItem(parent, node) {
-  const li = $('<li>');
-  
-  if (node.children) {
-    const folderIcon = '📁 ';
-    li.text(folderIcon + node.title);
-
-    const nestedList = $('<ul>', { class: 'nested' });
-    for (const child of node.children) {
-      createListItem(nestedList, child);
+function main_menu_actions() {
+  $("#focusClimbNotepad").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      $('.tabChiDeck').hide();
+      $(':focus').blur();
+      toggleNotepad();
+      $('#popup_note_textarea').focus();
     }
-    li.append(nestedList);
-    li.on('click', function (event) {
-      event.stopPropagation();
-      $('.nested').not(nestedList.parentsUntil('#bookmarksList')).not(nestedList).hide();
-      nestedList.toggle();
-    });
-  } else if (node.url) {
-    const linkIcon = '🔗 ';
-    li.text(linkIcon + node.title);
-
-    li.on('click', function () {
-      window.open(node.url, '_self');
-    });
-  }
-
-  parent.append(li);
-}
-
-
-function generateBookmarks(bookmarkNodes, parent) {
-  for (const node of bookmarkNodes) {
-    createListItem(parent, node);
-  }
-}
-
-// Save values to localStorage
-function saveWeatherOptions() {
-  const weatherEnabled = $('#weather-toggle').is(':checked');
-  const cityName = $('#city').val();
-  const unit = $('#unit').val();
-
-  localStorage.setItem('weatherEnabled', weatherEnabled);
-  localStorage.setItem('cityName', cityName);
-  localStorage.setItem('unit', unit);
-
-    // Show or hide weather options based on the weatherEnabled value
-    if (weatherEnabled) {
-      $('.weather-options').css('display', 'flex');
-  } else {
-      $('.weather-options').css('display', 'none');
-  }
-  if(weatherEnabled && cityName) {
-    weatherForecast(cityName, unit);
-    $('#weather').fadeIn('slow');
-  } else {
-    $('#weather').fadeOut('slow');
-  }
-}
-
-// Load values from localStorage
-function loadWeatherOptions(){
-  const weatherEnabled = localStorage.getItem('weatherEnabled') === 'true';
-  const cityName = localStorage.getItem('cityName') || '';
-  const unit = localStorage.getItem('unit') || 'C';
-
-  $('#weather-toggle').prop('checked', weatherEnabled);
-  $('#city').val(cityName);
-  $('#unit').val(unit);
-
-  // Show or hide weather options based on the weatherEnabled value
-  if (weatherEnabled) {
-      $('.weather-options').css('display', 'flex');
-  } else {
-      $('.weather-options').css('display', 'none');
-  }
-
-  // Attach event listeners to the controls
-  $('#weather-toggle').on('change', saveWeatherOptions);
-  $('#city').on('change', saveWeatherOptions);
-  $('#unit').on('change', saveWeatherOptions);
+  });
   
-  if(weatherEnabled && cityName) {
-    $('#weather').fadeIn('slow');
-    weatherForecast(cityName, unit);
-  }
-}
-
-function weatherForecast(city, unit){
-
-  var apikey = "df2f25b6da165d261b6d85f82def636e"; // Replace with your openweathermap API key
-  var url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=" + apikey;
-
-  $.getJSON(url, function(data) {
-    var name = data.name;
-    var weather = data.weather[0].description;
-    var icon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-    var temp = data.main.temp;
-
-      // Convert temperature to Fahrenheit if requested
-    if (unit == "F") {
-      temp = (temp * 1.8) + 32;
-      temp = temp.toFixed(1) + " &deg;F";
-    } else {
-      temp = temp.toFixed(1) + " &deg;C";
+  $("#toggleBookmark").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      $('.tabChiDeck').hide();
+      $(':focus').blur();
+      toggleBookmark();
     }
-
-    $("#weather").html("<p><img src='" + icon + "' alt='Weather Icon'> " + temp + ", " + weather + " in " + name + "</p>");
-  }).fail(function() {
-    showMessage("Error fetching weather data for " + city);
+  });
+  
+  $("#ai_icon").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      $('.tabChiDeck').hide();
+      $(':focus').blur();
+      $("#AI-container").toggle();
+      setTimeout(function() { $('#AI-user-input').focus() }, 100);
+    }
+  });
+  
+  $("#main_menu_settings").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      $('.tabChiDeck').hide();
+      $(':focus').blur();
+      $('.handle').trigger('click');
+    }
   });
 }
-
-
-
 

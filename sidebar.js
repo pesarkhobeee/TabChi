@@ -116,14 +116,6 @@
     toggleNotepad();
   })
 
-  $( "#focusClimbNotepad" ).click(function(){
-    toggleNotepad();
-  })
-
-  $( "#toggleBookmark" ).click(function(){
-    toggleBookmark();
-  })
-
   $( "#sidebarBookmark" ).click(function(){
     toggleBookmark();
   })
@@ -218,44 +210,3 @@
     localStorage.setItem("focusClimbCustomCSS", customcss);
     location.reload();
   });
-  
-  window.addEventListener("keydown", function (event) {
-    if (event.defaultPrevented) {
-      return; // Do nothing if the event was already processed
-    }
-  
-    if(event.ctrlKey ) {
-      switch (event.key) {
-        case "V":
-          updateBackground();
-          break;
-        case "N":
-          next();
-          break;
-        case "B":
-          previous();
-          break;
-        case "C":
-          toggleClock();
-          break;
-        case "M":
-          $('.handle').trigger('click');
-          break;
-        case "P":
-          togglePin();
-          break;
-        case "T":
-          toggleNotepad();
-          break;
-        case "S":
-          topsites();
-          break;
-        case "L":
-          toggleBookmark();
-          break;
-        default:
-          return; // Quit when this doesn't handle the key event.
-      }
-    }
-
-  }, true);
