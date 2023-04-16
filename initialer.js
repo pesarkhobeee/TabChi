@@ -71,33 +71,3 @@ function initiateSettings(){
   }
 }
 
-function backgroundController(background_setting){
-  if(background_setting){
-    $("#background-setting").val(background_setting);
-    if(background_setting == "Color") {
-      changeBackgroundColor();
-      $("#fieldset-color").show();
-      $("#fieldset-pexels").hide();
-      $("#focusClimbPushPin").hide();
-      $("#photographer").hide();
-    } else if (background_setting == "Pexels") {
-      updateBackground();
-      $("#fieldset-color").hide();
-      $("#fieldset-pexels").show();
-      $("#focusClimbPushPin").fadeIn();
-      $("#photographer").fadeIn();
-    } else {
-      offlineBackgroundPictures();
-      $("#fieldset-color").hide();
-      $("#fieldset-pexels").hide();
-      $("#focusClimbPushPin").hide();
-      $("#photographer").hide();
-    }
-    
-  } else {
-    offlineBackgroundPictures();
-    $("#fieldset-color").hide();
-    $("#fieldset-pexels").hide();
-  }
-}
-
