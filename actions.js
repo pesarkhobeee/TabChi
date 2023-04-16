@@ -50,8 +50,7 @@
       obj.removeClass("left-shadow-overlay");
     }
   });
-  
-  
+   
   $( "#focusClimbPexelsToken" ).focusout(function() {
     var pexels = $("#focusClimbPexelsToken").val();
     localStorage.setItem("focusClimbPexelsToken", pexels);
@@ -210,3 +209,39 @@
     localStorage.setItem("focusClimbCustomCSS", customcss);
     location.reload();
   });
+
+function main_menu_actions() {
+  $("#focusClimbNotepad").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      $('.tabChiDeck').not('#popup_note_textarea').hide();
+      $(':focus').blur();
+      toggleNotepad();
+      $('#popup_note_textarea').focus();
+    }
+  });
+  
+  $("#toggleBookmark").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      toggleBookmark();
+      $('.tabChiDeck').not('#bookmarksContainer').hide();
+      $(':focus').blur();
+    }
+  });
+  
+  $("#ai_icon").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      $("#AI-container").toggle();
+      $('.tabChiDeck').not('#AI-container').hide();
+      $(':focus').blur();
+      setTimeout(function() { $('#AI-user-input').focus() }, 100);
+    }
+  });
+  
+  $("#main_menu_settings").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      $('.handle').trigger('click');
+      $('.tabChiDeck').hide();
+      $(':focus').blur();
+    }
+  });
+}

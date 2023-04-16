@@ -85,3 +85,40 @@ function fetchNewBackground(searchTerm, searchLimit=0){
     offlineBackgroundPictures();
   });
 }
+
+function offlineBackgroundPictures() {
+  var local_background_image = 'images/' + ( 1 + Math.floor(Math.random() * 12) ) + '.jpg';
+  $("#fc-wallpaper-photo-hd").css("background-image", "url('" + local_background_image + "')");
+  $("#focusClimbPushPin").hide();
+  $("#photographer").hide();
+  $("#pin").prop("disabled",true);
+}
+
+function updateBackground() {
+  var background = $("#focusClimbSearchTerm").val();
+  fetchNewBackground(background);
+}
+
+function getTopSites() {
+  chrome.topSites.get(function(sites) {
+    var container = document.querySelector('.top-sites');
+    for (var i = 0; i < sites.length; i++) {
+      var site = sites[i];
+      var link = document.createElement('a');
+      link.classList.add('site-link');
+      link.href = site.url;
+      var icon = document.createElement('img');
+      icon.classList.add('site-icon');
+      icon.src = 'chrome://favicon/size/64@1x/' + site.url;
+      var title = document.createElement('span');
+      title.classList.add('site-title');
+      title.textContent = site.title;
+      link.appendChild(icon);
+      //link.appendChild(title);
+      var div = document.createElement('div');
+      div.classList.add('site');
+      div.appendChild(link);
+      container.appendChild(div);
+    }
+  });
+}
