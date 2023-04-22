@@ -20,14 +20,6 @@
       "activeTab",
       "*://*/*"
     ],
-    "commands": {
-      "_execute_browser_action": {
-         "suggested_key": {
-            "default": "Ctrl+Shift+E",
-            "mac": "Command+Shift+E"
-         }
-      }
-   },  
    "offline_enabled": true,
    "short_name": "TabChi",
    "version": "0.7.0"
