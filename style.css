@@ -533,6 +533,12 @@ input {
   background-color: #006fe6;
 }
 
+#AI-download-btn, #AI-container-settings {
+  display: inline-block;
+  margin: 0;
+  padding: 2px;
+  vertical-align: middle;
+}
 
 #main_menu_tips {
   font-size: 8px;
@@ -582,4 +588,49 @@ input {
 
 .main_menu_link:hover {
   opacity: 1;
+}
+
+/* The Modal (background) */
+#my-modal {
+  display: none;
+  position: fixed; /* Stay in place */
+  z-index: 101; /* Sit on top */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px; /* Standard width */
+  height: 400px;
+  overflow-y: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  border-radius: 8px;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 0 auto; /* Center horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 100%; /* Full width of modal */
+  box-sizing: border-box;
+  height: 100%;;
+}
+
+/* Close Button */
+#modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#modal-close:hover,
+#modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#ai_login_submit {
+  margin-top: 8px;
 }

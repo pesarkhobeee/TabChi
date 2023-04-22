@@ -69,5 +69,5 @@ function initiateSettings(){
     $("head").append(focusClimbCustomCSS);
     $("#customcss_textarea").val(focusClimbCustomCSS);
   }
-}
 
+}

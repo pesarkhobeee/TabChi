@@ -129,6 +129,28 @@ function updateBackground() {
   fetchNewBackground(background);
 }
 
+// create a modal function
+function toggleModalPopup(height, width, title, contentDive){
+  $("#my-modal").css({"height":height, "width":width}).toggle();
+  $("#modal-title").html(title);
+
+  // Get the div to move
+  var $divToMove = $("#" + contentDive);
+
+  // Detach the div to move from its original location
+  $divToMove.detach();
+
+  $("#modal-content").html($divToMove.html());
+  // Close the modal
+  $("#modal-close").click(function() {
+    $("#my-modal").css("display", "none");
+  }); 
+}
+
+$("#AI-container-settings").click(function() {
+  open_ai_settings_modal(true);
+});
+
 function getTopSites() {
   chrome.topSites.get(function(sites) {
     var container = document.querySelector('.top-sites');

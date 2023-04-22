@@ -233,7 +233,9 @@ function main_menu_actions() {
       $("#AI-container").toggle();
       $('.tabChiDeck').not('#AI-container').hide();
       $(':focus').blur();
-      setTimeout(function() { $('#AI-user-input').focus() }, 100);
+      setTimeout(function() { $('#AI-user-input').focus() }, 100);   
+
+      open_ai_settings_modal();
     }
   });
   
@@ -243,5 +245,22 @@ function main_menu_actions() {
       $('.tabChiDeck').hide();
       $(':focus').blur();
     }
+  });
+}
+
+function open_ai_settings_modal(OpenModal=false) {
+  chat_gpt_token = localStorage.getItem("chat_gpt_token");
+  if(chat_gpt_token){
+    $('#chat_gpt_token').attr("placeholder", chat_gpt_token);
+  } 
+  
+  if (!chat_gpt_token || OpenModal) {
+    toggleModalPopup("300px", "500px", "Login to ChatGPT",  "ai_login");
+  }
+
+  $('#ai_login_submit').on('click', function() {
+    var chat_gpt_token = $('#chat_gpt_token').val();
+    localStorage.setItem("chat_gpt_token", chat_gpt_token);
+    $("#my-modal").css("display", "none");
   });
 }

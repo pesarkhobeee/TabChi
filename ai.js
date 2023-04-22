@@ -92,7 +92,8 @@ $(document).ready(function () {
 
   // processInput function
   function processInput(textIn) {
-    const apiKey = "";
+    var chat_gpt_token = localStorage.getItem("chat_gpt_token");
+    const apiKey = chat_gpt_token;
     const url = "https://api.openai.com/v1/chat/completions";
 
     const data = {
