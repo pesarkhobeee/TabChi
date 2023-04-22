@@ -117,7 +117,8 @@ function fetchNewBackground(searchTerm, searchLimit=0){
 }
 
 function offlineBackgroundPictures() {
-  var local_background_image = 'images/' + ( 1 + Math.floor(Math.random() * 12) ) + '.jpg';
+  //var local_background_image = 'images/' + ( 1 + Math.floor(Math.random() * 12) ) + '.jpg';
+  var local_background_image = 'background.jpg';
   $("#fc-wallpaper-photo-hd").css("background-image", "url('" + local_background_image + "')");
   $("#focusClimbPushPin").hide();
   $("#photographer").hide();
