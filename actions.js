@@ -110,14 +110,6 @@
   $( "#pin" ).click(function(){
     togglePin();
   })
-
-  $( "#toggleNotepad" ).click(function(){
-    toggleNotepad();
-  })
-
-  $( "#sidebarBookmark" ).click(function(){
-    toggleBookmark();
-  })
   
   function next(){
     if(elements_index < (elements.length - 1)){
