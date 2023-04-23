@@ -84,7 +84,6 @@ input[type="button"]:focus {
   outline: none;
 }
 
-
 #menu-btn {
   position: relative;
   float: right;
@@ -207,7 +206,7 @@ input[type="button"]:focus {
   font-weight: bold;
 }
 
-#popup_note_textarea {
+#popup_note_textarea, #jumps_textarea, #customcss_textarea {
   top: 80px;
   bottom: 80px;
   background-color: rgba(255, 255, 255, 0.8);
@@ -302,21 +301,6 @@ input[type="button"]:focus {
 
 .photographer_link:hover {
   opacity: 1;
-}
-
-#customcss_textarea {
-  top: 80px;
-  bottom: 80px;
-  background-color: rgba(255, 255, 255, 0.8);
-  position: fixed;
-  z-index: 100;
-  /* margin: 2% 6%; */
-  padding: 8px;
-  display: none;
-  border-radius: 8px;
-  resize: none;
-  left: 80px;
-  right: 80px;
 }
 
 #bookmarksContainer {

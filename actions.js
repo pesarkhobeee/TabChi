@@ -202,6 +202,16 @@
     location.reload();
   });
 
+  $( "#jumps_textarea" ).focusout(function() {
+    var jumps_textarea = $("#jumps_textarea").val();
+    try {
+      var jumps = JSON.parse(jumps_textarea);
+      localStorage.setItem("jumps_textarea", jumps_textarea);
+    } catch (e) {
+      showMessage("Invalid JSON content!");
+    }
+  });
+
 function main_menu_actions() {
   $("#focusClimbNotepad").on("click keypress", function(event) {
     if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
@@ -217,6 +227,15 @@ function main_menu_actions() {
       toggleBookmark();
       $('.tabChiDeck').not('#bookmarksContainer').hide();
       $(':focus').blur();
+    }
+  });
+
+  $("#toggleJumps").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      $('.tabChiDeck').not('#jumps_textarea').hide();
+      $(':focus').blur();
+      $('#jumps_textarea').toggle();
+      $('#jumps_textarea').focus();
     }
   });
   

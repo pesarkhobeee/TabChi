@@ -1,6 +1,6 @@
 function keyboardManager(){
     // Detect when an element with tabindex 3 receives focus
-    $("[tabindex=5]").on("focus", function() {
+    $("[tabindex=6]").on("focus", function() {
       // Set a delay to move the focus to the element with tabindex 1 after the current event loop
       setTimeout(function() {
         $("[tabindex=1]").focus();

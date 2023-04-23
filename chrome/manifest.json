@@ -1,6 +1,6 @@
 {
    "background": {
-      "scripts": [ "dashboard.js" ],
+      "scripts": [ "background.js" ],
       "persistent": false
    },
    "browser_action": {
@@ -17,9 +17,9 @@
       "topSites",
       "chrome://favicon/",
       "bookmarks",
-      "activeTab",
-      "*://*/*"
+      "tabs"
     ],
+   "omnibox": { "keyword" : ">" },
    "offline_enabled": true,
    "short_name": "TabChi",
    "version": "0.7.0"

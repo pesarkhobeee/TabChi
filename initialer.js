@@ -70,4 +70,8 @@ function initiateSettings(){
     $("#customcss_textarea").val(focusClimbCustomCSS);
   }
 
+  jumps_textarea = localStorage.getItem("jumps_textarea");
+  if(jumps_textarea){
+    $("#jumps_textarea").val(jumps_textarea);
+  }
 }
