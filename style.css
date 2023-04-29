@@ -64,10 +64,24 @@ body {
   display: none;
   z-index: 12;
   opacity: .8;
+  text-shadow: 1px 1px 2px #424242;
+  display: block;
 }
 
 input {
   width: 100%;
+}
+
+input[type="button"] {
+  padding: 4px;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+input[type="button"]:focus {
+  border-color: #66afe9;
+  outline: none;
 }
 
 #menu-btn {
@@ -189,11 +203,10 @@ input {
   border-bottom: 1px solid #d8d8d8;
   /* padding: 1em; */
   color: #424242;
-  font-size: 1.4em;
-  font-weight: 300;
+  font-weight: bold;
 }
 
-#popup_note_textarea {
+#popup_note_textarea, #jumps_textarea, #customcss_textarea {
   top: 80px;
   bottom: 80px;
   background-color: rgba(255, 255, 255, 0.8);
@@ -206,30 +219,6 @@ input {
   resize: none;
   left: 80px;
   right: 80px;
-}
-
-#notepad {
-  margin: auto;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  height: 30px;
-  font-size: 25px;
-  color: #ffffff;
-  text-shadow: #000 0px 0px 6px;
-  z-index: 999;
-}
-
-.notepad_link {
-  color: #ffffff;
-  font-size: 20px;
-  text-decoration: none;
-  opacity: 0.4;
-  cursor: pointer;
-}
-
-.notepad_link:hover {
-  opacity: 1;
 }
 
 .top-site-container {
@@ -314,8 +303,340 @@ input {
   opacity: 1;
 }
 
-#customcss_textarea {
-  width: 100%;
-  min-height: 200px;
+#bookmarksContainer {
   display: none;
+  top: 80px;
+  bottom: 80px;
+  background-color: rgba(255, 255, 255, 0.8);
+  position: fixed;
+  z-index: 100;
+  padding: 8px;
+  border-radius: 8px;
+  resize: none;
+  left: 80px;
+  right: 80px;
+  overflow:auto;
+}
+
+#bookmarksContainer h1 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+#bookmarksList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#bookmarksList ul {
+  list-style-type: none;
+}
+
+#bookmarksList li {
+  cursor: pointer;
+}
+
+#bookmarksList a {
+  color: #4285f4;
+  text-decoration: none;
+}
+
+#bookmarksList a:hover {
+  text-decoration: underline;
+}
+
+.nested {
+  display: none;
+}
+
+/* Show the first level <ul> elements with the class 'nested' */
+#bookmarksList > li > ul.nested {
+  display: block;
+}
+
+#weather {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 50px;
+  z-index: 99;
+  opacity: 0.8;
+  color:#FFF;
+  text-shadow: 1px 1px 2px #424242;
+}
+
+#weather p {
+  margin: 0;
+  line-height: 1;
+}
+
+#weather .temperature {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#weather .description {
+  text-transform: capitalize;
+}
+
+#weather img {
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+#weather img {
+  vertical-align: middle;
+  margin-left: 5px;
+  height: 25px; /* adjust the height as needed */
+  filter: brightness(0) invert(1); /* set filter to make the icon appear white */
+}
+
+.weather-switch {
+  align-items: center;
+}
+
+.weather-switch label {
+  margin-right: 5px;
+}
+
+#weather-toggle {
+  width: 40%;
+}
+
+.weather-options div {
+  padding-top: 4px;
+  font-weight: lighter;
+}
+
+#city {
+  width: 90%;
+}
+
+#AI-container {
+  display: none;
+  top: 80px;
+  bottom: 80px;
+  background-color: rgba(255, 255, 255, 0.8);
+  position: fixed;
+  z-index: 100;
+  border-radius: 8px;
+  resize: none;
+  left: 80px;
+  right: 80px;
+  overflow: hidden; 
+  height: calc(100% - 160px);
+}
+
+
+.AI-chat {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  height: calc(100% - 64px); /* Change this line */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.AI-input {
+  display: flex;
+  position: absolute; /* Add this line */
+  bottom: 0; /* Add this line */
+  left: 0; /* Add this line */
+  width: 100%; /* Add this line */
+  background-color: rgba(255, 255, 255, 0.8); /* Add this line */
+  padding: 8px 8px 8px 20px; /* Change this line */
+  box-sizing: border-box; /* Add this line */
+}
+
+.AI-messages {
+  display: flex;
+  flex-direction: column;
+}
+
+.AI-message {
+  margin-bottom: 10px;
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  font-size: 16px;
+  line-height: 1.4;
+  border-radius: 15px;
+  max-width: 75%;
+  word-wrap: break-word;
+  white-space: pre-wrap; /* Add this line */
+}
+
+
+.user {
+  align-self: flex-end;
+  background-color: #0084ff; /* Change this line */
+  color: white;
+  font-weight: 500; /* Add this line */
+  border-radius: 15px 15px 0 15px; /* Change this line */
+}
+
+.gpt {
+  align-self: flex-start;
+  background-color: #f1f0f0; /* Change this line */
+  color: #222;
+  font-weight: 400; /* Add this line */
+  border-radius: 15px 15px 15px 0; /* Change this line */
+}
+
+/* Add the CSS for the AI-loading icon */
+.AI-spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: AI-spin 2s linear infinite;
+}
+
+@keyframes AI-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add CSS for controlling the visibility of the AI-loading icon */
+.AI-loading-icon-hidden {
+  display: none;
+}
+
+.AI-loading-icon-visible {
+  display: block;
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#AI-download-btn {
+  display: inline-block;
+  margin: 10px;
+  background-color: #0084ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+}
+
+#AI-send-btn {
+  background-color: #0084ff;
+  color: white;
+}
+
+#AI-download-btn:hover {
+  background-color: #006fe6;
+}
+
+#AI-download-btn, #AI-container-settings {
+  display: inline-block;
+  margin: 0;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+#main_menu_tips {
+  font-size: 8px;
+  font-weight: bold;
+  padding: 0px 5px;
+}
+
+#main_menu {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 10px;
+  z-index: 99;
+  gap:5px;
+}
+
+#main_menu_item:focus-within {
+  color:#000;
+}
+
+.main_menu_link:focus-within{
+  opacity: 1;
+}
+
+.main_menu_link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  /* box-shadow: 0px 2px 6px rgb(0 0 0 / 10%); */
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.5);
+
+  opacity: 0.5;
+  cursor: pointer;
+  color: #FFF;
+  width: 32px;
+  height: 32px;
+  text-decoration: none;
+}
+
+.main_menu_link:focus {
+  opacity: 1;
+}
+
+.main_menu_link:hover {
+  opacity: 1;
+}
+
+/* The Modal (background) */
+#my-modal {
+  display: none;
+  position: fixed; /* Stay in place */
+  z-index: 101; /* Sit on top */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px; /* Standard width */
+  height: 400px;
+  overflow-y: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  border-radius: 8px;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 0 auto; /* Center horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 100%; /* Full width of modal */
+  box-sizing: border-box;
+  height: 100%;;
+}
+
+/* Close Button */
+#modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#modal-close:hover,
+#modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#ai_login_submit {
+  margin-top: 8px;
 }

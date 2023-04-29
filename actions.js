@@ -50,8 +50,7 @@
       obj.removeClass("left-shadow-overlay");
     }
   });
-  
-  
+   
   $( "#focusClimbPexelsToken" ).focusout(function() {
     var pexels = $("#focusClimbPexelsToken").val();
     localStorage.setItem("focusClimbPexelsToken", pexels);
@@ -111,14 +110,6 @@
   $( "#pin" ).click(function(){
     togglePin();
   })
-
-  $( "#toggleNotepad" ).click(function(){
-    toggleNotepad();
-  })
-
-  $( "#focusClimbNotepad" ).click(function(){
-    toggleNotepad();
-  })
   
   function next(){
     if(elements_index < (elements.length - 1)){
@@ -148,6 +139,10 @@
 
   function toggleNotepad(){
     $("#popup_note_textarea").toggle();
+  }
+
+  function toggleBookmark(){
+    $("#bookmarksContainer").toggle();
   }
 
   function togglePin(){
@@ -206,41 +201,77 @@
     localStorage.setItem("focusClimbCustomCSS", customcss);
     location.reload();
   });
-  
-  window.addEventListener("keydown", function (event) {
-    if (event.defaultPrevented) {
-      return; // Do nothing if the event was already processed
-    }
-  
-    if(event.ctrlKey ) {
-      switch (event.key) {
-        case "V":
-          updateBackground();
-          break;
-        case "N":
-          next();
-          break;
-        case "B":
-          previous();
-          break;
-        case "C":
-          toggleClock();
-          break;
-        case "M":
-          $('.handle').trigger('click');
-          break;
-        case "P":
-          togglePin();
-          break;
-        case "T":
-          toggleNotepad();
-          break;
-        case "S":
-          topsites();
-          break;
-        default:
-          return; // Quit when this doesn't handle the key event.
-      }
-    }
 
-  }, true);
+  $( "#jumps_textarea" ).focusout(function() {
+    var jumps_textarea = $("#jumps_textarea").val();
+    try {
+      var jumps = JSON.parse(jumps_textarea);
+      localStorage.setItem("jumps_textarea", jumps_textarea);
+    } catch (e) {
+      showMessage("Invalid JSON content!");
+    }
+  });
+
+function main_menu_actions() {
+  $("#focusClimbNotepad").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      $('.tabChiDeck').not('#popup_note_textarea').hide();
+      $(':focus').blur();
+      toggleNotepad();
+      $('#popup_note_textarea').focus();
+    }
+  });
+  
+  $("#toggleBookmark").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      toggleBookmark();
+      $('.tabChiDeck').not('#bookmarksContainer').hide();
+      $(':focus').blur();
+    }
+  });
+
+  $("#toggleJumps").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      $('.tabChiDeck').not('#jumps_textarea').hide();
+      $(':focus').blur();
+      $('#jumps_textarea').toggle();
+      $('#jumps_textarea').focus();
+    }
+  });
+  
+  $("#ai_icon").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      $("#AI-container").toggle();
+      $('.tabChiDeck').not('#AI-container').hide();
+      $(':focus').blur();
+      setTimeout(function() { $('#AI-user-input').focus() }, 100);   
+
+      open_ai_settings_modal();
+    }
+  });
+  
+  $("#main_menu_settings").on("click keypress", function(event) {
+    if (event.type === "click" || (event.type === "keypress" && event.which === 13)) {
+      $('.handle').trigger('click');
+      $('.tabChiDeck').hide();
+      $(':focus').blur();
+    }
+  });
+}
+
+function open_ai_settings_modal(OpenModal=false) {
+  chat_gpt_token = localStorage.getItem("chat_gpt_token");
+  if(chat_gpt_token){
+    $('#chat_gpt_token').attr("placeholder", chat_gpt_token);
+  } 
+  
+  if (!chat_gpt_token || OpenModal) {
+    toggleModalPopup("300px", "500px", "Login to ChatGPT",  "ai_login");
+  }
+
+  $('#ai_login_submit').on('click', function() {
+    var chat_gpt_token = $('#chat_gpt_token').val();
+    localStorage.setItem("chat_gpt_token", chat_gpt_token);
+    $("#my-modal").css("display", "none");
+  });
+}

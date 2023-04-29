@@ -1,7 +1,7 @@
 {
    "background": {
-      "persistent": false,
-      "scripts": [ "focusclimb.js" ]
+      "scripts": [ "background.js" ],
+      "persistent": false
    },
    "browser_action": {
       "default_title": "TabChi"
@@ -15,9 +15,12 @@
    "name": "TabChi",
    "permissions": [
       "topSites",
-      "chrome://favicon/"
+      "chrome://favicon/",
+      "bookmarks",
+      "tabs"
     ],
+   "omnibox": { "keyword" : ">" },
    "offline_enabled": true,
    "short_name": "TabChi",
-   "version": "0.6.0"
+   "version": "0.7.0"
 }

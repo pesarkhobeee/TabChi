@@ -4,6 +4,36 @@ function showMessage(content){
   $("#message").delay(4000).fadeOut("slow");
 }
 
+function backgroundController(background_setting){
+  if(background_setting){
+    $("#background-setting").val(background_setting);
+    if(background_setting == "Color") {
+      changeBackgroundColor();
+      $("#fieldset-color").show();
+      $("#fieldset-pexels").hide();
+      $("#focusClimbPushPin").hide();
+      $("#photographer").hide();
+    } else if (background_setting == "Pexels") {
+      updateBackground();
+      $("#fieldset-color").hide();
+      $("#fieldset-pexels").show();
+      $("#focusClimbPushPin").fadeIn();
+      $("#photographer").fadeIn();
+    } else {
+      offlineBackgroundPictures();
+      $("#fieldset-color").hide();
+      $("#fieldset-pexels").hide();
+      $("#focusClimbPushPin").hide();
+      $("#photographer").hide();
+    }
+    
+  } else {
+    offlineBackgroundPictures();
+    $("#fieldset-color").hide();
+    $("#fieldset-pexels").hide();
+  }
+}
+
 function changeBackgroundColor(color_code) {
   if(color_code) {
     localStorage.setItem("colorsPalette", color_code);
@@ -83,5 +113,65 @@ function fetchNewBackground(searchTerm, searchLimit=0){
   }).fail(function (jqXHR, textStatus, errorThrown) {
     showMessage("Something is wrong, couldn't fetch any image!");
     offlineBackgroundPictures();
+  });
+}
+
+function offlineBackgroundPictures() {
+  //var local_background_image = 'images/' + ( 1 + Math.floor(Math.random() * 12) ) + '.jpg';
+  var local_background_image = 'background.jpg';
+  $("#fc-wallpaper-photo-hd").css("background-image", "url('" + local_background_image + "')");
+  $("#focusClimbPushPin").hide();
+  $("#photographer").hide();
+  $("#pin").prop("disabled",true);
+}
+
+function updateBackground() {
+  var background = $("#focusClimbSearchTerm").val();
+  fetchNewBackground(background);
+}
+
+// create a modal function
+function toggleModalPopup(height, width, title, contentDive){
+  $("#my-modal").css({"height":height, "width":width}).toggle();
+  $("#modal-title").html(title);
+
+  // Get the div to move
+  var $divToMove = $("#" + contentDive);
+
+  // Detach the div to move from its original location
+  $divToMove.detach();
+
+  $("#modal-content").html($divToMove.html());
+  // Close the modal
+  $("#modal-close").click(function() {
+    $("#my-modal").css("display", "none");
+  }); 
+}
+
+$("#AI-container-settings").click(function() {
+  open_ai_settings_modal(true);
+});
+
+function getTopSites() {
+  chrome.topSites.get(function(sites) {
+    var container = document.querySelector('.top-sites');
+    for (var i = 0; i < sites.length; i++) {
+      var site = sites[i];
+      var link = document.createElement('a');
+      link.classList.add('site-link');
+      link.href = site.url;
+      var icon = document.createElement('img');
+      icon.classList.add('site-icon');
+      icon.src = 'chrome://favicon/size/64@1x/' + site.url;
+      var title = document.createElement('span');
+      title.classList.add('site-title');
+      title.textContent = site.title;
+      link.appendChild(icon);
+      //link.appendChild(title);
+      var div = document.createElement('div');
+      div.classList.add('site');
+      div.appendChild(link);
+      container.appendChild(div);
+    }
   });
 }
