@@ -1,0 +1,28 @@
+Privacy Policy for TabChi Extension
+
+This Privacy Policy describes how TabChi ("we," "us," or "our") collects, uses, and shares personal information when you use the TabChi extension ("Extension") for Google Chrome and Firefox browsers. By installing and using the Extension, you consent to the practices outlined in this Privacy Policy.
+
+Information Collection and Use
+1.1 Personal Information
+The Extension does not collect any personally identifiable information (PII) from its users. We do not require you to create an account or provide personal details such as your name, email address, or contact information.
+
+1.2 Usage Information
+We may collect certain usage information automatically when you interact with the Extension. This information may include your IP address, browser type, operating system, and browsing activities within the Extension. We use this information to analyze trends, administer the Extension, and gather demographic information for aggregate use.
+
+2. Cookies and Tracking Technologies
+The Extension does not use cookies or any other tracking technologies to collect information about your browsing activities.
+
+3. Data Security
+We take reasonable measures to protect the security of your information while it is under our control. However, please be aware that no method of transmission over the internet or electronic storage is completely secure. We cannot guarantee absolute security of your data.
+
+4. Third-Party Services
+The Extension may include links to third-party websites or services that are not operated by us. These third-party sites have their own privacy policies, and we have no control over and assume no responsibility for their content or practices. We recommend reviewing the privacy policies of any third-party websites you visit.
+
+5. Children's Privacy
+The TabChi Extension is intended for general audiences and does not collect any personal information from users, regardless of age. We do not knowingly collect or solicit any information from individuals under the age of 13. If you are a parent or guardian and believe that your child has provided personal information to us, please contact us immediately. We will promptly remove any such information from our records.
+
+6. Changes to this Privacy Policy
+We may update this Privacy Policy from time to time. We will notify you of any changes by posting the updated Privacy Policy on our website or through the Extension. Please review this Privacy Policy periodically for any updates.
+
+7. Contact Us
+If you have any questions or concerns about this Privacy Policy or the practices of the Extension, please contact us at Ahmadian.farid.1988@gmail.com.

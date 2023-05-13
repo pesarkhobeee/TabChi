@@ -321,8 +321,14 @@ input {
         </div>
 
         <div id="ai_login">
+                <label for="chat_gpt_token">Token:</label>
                 <input type="text" id="chat_gpt_token">
-                <button id="ai_login_submit" >Save ChatGPT Token</button>
+                <br>
+                <label for="chat_gpt_prompt">Prompt:</label>
+                <textarea id="chat_gpt_prompt"></textarea>
+                <a href="https://github.com/f/awesome-chatgpt-prompts
+">Sample Promts</a>                <br>
+                <button id="ai_login_submit" >Save ChatGPT Settings</button>
                 <p>
                         You can find your ChatGPT API keys from 
                         <a href="https://platform.openai.com/account/api-keys" target="_blank">here</a>.
@@ -341,5 +347,11 @@ input {
             <script src="ai.js" ></script>
             <script src="weather.js" ></script>
             <script src="bookmarks.js" ></script>
+            <dialog id="d">
+                <form method="dialog">
+                        <p>Hi, I'm a dialog.</p>
+                        <button>ok</button>
+                </form>
+            </dialog>
     </body>
 </html>
