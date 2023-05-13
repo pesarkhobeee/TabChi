@@ -4,11 +4,18 @@ $(document).ready(function () {
   const $messages = $(".AI-messages");
   const $downloadBtn = $("#AI-download-btn");
 
+
+  chat_gpt_prompt = localStorage.getItem("chat_gpt_prompt");
+  if(chat_gpt_token){
+    promt = chat_gpt_prompt;
+  } else {
+    promt = ""
+  }
+
   let conversationHistory = [
     {
       role: "system",
-      content:
-        "You are the chatbot of a website called TabChi.",
+      content: promt,
     },
   ];
 
@@ -102,6 +109,8 @@ $(document).ready(function () {
       temperature: 0.3,
       max_tokens: 2000,
     };
+
+    console.log(data);
 
     return new Promise((resolve, reject) => {
       $.ajax({

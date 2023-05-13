@@ -264,6 +264,11 @@ function open_ai_settings_modal(OpenModal=false) {
   if(chat_gpt_token){
     $('#chat_gpt_token').attr("placeholder", chat_gpt_token);
   } 
+
+  chat_gpt_prompt = localStorage.getItem("chat_gpt_prompt");
+  if(chat_gpt_token){
+    $('#chat_gpt_prompt').attr("placeholder", chat_gpt_prompt);
+  } 
   
   if (!chat_gpt_token || OpenModal) {
     toggleModalPopup("300px", "500px", "Login to ChatGPT",  "ai_login");
@@ -271,7 +276,14 @@ function open_ai_settings_modal(OpenModal=false) {
 
   $('#ai_login_submit').on('click', function() {
     var chat_gpt_token = $('#chat_gpt_token').val();
-    localStorage.setItem("chat_gpt_token", chat_gpt_token);
+    if(chat_gpt_token) {
+      localStorage.setItem("chat_gpt_token", chat_gpt_token);
+    }
+
+    var chat_gpt_prompt = $('#chat_gpt_prompt').val();
+    if(chat_gpt_prompt) {
+      localStorage.setItem("chat_gpt_prompt", chat_gpt_prompt);
+    }
     $("#my-modal").css("display", "none");
   });
 }
