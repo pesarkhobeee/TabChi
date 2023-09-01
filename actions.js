@@ -58,14 +58,6 @@ $("#focusClimbPexelsToken").focusout(function() {
   updateBackground();
 });
 
-/*
- * TODO: Whenever it is saving the notes, it should also send a signal, telling other instanses to update themself
- *   focusClimbNotePad = localStorage.getItem("focusClimbNotePad");
-  if(focusClimbNotePad){
-      $("#popup_note_textarea").val(focusClimbNotePad); 
-  }
-*/
-
 // Listen for focusout event on the textarea
 $("#popup_note_textarea").focusout(function() {
   var notes = $("#popup_note_textarea").val();

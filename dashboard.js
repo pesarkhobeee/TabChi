@@ -1,20 +1,20 @@
-function showMessage(content){
+function showMessage(content) {
   $("#message").html(content);
   $("#message").fadeIn("slow");
   $("#message").delay(4000).fadeOut("slow");
 }
 
-function backgroundController(background_setting){
-  if(background_setting){
+function backgroundController(background_setting) {
+  if (background_setting) {
     $("#background-setting").val(background_setting);
-    if(background_setting == "Color") {
+    if (background_setting == "Color") {
       changeBackgroundColor();
       $("#fieldset-color").show();
       $("#fieldset-pexels").hide();
       $("#focusClimbPushPin").hide();
       $("#photographer").hide();
     } else if (background_setting == "Pexels") {
-      updateBackground();
+      showPexelsBackground();
       $("#fieldset-color").hide();
       $("#fieldset-pexels").show();
       $("#focusClimbPushPin").fadeIn();
@@ -26,7 +26,7 @@ function backgroundController(background_setting){
       $("#focusClimbPushPin").hide();
       $("#photographer").hide();
     }
-    
+
   } else {
     offlineBackgroundPictures();
     $("#fieldset-color").hide();
@@ -34,41 +34,70 @@ function backgroundController(background_setting){
   }
 }
 
+function showPexelsBackground() {
+  // Here we want to check if it is the firt time, we like to sho the offline picture
+  // otherwise we will show what we have as a saved base64 one
+  // and also we trigger the updating picture part
+  loadBackgroundFromLocalStorage();
+  updateBackground();
+}
+
 function changeBackgroundColor(color_code) {
-  if(color_code) {
+  if (color_code) {
     localStorage.setItem("colorsPalette", color_code);
   } else {
     color_code = localStorage.getItem("colorsPalette");
     $("#colorsPalette").val(color_code);
   }
-  $("#fc-wallpaper-photo-hd").css({"background-color": color_code, "background-image": ""});
+  $("#fc-wallpaper-photo-hd").css({ "background-color": color_code, "background-image": "" });
 }
 
 function changeBackground(elements_index) {
   var bg = elements[elements_index]['photos'][0]['src']['original'];
-  
-  $("#fc-wallpaper-photo").css("background-image", 'url(' +  bg  + '?auto=compress&cs=tinysrgb&&fit=crop&h=54&w=96)');
-  $("#fc-wallpaper-photo-hd").hide();
-  $("#fc-wallpaper-photo-hd").css("background-image", 'url(' +  bg   + '?fit=crop&h=1080&w=1920)');
-  $("#fc-wallpaper-photo-hd").show(2000);
+
 
   var photographer = elements[elements_index]['photos'][0]['photographer'];
   var photographer_url = elements[elements_index]['photos'][0]['url'];
-  $("#photographer_link").attr("href", photographer_url);
-  $("#photographer_link").attr("alt", photographer);
+
+  // Fetch the image as a Blob, convert to Base64, and save to localStorage
+  fetch(bg + '?fit=crop&h=1080&w=1920')
+    .then(response => response.blob())
+    .then(blob => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64Image = reader.result;
+        localStorage.setItem('backgroundImage', base64Image);
+        localStorage.setItem('backgroundImagePhotographer', photographer);
+        localStorage.setItem('backgroundImagePhotographerlink', photographer_url);
+      };
+      reader.readAsDataURL(blob);
+    });
 
   changeButtonsStatus();
 }
 
-function fetchNewBackground(searchTerm, searchLimit=0){
-  if(focus_climb_push_pin) {
+function loadBackgroundFromLocalStorage() {
+  var savedBg = localStorage.getItem('backgroundImage');
+  var photographer = localStorage.getItem('backgroundImagePhotographer');
+  var photographer_url = localStorage.getItem('backgroundImagePhotographerlink');
+  if (savedBg) {
+    $("#fc-wallpaper-photo-hd").css("background-image", 'url(' + savedBg + ')');
+    $("#photographer_link").attr("href", photographer_url);
+    $("#photographer_link").attr("alt", photographer);
+  }
+}
+
+function fetchNewBackground(searchTerm, searchLimit = 0) {
+  if (focus_climb_push_pin) {
     changeBackground(elements_index);
     return false;
   }
   $("#focusClimbPushPin").fadeIn();
-  $("#pin").prop("disabled",false);
+  $("#pin").prop("disabled", false);
 
-  if(!searchLimit) {
+  // TODO: fetch second image right after loading the first one,
+  // with this manner we will spead up seeing the pictures 
+  if (!searchLimit) {
     searchLimit = topics[searchTerm] || 8000;
     var number = 1 + Math.floor(Math.random() * searchLimit);
   } else {
@@ -87,7 +116,7 @@ function fetchNewBackground(searchTerm, searchLimit=0){
       per_page: 1,
       page: number
     },
-    success: function( result ) {
+    success: function(result) {
       try {
         var total_results = result['total_results'];
         topics[searchTerm] = total_results;
@@ -97,23 +126,24 @@ function fetchNewBackground(searchTerm, searchLimit=0){
           changeBackground(elements_index);
         }
       } catch (error) {
-        if(background_retry_count < 3) {
-            background_retry_count += 1;
-            if(total_results) {
-              fetchNewBackground(searchTerm, total_results);
-            } else {
-              fetchNewBackground(searchTerm);
-            }
+        if (background_retry_count < 3) {
+          background_retry_count += 1;
+          if (total_results) {
+            fetchNewBackground(searchTerm, total_results);
+          } else {
+            fetchNewBackground(searchTerm);
+          }
         } else {
-            background_retry_count = 1;
-            showMessage("Something is wrong, couldn't fetch any image, maybe your search term or ...!");
+          background_retry_count = 1;
+          showMessage("Something is wrong, couldn't fetch any image, maybe your search term or ...!");
         }
       }
     },
-  }).fail(function (jqXHR, textStatus, errorThrown) {
+  }).fail(function(jqXHR, textStatus, errorThrown) {
     showMessage("Something is wrong, couldn't fetch any image!");
     offlineBackgroundPictures();
   });
+
 }
 
 function offlineBackgroundPictures() {
@@ -122,7 +152,7 @@ function offlineBackgroundPictures() {
   $("#fc-wallpaper-photo-hd").css("background-image", "url('" + local_background_image + "')");
   $("#focusClimbPushPin").hide();
   $("#photographer").hide();
-  $("#pin").prop("disabled",true);
+  $("#pin").prop("disabled", true);
 }
 
 function updateBackground() {
@@ -131,8 +161,8 @@ function updateBackground() {
 }
 
 // create a modal function
-function toggleModalPopup(height, width, title, contentDive){
-  $("#my-modal").css({"height":height, "width":width}).toggle();
+function toggleModalPopup(height, width, title, contentDive) {
+  $("#my-modal").css({ "height": height, "width": width }).toggle();
   $("#modal-title").html(title);
 
   // Get the div to move
@@ -145,7 +175,7 @@ function toggleModalPopup(height, width, title, contentDive){
   // Close the modal
   $("#modal-close").click(function() {
     $("#my-modal").css("display", "none");
-  }); 
+  });
 }
 
 $("#AI-container-settings").click(function() {
