@@ -182,6 +182,13 @@ $("#AI-container-settings").click(function() {
   open_ai_settings_modal(true);
 });
 
+function faveiconURL(u, s = 32) {
+  const url = new URL(chrome.runtime.getURL("/_favicon/"));
+  url.searchParams.set("pageUrl", u);
+  url.searchParams.set("size", s);
+  return url.toString();
+}
+
 function getTopSites() {
   chrome.topSites.get(function(sites) {
     var container = document.querySelector('.top-sites');
@@ -192,7 +199,7 @@ function getTopSites() {
       link.href = site.url;
       var icon = document.createElement('img');
       icon.classList.add('site-icon');
-      icon.src = 'chrome://favicon/size/64@1x/' + site.url;
+      icon.src = faveiconURL(site.url);
       var title = document.createElement('span');
       title.classList.add('site-title');
       title.textContent = site.title;
