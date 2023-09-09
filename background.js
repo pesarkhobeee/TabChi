@@ -12,21 +12,24 @@ chrome.runtime.onMessage.addListener(function(message) {
 
 
 chrome.omnibox.onInputEntered.addListener(function(text) {
-    var jumps_textarea = localStorage.getItem("jumps_textarea");
-    if (jumps_textarea) {
-        try {
-            var jumps = JSON.parse(jumps_textarea);
+    console.log(text);
+    chrome.storage.local.get(["jumps_textarea"]).then((result) => {
 
-            shortcut = jumps.find(s => s.shortkey === text);
-            var url = shortcut ? shortcut.url : null;
+        if (result.jumps_textarea) {
+            try {
+                var jumps = JSON.parse(result.jumps_textarea);
 
-            if (url) {
-                chrome.tabs.update({ url: url });
-            } else {
-                chrome.tabs.update({ url: text });
+                shortcut = jumps.find(s => s.shortkey === text);
+                var url = shortcut ? shortcut.url : null;
+
+                if (url) {
+                    chrome.tabs.update({ url: url });
+                } else {
+                    chrome.tabs.update({ url: text });
+                }
+            } catch (e) {
+                console.error("Invalid JSON content in jumps_textarea: " + e);
             }
-        } catch (e) {
-            console.error("Invalid JSON content in jumps_textarea: " + e);
         }
-    }
+    });
 });

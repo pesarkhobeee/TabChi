@@ -34,7 +34,7 @@ $("#menu-bar a").click(function() {
   menu();
 });
 
-var slider = $("#menu-bar").slideReveal({
+$("#menu-bar").slideReveal({
   // width: 100,
   push: false,
   position: "right",
@@ -53,7 +53,7 @@ var slider = $("#menu-bar").slideReveal({
 
 $("#focusClimbPexelsToken").focusout(function() {
   var pexels = $("#focusClimbPexelsToken").val();
-  localStorage.setItem("focusClimbPexelsToken", pexels);
+  chrome.storage.local.set({ focusClimbPexelsToken: pexels });
   focusClimbPexelsToken = pexels;
   updateBackground();
 });
@@ -61,7 +61,10 @@ $("#focusClimbPexelsToken").focusout(function() {
 // Listen for focusout event on the textarea
 $("#popup_note_textarea").focusout(function() {
   var notes = $("#popup_note_textarea").val();
-  localStorage.setItem("focusClimbNotePad", notes);
+  console.log(notes);
+  chrome.storage.local.set({ focusClimbNotePad: notes }).then(() => {
+    console.log("notepad Value is set");
+  });
 
   // Notify other instances to update their content
   chrome.runtime.sendMessage({ action: "updateNotes", notes: notes });
@@ -78,7 +81,7 @@ $('#focusClimbPexelsToken').keypress(function(e) {
 
 $("#focusClimbSearchTerm").focusout(function() {
   var background = $("#focusClimbSearchTerm").val();
-  localStorage.setItem("focusClimbSearchTerm", background);
+  chrome.storage.local.set({ focusClimbSearchTerm: background });
   updateBackground();
 });
 
@@ -138,7 +141,7 @@ function toggleClock() {
   } else {
     focus_climb_clock = "show";
   }
-  localStorage.setItem("focusClimbClock", focus_climb_clock);
+  chrome.storage.local.set({ focusClimbClock: focus_climb_clock });
 }
 
 function toggleNotepad() {
@@ -151,11 +154,12 @@ function toggleBookmark() {
 
 function togglePin() {
   if (focus_climb_push_pin) {
-    localStorage.removeItem("focusClimbPushPin");
+    chrome.storage.local.remove(["focusClimbPushPin"]);
     focus_climb_push_pin = false;
   } else {
     var current_element = JSON.stringify(elements[elements_index]);
-    localStorage.setItem("focusClimbPushPin", current_element);
+    console.log(current_element);
+    chrome.storage.local.set({ focusClimbPushPin: current_element });
     focus_climb_push_pin = true;
   }
   changeButtonsStatus();
@@ -163,13 +167,13 @@ function togglePin() {
 
 $('#topsites-setting').on('change', function() {
   var topsites_setting = this.value;
-  localStorage.setItem("topsites_setting", topsites_setting);
+  chrome.storage.local.set({ topsites_setting: topsites_setting });
   topsites(topsites_setting);
 });
 
 $('#background-setting').on('change', function() {
   var background_setting = this.value;
-  localStorage.setItem("background_setting", background_setting);
+  chrome.storage.local.set({ background_setting: background_setting });
   backgroundController(background_setting);
 });
 
@@ -202,7 +206,7 @@ $('#customcss').on('click', function() {
 $("#customcss_textarea").focusout(function() {
   var customcss = $("#customcss_textarea").val();
   $("head").append(customcss);
-  localStorage.setItem("focusClimbCustomCSS", customcss);
+  chrome.storage.local.set({ focusClimbCustomCSS: customcss });
   location.reload();
 });
 
@@ -210,7 +214,7 @@ $("#jumps_textarea").focusout(function() {
   var jumps_textarea = $("#jumps_textarea").val();
   try {
     var jumps = JSON.parse(jumps_textarea);
-    localStorage.setItem("jumps_textarea", jumps_textarea);
+    chrome.storage.local.set({ jumps_textarea: jumps_textarea });
   } catch (e) {
     showMessage("Invalid JSON content!");
   }
@@ -264,29 +268,31 @@ function main_menu_actions() {
 }
 
 function open_ai_settings_modal(OpenModal = false) {
-  chat_gpt_token = localStorage.getItem("chat_gpt_token");
-  if (chat_gpt_token) {
-    $('#chat_gpt_token').attr("placeholder", chat_gpt_token);
-  }
+  chat_gpt_token = chrome.storage.local.get(["chat_gpt_token"]).then((result) => {
+    if (result.chat_gpt_token) {
+      $('#chat_gpt_token').attr("placeholder", chat_gpt_token);
+    }
+  });
 
-  chat_gpt_prompt = localStorage.getItem("chat_gpt_prompt");
-  if (chat_gpt_token) {
-    $('#chat_gpt_prompt').attr("placeholder", chat_gpt_prompt);
-  }
+  chat_gpt_prompt = chrome.storage.local.get(["chat_gpt_prompt"]).then((result) => {
+    if (result.chat_gpt_token) {
+      $('#chat_gpt_prompt').attr("placeholder", chat_gpt_prompt);
+    }
 
-  if (!chat_gpt_token || OpenModal) {
-    toggleModalPopup("300px", "500px", "Login to ChatGPT", "ai_login");
-  }
+    if (!result.chat_gpt_token || OpenModal) {
+      toggleModalPopup("300px", "500px", "Login to ChatGPT", "ai_login");
+    }
+  });
 
   $('#ai_login_submit').on('click', function() {
     var chat_gpt_token = $('#chat_gpt_token').val();
     if (chat_gpt_token) {
-      localStorage.setItem("chat_gpt_token", chat_gpt_token);
+      chrome.storage.local.set({ chat_gpt_token: chat_gpt_token });
     }
 
     var chat_gpt_prompt = $('#chat_gpt_prompt').val();
     if (chat_gpt_prompt) {
-      localStorage.setItem("chat_gpt_prompt", chat_gpt_prompt);
+      chrome.storage.local.set({ chat_gpt_prompt: chat_gpt_prompt });
     }
     $("#my-modal").css("display", "none");
   });

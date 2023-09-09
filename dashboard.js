@@ -44,10 +44,11 @@ function showPexelsBackground() {
 
 function changeBackgroundColor(color_code) {
   if (color_code) {
-    localStorage.setItem("colorsPalette", color_code);
+    chrome.storage.local.set({ colorsPalette: color_code });
   } else {
-    color_code = localStorage.getItem("colorsPalette");
-    $("#colorsPalette").val(color_code);
+    chrome.storage.local.get(["colorsPalette"]).then((result) => {
+      $("#colorsPalette").val(result.color_code);
+    });
   }
   $("#fc-wallpaper-photo-hd").css({ "background-color": color_code, "background-image": "" });
 }
@@ -66,9 +67,9 @@ function changeBackground(elements_index) {
       const reader = new FileReader();
       reader.onload = () => {
         const base64Image = reader.result;
-        localStorage.setItem('backgroundImage', base64Image);
-        localStorage.setItem('backgroundImagePhotographer', photographer);
-        localStorage.setItem('backgroundImagePhotographerlink', photographer_url);
+        chrome.storage.local.set({ backgroundImage: base64Image });
+        chrome.storage.local.set({ backgroundImagePhotographer: photographer });
+        chrome.storage.local.set({ backgroundImagePhotographerlink: photographer_url });
       };
       reader.readAsDataURL(blob);
     });
@@ -77,14 +78,13 @@ function changeBackground(elements_index) {
 }
 
 function loadBackgroundFromLocalStorage() {
-  var savedBg = localStorage.getItem('backgroundImage');
-  var photographer = localStorage.getItem('backgroundImagePhotographer');
-  var photographer_url = localStorage.getItem('backgroundImagePhotographerlink');
-  if (savedBg) {
-    $("#fc-wallpaper-photo-hd").css("background-image", 'url(' + savedBg + ')');
-    $("#photographer_link").attr("href", photographer_url);
-    $("#photographer_link").attr("alt", photographer);
-  }
+  chrome.storage.local.get(['backgroundImage', 'backgroundImagePhotographer', 'backgroundImagePhotographerlink']).then((result) => {
+    if (result.backgroundImage) {
+      $("#fc-wallpaper-photo-hd").css("background-image", 'url(' + result.backgroundImage + ')');
+      $("#photographer_link").attr("href", result.backgroundImagePhotographerlink);
+      $("#photographer_link").attr("alt", result.backgroundImagePhotographer);
+    }
+  });
 }
 
 function fetchNewBackground(searchTerm, searchLimit = 0) {
@@ -95,8 +95,6 @@ function fetchNewBackground(searchTerm, searchLimit = 0) {
   $("#focusClimbPushPin").fadeIn();
   $("#pin").prop("disabled", false);
 
-  // TODO: fetch second image right after loading the first one,
-  // with this manner we will spead up seeing the pictures 
   if (!searchLimit) {
     searchLimit = topics[searchTerm] || 8000;
     var number = 1 + Math.floor(Math.random() * searchLimit);
