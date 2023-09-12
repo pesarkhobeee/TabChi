@@ -12,20 +12,15 @@ chrome.runtime.onMessage.addListener(function(message) {
 
 
 chrome.omnibox.onInputEntered.addListener(function(text) {
-    console.log(text);
     chrome.storage.local.get(["jumps_textarea"]).then((result) => {
 
         if (result.jumps_textarea) {
             try {
                 var jumps = JSON.parse(result.jumps_textarea);
+                let shortcut = jumps.find(s => s.shortkey == text);
 
-                shortcut = jumps.find(s => s.shortkey === text);
-                var url = shortcut ? shortcut.url : null;
-
-                if (url) {
-                    chrome.tabs.update({ url: url });
-                } else {
-                    chrome.tabs.update({ url: text });
+                if (shortcut) {
+                    chrome.tabs.update({ url: shortcut.url });
                 }
             } catch (e) {
                 console.error("Invalid JSON content in jumps_textarea: " + e);
