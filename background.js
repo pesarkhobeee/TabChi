@@ -28,3 +28,7 @@ chrome.omnibox.onInputEntered.addListener(function(text) {
         }
     });
 });
+
+// TODO: bring from dahsboard.js the changeBackground and test it here
+//   chrome.runtime.sendMessage({ action: "updateNotes", notes: notes });
+//   use this to trigger if it possible

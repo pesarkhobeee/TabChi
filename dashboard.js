@@ -53,12 +53,11 @@ function changeBackgroundColor(color_code) {
   $("#fc-wallpaper-photo-hd").css({ "background-color": color_code, "background-image": "" });
 }
 
-function changeBackground(elements_index) {
-  var bg = elements[elements_index]['photos'][0]['src']['original'];
+function changeBackground(image) {
+  var bg = image['photos'][0]['src']['original'];
+  var photographer = image['photos'][0]['photographer'];
+  var photographer_url = image['photos'][0]['url'];
 
-
-  var photographer = elements[elements_index]['photos'][0]['photographer'];
-  var photographer_url = elements[elements_index]['photos'][0]['url'];
 
   // Fetch the image as a Blob, convert to Base64, and save to localStorage
   fetch(bg + '?fit=crop&h=1080&w=1920')
@@ -66,10 +65,12 @@ function changeBackground(elements_index) {
     .then(blob => {
       const reader = new FileReader();
       reader.onload = () => {
-        const base64Image = reader.result;
-        chrome.storage.local.set({ backgroundImage: base64Image });
-        chrome.storage.local.set({ backgroundImagePhotographer: photographer });
-        chrome.storage.local.set({ backgroundImagePhotographerlink: photographer_url });
+        if (focus_climb_push_pin == false) {
+          const base64Image = reader.result;
+          chrome.storage.local.set({ backgroundImage: base64Image });
+          chrome.storage.local.set({ backgroundImagePhotographer: photographer });
+          chrome.storage.local.set({ backgroundImagePhotographerlink: photographer_url });
+        }
       };
       reader.readAsDataURL(blob);
     });
@@ -78,6 +79,11 @@ function changeBackground(elements_index) {
 }
 
 function loadBackgroundFromLocalStorage() {
+  // TODO : this should not be called when focus_climb_push_pin is set
+  if (focus_climb_push_pin) {
+    return false;
+  }
+
   chrome.storage.local.get(['backgroundImage', 'backgroundImagePhotographer', 'backgroundImagePhotographerlink']).then((result) => {
     if (result.backgroundImage) {
       $("#fc-wallpaper-photo-hd").css("background-image", 'url(' + result.backgroundImage + ')');
@@ -89,7 +95,13 @@ function loadBackgroundFromLocalStorage() {
 
 function fetchNewBackground(searchTerm, searchLimit = 0) {
   if (focus_climb_push_pin) {
-    changeBackground(elements_index);
+    // TODO: add pushed pin reader here
+    $("#fc-wallpaper-photo-hd").css("background-image", 'url(' + focus_climb_push_pin.backgroundImage + ')');
+    $("#photographer_link").attr("href", focus_climb_push_pin.backgroundImagePhotographerlink);
+    $("#photographer_link").attr("alt", focus_climb_push_pin.backgroundImagePhotographer);
+    console.log(focus_climb_push_pin.backgroundImagePhotographerlink);
+    console.log(focus_climb_push_pin.backgroundImagePhotographer);
+    console.log(focus_climb_push_pin.backgroundImage);
     return false;
   }
   $("#focusClimbPushPin").fadeIn();
@@ -119,9 +131,7 @@ function fetchNewBackground(searchTerm, searchLimit = 0) {
         var total_results = result['total_results'];
         topics[searchTerm] = total_results;
         if (result['photos'][0]['src']['original']) {
-          elements.push(result);
-          elements_index = elements.length - 1;
-          changeBackground(elements_index);
+          changeBackground(result);
         }
       } catch (error) {
         if (background_retry_count < 3) {

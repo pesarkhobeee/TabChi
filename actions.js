@@ -11,18 +11,6 @@ function changeButtonsStatus() {
     $('#pin').val("Pin the current picture");
   }
 
-  if (elements_index > 0) {
-    $('#previous').prop('disabled', false);
-  } else {
-    $('#previous').prop('disabled', true);
-  }
-
-  if (elements_index < (elements.length - 1)) {
-    $('#next').prop('disabled', false);
-  } else {
-    $('#next').prop('disabled', true);
-  }
-
   if (focus_climb_push_pin) {
     $("#focusClimbPushPin").css("opacity", 1);
   } else {
@@ -94,18 +82,6 @@ $('#focusClimbSearchTerm').keypress(function(e) {
   }
 });
 
-$("#changebackground").click(function() {
-  updateBackground();
-})
-
-$("#previous").click(function() {
-  previous();
-})
-
-$("#next").click(function() {
-  next();
-})
-
 $("#clock").click(function() {
   toggleClock();
 })
@@ -117,22 +93,6 @@ $("#focusClimbPushPin").click(function() {
 $("#pin").click(function() {
   togglePin();
 })
-
-function next() {
-  if (elements_index < (elements.length - 1)) {
-    elements_index += 1;
-    changeBackground(elements_index);
-    changeButtonsStatus();
-  }
-}
-
-function previous() {
-  if (elements_index > 0) {
-    elements_index -= 1;
-    changeBackground(elements_index);
-    changeButtonsStatus();
-  }
-}
 
 function toggleClock() {
   $("#digital-clock").toggle();
@@ -157,10 +117,15 @@ function togglePin() {
     chrome.storage.local.remove(["focusClimbPushPin"]);
     focus_climb_push_pin = false;
   } else {
-    var current_element = JSON.stringify(elements[elements_index]);
-    console.log(current_element);
-    chrome.storage.local.set({ focusClimbPushPin: current_element });
-    focus_climb_push_pin = true;
+    bg = $("#fc-wallpaper-photo-hd").css("background-image");
+    bg = bg.substring(4, bg.length - 1);
+    let pin = {
+      "backgroundImage": bg,
+      "backgroundImagePhotographerlink": $("#photographer_link").attr("href"),
+      "backgroundImagePhotographer": $("#photographer_link").attr("alt")
+    }
+    focus_climb_push_pin = pin;
+    chrome.storage.local.set({ focusClimbPushPin: pin });
   }
   changeButtonsStatus();
 }
