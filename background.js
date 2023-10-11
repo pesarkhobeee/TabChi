@@ -7,11 +7,12 @@ chrome.runtime.onMessage.addListener(function(message) {
                 chrome.tabs.sendMessage(tab.id, { action: "updateNotes", notes: message.notes });
             });
         });
+    } else if (message.action === "jumpHosts") {
+        gotoHost(message.host);
     }
 });
 
-
-chrome.omnibox.onInputEntered.addListener(function(text) {
+function gotoHost(text) {
     chrome.storage.local.get(["jumps_textarea"]).then((result) => {
 
         if (result.jumps_textarea) {
@@ -27,8 +28,12 @@ chrome.omnibox.onInputEntered.addListener(function(text) {
             }
         }
     });
-});
+}
 
-// TODO: bring from dahsboard.js the changeBackground and test it here
-//   chrome.runtime.sendMessage({ action: "updateNotes", notes: notes });
-//   use this to trigger if it possible
+chrome.omnibox.onInputEntered.addListener(gotoHost);
+
+chrome.commands.onCommand.addListener(function(command) {
+    if (command === "_execute_action") {
+        chrome.browserAction.openPopup();
+    }
+});
