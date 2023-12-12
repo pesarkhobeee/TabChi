@@ -1,6 +1,4 @@
 topics = {};
-elements = [];
-elements_index = 0;
 background_retry_count = 1;
 focus_climb_clock = "show";
 focus_climb_push_pin = false;
@@ -13,65 +11,86 @@ topsites_setting = "";
 background_setting = "";
 
 $(document).ready(function() {
+  // Loading custom CSS first, we don't want users see the delay!
+  chrome.storage.local.get(["focusClimbCustomCSS"]).then((result) => {
+    if (result.focusClimbCustomCSS) {
+      $("head").append(result.focusClimbCustomCSS);
+      $("#customcss_textarea").val(result.focusClimbCustomCSS);
+    }
+  });
+
   keyboardManager();
   initiateSettings();
   clockUpdate();
   setInterval(clockUpdate, 1000);
-  changeButtonsStatus();
+  //changeButtonsStatus();
   getTopSites();
   loadWeatherOptions();
   loadBookmarks();
   main_menu_actions();
+
+  // Listen for messages from the background script
+  chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    if (message.action === "updateNotes") {
+      // Update the content in this instance (new tab page)
+      $("#popup_note_textarea").val(message.notes);
+    }
+  });
+
 });
 
-function initiateSettings(){
-  focusClimbSearchTerm = localStorage.getItem("focusClimbSearchTerm");
-  if(focusClimbSearchTerm){
-      $("#focusClimbSearchTerm").val(focusClimbSearchTerm); 
-  }
+function initiateSettings() {
+  chrome.storage.local.get(
+    ["focusClimbSearchTerm",
+      "focusClimbPexelsToken",
+      "focus_climb_clock",
+      "focusClimbPushPin",
+      "focusClimbNotePad",
+      "topsites_setting",
+      "background_setting",
+      "jumps_textarea"
+    ]
+  ).then((result) => {
 
-  focusClimbPexelsToken = localStorage.getItem("focusClimbPexelsToken");
-  if(focusClimbPexelsToken){
-      $("#focusClimbPexelsToken").val(focusClimbPexelsToken); 
-  } else {
-    focusClimbPexelsToken = '563492ad6f917000010000010b883213d49b45daaa804a8854ad452c';
-  }
+    if (result.focusClimbSearchTerm) {
+      $("#focusClimbSearchTerm").val(result.focusClimbSearchTerm);
+    }
 
-  focus_climb_clock = localStorage.getItem("focusClimbClock");
-  if(focus_climb_clock && focus_climb_clock == "hide"){
-    $("#digital-clock").hide();
-  } else {
-    $("#digital-clock").show();
-  }
+    if (result.focusClimbPexelsToken) {
+      focusClimbPexelsToken = result.focusClimbPexelsToken;
+      $("#focusClimbPexelsToken").val(focusClimbPexelsToken);
+    } else {
+      focusClimbPexelsToken = '563492ad6f917000010000010b883213d49b45daaa804a8854ad452c';
+    }
 
-  focusClimbPushPin = localStorage.getItem("focusClimbPushPin");
-  if(focusClimbPushPin){
-    focus_climb_push_pin = true;
-    elements.push(JSON.parse(focusClimbPushPin));
-    elements_index = elements.length - 1;
-  }
+    if (result.focus_climb_clock && result.focus_climb_clock == "hide") {
+      $("#digital-clock").hide();
+    } else {
+      $("#digital-clock").show();
+    }
 
-  focusClimbNotePad = localStorage.getItem("focusClimbNotePad");
-  if(focusClimbNotePad){
-      $("#popup_note_textarea").val(focusClimbNotePad); 
-  }
+    if (result.focusClimbPushPin) {
+      try {
+        focus_climb_push_pin = result.focusClimbPushPin;
+      } catch {
+        console.log("There was a problem with pinned image!");
+      }
+    }
 
-  topsites_setting = localStorage.getItem("topsites_setting");
-  if(topsites_setting){
-    topsites(topsites_setting);
-  }
+    if (result.focusClimbNotePad) {
+      $("#popup_note_textarea").val(result.focusClimbNotePad);
+    }
 
-  background_setting = localStorage.getItem("background_setting");
-  backgroundController(background_setting);
+    if (result.topsites_setting) {
+      topsites(result.topsites_setting);
+    }
 
-  focusClimbCustomCSS = localStorage.getItem("focusClimbCustomCSS");
-  if(focusClimbCustomCSS){
-    $("head").append(focusClimbCustomCSS);
-    $("#customcss_textarea").val(focusClimbCustomCSS);
-  }
+    backgroundController(result.background_setting);
 
-  jumps_textarea = localStorage.getItem("jumps_textarea");
-  if(jumps_textarea){
-    $("#jumps_textarea").val(jumps_textarea);
-  }
+    if (result.jumps_textarea) {
+      $("#jumps_textarea").val(result.jumps_textarea);
+    }
+
+    changeButtonsStatus();
+  });
 }

@@ -1,19 +1,39 @@
-chrome.omnibox.onInputEntered.addListener(function(text) {
-    var jumps_textarea = localStorage.getItem("jumps_textarea");
-    if(jumps_textarea){
-        try {
-            var jumps = JSON.parse(jumps_textarea);
+// Listen for messages from NotePad
+chrome.runtime.onMessage.addListener(function(message) {
+    if (message.action === "updateNotes") {
+        // Update the content in all open instances (new tab pages)
+        chrome.tabs.query({ url: "chrome://newtab/" }, function(tabs) {
+            tabs.forEach(function(tab) {
+                chrome.tabs.sendMessage(tab.id, { action: "updateNotes", notes: message.notes });
+            });
+        });
+    } else if (message.action === "jumpHosts") {
+        gotoHost(message.host);
+    }
+});
 
-            shortcut = jumps.find(s => s.shortkey === text);
-            var url = shortcut ? shortcut.url : null;
+function gotoHost(text) {
+    chrome.storage.local.get(["jumps_textarea"]).then((result) => {
 
-            if (url) {
-                chrome.tabs.update({url: url});
-            } else {
-                chrome.tabs.update({url: text});
+        if (result.jumps_textarea) {
+            try {
+                var jumps = JSON.parse(result.jumps_textarea);
+                let shortcut = jumps.find(s => s.shortkey == text);
+
+                if (shortcut) {
+                    chrome.tabs.update({ url: shortcut.url });
+                }
+            } catch (e) {
+                console.error("Invalid JSON content in jumps_textarea: " + e);
             }
-        } catch(e) {
-            console.error("Invalid JSON content in jumps_textarea: " + e);
         }
+    });
+}
+
+chrome.omnibox.onInputEntered.addListener(gotoHost);
+
+chrome.commands.onCommand.addListener(function(command) {
+    if (command === "_execute_action") {
+        chrome.browserAction.openPopup();
     }
 });

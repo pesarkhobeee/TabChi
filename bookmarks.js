@@ -1,5 +1,5 @@
-function loadBookmarks(){
-  chrome.bookmarks.getTree(function (bookmarkTreeNodes) {
+function loadBookmarks() {
+  chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
     generateBookmarks(bookmarkTreeNodes[0].children, $('#bookmarksList'));
   });
 }
@@ -22,18 +22,18 @@ function createListItem(parent, node) {
       createListItem(nestedList, child);
     }
     li.append(nestedList);
-    li.on('click', function (event) {
+    li.on('click', function(event) {
       event.stopPropagation();
       $('.nested').not(nestedList.parentsUntil('#bookmarksList')).not(nestedList).hide();
       nestedList.toggle();
     });
   } else if (node.url) {
-    const faviconUrl = `chrome://favicon/${node.url}`;
+    const faviconUrl = faveiconURL(node.url, 12);
     const faviconImg = $('<img>', { alt: 'Favicon', src: faviconUrl });
     li.append(faviconImg);
     li.append(node.title);
 
-    li.on('click', function () {
+    li.on('click', function() {
       window.open(node.url, '_self');
     });
   }
@@ -41,4 +41,4 @@ function createListItem(parent, node) {
   parent.append(li);
 }
 
-  
+

@@ -55,3 +55,7 @@ cp chrome/manifest.json .
 then inside of Firefox address bar go to
 ```chrome://extensions```
 Click on `Load unpacked` and choose manifest.json file, now you can see the details, errors and test the extention.
+
+### Thanks to:
+
+* https://www.flaticon.com/free-icon/windows_4116315?term=tab&page=2&position=66&origin=search&related_id=4116315

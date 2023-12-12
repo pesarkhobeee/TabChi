@@ -1,25 +1,28 @@
-$(document).ready(function () {
+$(document).ready(function() {
   const $sendBtn = $("#AI-send-btn");
   const $userInput = $("#AI-user-input");
   const $messages = $(".AI-messages");
   const $downloadBtn = $("#AI-download-btn");
+  let conversationHistory = []
 
+  chrome.storage.local.get(["chat_gpt_prompt"]).then((result) => {
 
-  chat_gpt_prompt = localStorage.getItem("chat_gpt_prompt");
-  if(chat_gpt_token){
-    promt = chat_gpt_prompt;
-  } else {
-    promt = ""
-  }
+    if (result.chat_gpt_token) {
+      promt = chat_gpt_prompt;
+    } else {
+      promt = ""
+    }
 
-  let conversationHistory = [
-    {
-      role: "system",
-      content: promt,
-    },
-  ];
+    conversationHistory = [
+      {
+        role: "system",
+        content: promt,
+      },
+    ];
 
-  $downloadBtn.on("click", function () {
+  });
+
+  $downloadBtn.on("click", function() {
     const fileName = "conversation.txt";
     const content = conversationHistory
       .map((message) => `${message.role}: ${message.content}`)
@@ -62,28 +65,28 @@ $(document).ready(function () {
     $('#AI-send-btn').prop('disabled', false);
   }
 
-  $sendBtn.on("click", function () {
+  $sendBtn.on("click", function() {
     const message = $userInput.val().trim();
 
     if (message) {
       sendMessage(message);
       $userInput.val("");
-    
+
       // Show the loading icon and disable the text box and button
       AI_showLoadingIcon();
-    
+
       // Use processInput function to get a response
       processInput(message)
         .then((response) => {
           // Hide the loading icon and enable the text box and button
           AI_hideLoadingIcon();
-    
+
           receiveMessage(response);
         })
         .catch((error) => {
           // Hide the loading icon and enable the text box and button
           AI_hideLoadingIcon();
-    
+
           console.error("Error:", error);
           receiveMessage("An error occurred. Please try again later.");
         });
@@ -91,7 +94,7 @@ $(document).ready(function () {
   });
 
   // Pressing enter to send the message
-  $userInput.on("keydown", function (e) {
+  $userInput.on("keydown", function(e) {
     if (e.keyCode === 13) {
       $sendBtn.click();
     }
@@ -99,36 +102,37 @@ $(document).ready(function () {
 
   // processInput function
   function processInput(textIn) {
-    var chat_gpt_token = localStorage.getItem("chat_gpt_token");
-    const apiKey = chat_gpt_token;
-    const url = "https://api.openai.com/v1/chat/completions";
+    chrome.storage.local.get(["chat_gpt_token"]).then((result) => {
+      const apiKey = result.chat_gpt_token;
+      const url = "https://api.openai.com/v1/chat/completions";
 
-    const data = {
-      model: "gpt-3.5-turbo",
-      messages: conversationHistory,
-      temperature: 0.3,
-      max_tokens: 2000,
-    };
+      const data = {
+        model: "gpt-3.5-turbo",
+        messages: conversationHistory,
+        temperature: 0.3,
+        max_tokens: 2000,
+      };
 
-    console.log(data);
+      console.log(data);
 
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        url: url,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + apiKey,
-        },
-        data: JSON.stringify(data),
-        success: function (response) {
-          const chatbotResponse = response.choices[0].message.content;
-          resolve(chatbotResponse);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.error("Error:", errorThrown);
-          reject(errorThrown);
-        },
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          url: url,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + apiKey,
+          },
+          data: JSON.stringify(data),
+          success: function(response) {
+            const chatbotResponse = response.choices[0].message.content;
+            resolve(chatbotResponse);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error:", errorThrown);
+            reject(errorThrown);
+          },
+        });
       });
     });
   }
