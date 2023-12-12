@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener(function(message) {
 });
 
 function gotoHost(text) {
-    chrome.storage.local.get(["jumps_textarea"]).then((result) => {
+    chrome.storage.sync.get(["jumps_textarea"]).then((result) => {
 
         if (result.jumps_textarea) {
             try {

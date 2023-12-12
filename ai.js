@@ -5,7 +5,7 @@ $(document).ready(function() {
   const $downloadBtn = $("#AI-download-btn");
   let conversationHistory = []
 
-  chrome.storage.local.get(["chat_gpt_prompt"]).then((result) => {
+  chrome.storage.sync.get(["chat_gpt_prompt"]).then((result) => {
 
     if (result.chat_gpt_token) {
       promt = chat_gpt_prompt;
@@ -102,7 +102,7 @@ $(document).ready(function() {
 
   // processInput function
   function processInput(textIn) {
-    chrome.storage.local.get(["chat_gpt_token"]).then((result) => {
+    chrome.storage.sync.get(["chat_gpt_token"]).then((result) => {
       const apiKey = result.chat_gpt_token;
       const url = "https://api.openai.com/v1/chat/completions";
 

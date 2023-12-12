@@ -12,7 +12,7 @@ background_setting = "";
 
 $(document).ready(function() {
   // Loading custom CSS first, we don't want users see the delay!
-  chrome.storage.local.get(["focusClimbCustomCSS"]).then((result) => {
+  chrome.storage.sync.get(["focusClimbCustomCSS"]).then((result) => {
     if (result.focusClimbCustomCSS) {
       $("head").append(result.focusClimbCustomCSS);
       $("#customcss_textarea").val(result.focusClimbCustomCSS);
@@ -40,7 +40,7 @@ $(document).ready(function() {
 });
 
 function initiateSettings() {
-  chrome.storage.local.get(
+  chrome.storage.sync.get(
     ["focusClimbSearchTerm",
       "focusClimbPexelsToken",
       "focus_climb_clock",

@@ -4,9 +4,9 @@ function saveWeatherOptions() {
   const cityName = $('#city').val();
   const unit = $('#unit').val();
 
-  chrome.storage.local.set({ weatherEnabled: weatherEnabled });
-  chrome.storage.local.set({ cityName: cityName });
-  chrome.storage.local.set({ unit: unit });
+  chrome.storage.sync.set({ weatherEnabled: weatherEnabled });
+  chrome.storage.sync.set({ cityName: cityName });
+  chrome.storage.sync.set({ unit: unit });
 
   // Show or hide weather options based on the weatherEnabled value
   if (weatherEnabled) {
@@ -24,7 +24,7 @@ function saveWeatherOptions() {
 
 // Load values from localStorage
 function loadWeatherOptions() {
-  chrome.storage.local.get(['weatherEnabled', 'cityName', 'unit']).then((result) => {
+  chrome.storage.sync.get(['weatherEnabled', 'cityName', 'unit']).then((result) => {
 
     const weatherEnabled = result.weatherEnabled;
     const cityName = result.cityName || '';

@@ -41,7 +41,7 @@ $("#menu-bar").slideReveal({
 
 $("#focusClimbPexelsToken").focusout(function() {
   var pexels = $("#focusClimbPexelsToken").val();
-  chrome.storage.local.set({ focusClimbPexelsToken: pexels });
+  chrome.storage.sync.set({ focusClimbPexelsToken: pexels });
   focusClimbPexelsToken = pexels;
   updateBackground();
 });
@@ -50,7 +50,7 @@ $("#focusClimbPexelsToken").focusout(function() {
 $("#popup_note_textarea").focusout(function() {
   var notes = $("#popup_note_textarea").val();
   console.log(notes);
-  chrome.storage.local.set({ focusClimbNotePad: notes }).then(() => {
+  chrome.storage.sync.set({ focusClimbNotePad: notes }).then(() => {
     console.log("notepad Value is set");
   });
 
@@ -69,7 +69,7 @@ $('#focusClimbPexelsToken').keypress(function(e) {
 
 $("#focusClimbSearchTerm").focusout(function() {
   var background = $("#focusClimbSearchTerm").val();
-  chrome.storage.local.set({ focusClimbSearchTerm: background });
+  chrome.storage.sync.set({ focusClimbSearchTerm: background });
   updateBackground();
 });
 
@@ -101,7 +101,7 @@ function toggleClock() {
   } else {
     focus_climb_clock = "show";
   }
-  chrome.storage.local.set({ focusClimbClock: focus_climb_clock });
+  chrome.storage.sync.set({ focusClimbClock: focus_climb_clock });
 }
 
 function toggleNotepad() {
@@ -114,7 +114,7 @@ function toggleBookmark() {
 
 function togglePin() {
   if (focus_climb_push_pin) {
-    chrome.storage.local.remove(["focusClimbPushPin"]);
+    chrome.storage.sync.remove(["focusClimbPushPin"]);
     focus_climb_push_pin = false;
   } else {
     bg = $("#fc-wallpaper-photo-hd").css("background-image");
@@ -125,20 +125,20 @@ function togglePin() {
       "backgroundImagePhotographer": $("#photographer_link").attr("alt")
     }
     focus_climb_push_pin = pin;
-    chrome.storage.local.set({ focusClimbPushPin: pin });
+    chrome.storage.sync.set({ focusClimbPushPin: pin });
   }
   changeButtonsStatus();
 }
 
 $('#topsites-setting').on('change', function() {
   var topsites_setting = this.value;
-  chrome.storage.local.set({ topsites_setting: topsites_setting });
+  chrome.storage.sync.set({ topsites_setting: topsites_setting });
   topsites(topsites_setting);
 });
 
 $('#background-setting').on('change', function() {
   var background_setting = this.value;
-  chrome.storage.local.set({ background_setting: background_setting });
+  chrome.storage.sync.set({ background_setting: background_setting });
   backgroundController(background_setting);
 });
 
@@ -171,7 +171,7 @@ $('#customcss').on('click', function() {
 $("#customcss_textarea").focusout(function() {
   var customcss = $("#customcss_textarea").val();
   $("head").append(customcss);
-  chrome.storage.local.set({ focusClimbCustomCSS: customcss });
+  chrome.storage.sync.set({ focusClimbCustomCSS: customcss });
   location.reload();
 });
 
@@ -179,7 +179,7 @@ $("#jumps_textarea").focusout(function() {
   var jumps_textarea = $("#jumps_textarea").val();
   try {
     var jumps = JSON.parse(jumps_textarea);
-    chrome.storage.local.set({ jumps_textarea: jumps_textarea });
+    chrome.storage.sync.set({ jumps_textarea: jumps_textarea });
   } catch (e) {
     showMessage("Invalid JSON content!");
   }
@@ -233,13 +233,13 @@ function main_menu_actions() {
 }
 
 function open_ai_settings_modal(OpenModal = false) {
-  chat_gpt_token = chrome.storage.local.get(["chat_gpt_token"]).then((result) => {
+  chat_gpt_token = chrome.storage.sync.get(["chat_gpt_token"]).then((result) => {
     if (result.chat_gpt_token) {
       $('#chat_gpt_token').attr("placeholder", chat_gpt_token);
     }
   });
 
-  chat_gpt_prompt = chrome.storage.local.get(["chat_gpt_prompt"]).then((result) => {
+  chat_gpt_prompt = chrome.storage.sync.get(["chat_gpt_prompt"]).then((result) => {
     if (result.chat_gpt_token) {
       $('#chat_gpt_prompt').attr("placeholder", chat_gpt_prompt);
     }
@@ -252,12 +252,12 @@ function open_ai_settings_modal(OpenModal = false) {
   $('#ai_login_submit').on('click', function() {
     var chat_gpt_token = $('#chat_gpt_token').val();
     if (chat_gpt_token) {
-      chrome.storage.local.set({ chat_gpt_token: chat_gpt_token });
+      chrome.storage.sync.set({ chat_gpt_token: chat_gpt_token });
     }
 
     var chat_gpt_prompt = $('#chat_gpt_prompt').val();
     if (chat_gpt_prompt) {
-      chrome.storage.local.set({ chat_gpt_prompt: chat_gpt_prompt });
+      chrome.storage.sync.set({ chat_gpt_prompt: chat_gpt_prompt });
     }
     $("#my-modal").css("display", "none");
   });

@@ -44,9 +44,9 @@ function showPexelsBackground() {
 
 function changeBackgroundColor(color_code) {
   if (color_code) {
-    chrome.storage.local.set({ colorsPalette: color_code });
+    chrome.storage.sync.set({ colorsPalette: color_code });
   } else {
-    chrome.storage.local.get(["colorsPalette"]).then((result) => {
+    chrome.storage.sync.get(["colorsPalette"]).then((result) => {
       $("#colorsPalette").val(result.color_code);
     });
   }
@@ -67,9 +67,9 @@ function changeBackground(image) {
       reader.onload = () => {
         if (focus_climb_push_pin == false) {
           const base64Image = reader.result;
-          chrome.storage.local.set({ backgroundImage: base64Image });
-          chrome.storage.local.set({ backgroundImagePhotographer: photographer });
-          chrome.storage.local.set({ backgroundImagePhotographerlink: photographer_url });
+          chrome.storage.sync.set({ backgroundImage: base64Image });
+          chrome.storage.sync.set({ backgroundImagePhotographer: photographer });
+          chrome.storage.sync.set({ backgroundImagePhotographerlink: photographer_url });
         }
       };
       reader.readAsDataURL(blob);
@@ -84,7 +84,7 @@ function loadBackgroundFromLocalStorage() {
     return false;
   }
 
-  chrome.storage.local.get(['backgroundImage', 'backgroundImagePhotographer', 'backgroundImagePhotographerlink']).then((result) => {
+  chrome.storage.sync.get(['backgroundImage', 'backgroundImagePhotographer', 'backgroundImagePhotographerlink']).then((result) => {
     if (result.backgroundImage) {
       $("#fc-wallpaper-photo-hd").css("background-image", 'url(' + result.backgroundImage + ')');
       $("#photographer_link").attr("href", result.backgroundImagePhotographerlink);
