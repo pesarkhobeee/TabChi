@@ -43,14 +43,17 @@ function showPexelsBackground() {
 }
 
 function changeBackgroundColor(color_code) {
+
   if (color_code) {
     chrome.storage.sync.set({ colorsPalette: color_code });
+    $("#fc-wallpaper-photo-hd").css({ "background-color": color_code, "background-image": "" });
   } else {
     chrome.storage.sync.get(["colorsPalette"]).then((result) => {
-      $("#colorsPalette").val(result.color_code);
+      $("#colorsPalette").val(result.colorsPalette);
+      color_code = result.colorsPalette;
+      $("#fc-wallpaper-photo-hd").css({ "background-color": color_code, "background-image": "" });
     });
   }
-  $("#fc-wallpaper-photo-hd").css({ "background-color": color_code, "background-image": "" });
 }
 
 function changeBackground(image) {
