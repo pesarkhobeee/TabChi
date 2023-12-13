@@ -31,31 +31,25 @@ Don't settle for a dull new tab page. Install TabChi now and transform your brow
 
 ## Development
 
-### Firefox
-
-To develop and test this plugin on Firefox please clone this repository on your machine and copy manifest.json from firefox folder to the root folder:
-```
-git clone git@github.com:pesarkhobeee/focusClimb.git
-cd focusClimb
-cp firefox/manifest.json .
-```
-then inside of Firefox address bar go to
-```about:debugging#/runtime/this-firefox```
-Click on `Load Temporary Add-on` and choose manifest.json file, now you can inspect, test, and reload the plugin. 
-
-### Google Chrome
-
-
 To develop and test this plugin on Google Chrome please clone this repository on your machine and copy manifest.json from chrome folder to the root folder:
 ```
-git clone git@github.com:pesarkhobeee/focusClimb.git
-cd focusClimb
-cp chrome/manifest.json .
+git clone git@github.com:pesarkhobeee/TabChi.git
+cd TabChi
+
 ```
-then inside of Firefox address bar go to
+then inside of address bar go to
 ```chrome://extensions```
-Click on `Load unpacked` and choose manifest.json file, now you can see the details, errors and test the extention.
+Click on `Load unpacked` and choose the gt folder, now you can see the details, errors and test the extention.
 
 ### Thanks to:
 
 * https://www.flaticon.com/free-icon/windows_4116315?term=tab&page=2&position=66&origin=search&related_id=4116315
+
+
+### TODO:
+* Fix openAI setting window bug
+* Add pre-commit check
+* Add on boarding
+* check code qulities
+* Add Community CSS
+* Add tooltip for menu items
