@@ -4,16 +4,16 @@ html {
 
 /* Style for the container div */
 .container {
-    display: flex;
-    align-items: center; /* Vertical alignment */
+  display: flex;
+  align-items: center; /* Vertical alignment */
 }
 
 /* Style for the left column (SVG) */
 .column-left {
-    flex: 1; /* Take up 50% of the container */
+  flex: 1; /* Take up 50% of the container */
 }
 
 /* Style for the right column (text) */
 .column-right {
-    flex: 1; /* Take up 50% of the container */
+  flex: 1; /* Take up 50% of the container */
 }

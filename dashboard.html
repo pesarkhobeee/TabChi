@@ -1,55 +1,67 @@
 <html>
-    <head>
-            <title>New Tab - TabChi</title>
-            <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-            <meta content="utf-8" http-equiv="encoding">
-            <link rel="stylesheet" type="text/css" href="style.css">
-            <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
-    </head>
-    <body>
+  <head>
+    <title>New Tab - TabChi</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self' 'unsafe-inline'"
+    />
+  </head>
+  <body>
+    <div id="digital-clock">00:00:00</div>
+    <div id="message"></div>
+    <div class="top-site-container"><div class="top-sites"></div></div>
+    <div id="weather"></div>
 
-        <div id="digital-clock">00:00:00</div>
-        <div id="message"></div>
-        <div class="top-site-container"><div class="top-sites"></div></div>
-        <div id="weather"></div>
+    <div id="wallpaper">
+      <div id="fc-wallpaper-photo"></div>
+      <div id="fc-wallpaper-photo-blur"></div>
+      <div id="fc-wallpaper-photo-hd"></div>
+    </div>
 
-        <div id="wallpaper">
-                <div id="fc-wallpaper-photo">
-                </div>
-                <div id="fc-wallpaper-photo-blur">
-                </div>
-                <div id="fc-wallpaper-photo-hd">
-                </div>
+    <div id="deck">
+      <div id="AI-container" class="tabChiDeck">
+        <div>
+          <a id="AI-container-settings" class="main_menu_link">
+            <svg
+              fill="#000"
+              width="90%"
+              height="90%"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12,16a4,4,0,1,0-4-4A4,4,0,0,0,12,16Zm0-6a2,2,0,1,1-2,2A2,2,0,0,1,12,10ZM3.5,12.877l-1,.579a2,2,0,0,0-.733,2.732l1.489,2.578A2,2,0,0,0,5.99,19.5L7,18.916a1.006,1.006,0,0,1,1.008.011.992.992,0,0,1,.495.857V21a2,2,0,0,0,2,2h3a2,2,0,0,0,2-2V19.782a1.009,1.009,0,0,1,1.5-.866l1.009.582a2,2,0,0,0,2.732-.732l1.488-2.578a2,2,0,0,0-.733-2.732l-1-.579a1.007,1.007,0,0,1-.5-.89,1,1,0,0,1,.5-.864l1-.579a2,2,0,0,0,.733-2.732L20.742,5.234A2,2,0,0,0,18.01,4.5L17,5.083a1.008,1.008,0,0,1-1.5-.867V3a2,2,0,0,0-2-2h-3a2,2,0,0,0-2,2V4.294a.854.854,0,0,1-.428.74l-.154.089a.864.864,0,0,1-.854,0L5.99,4.5a2,2,0,0,0-2.733.732L1.769,7.813A2,2,0,0,0,2.5,10.544l1,.578a1.011,1.011,0,0,1,.5.891A.994.994,0,0,1,3.5,12.877Zm1-3.487-1-.578L4.99,6.234l1.074.62a2.86,2.86,0,0,0,2.85,0l.154-.088A2.863,2.863,0,0,0,10.5,4.294V3h3V4.216a3.008,3.008,0,0,0,4.5,2.6l1.007-.582L20.5,8.812l-1,.578a3.024,3.024,0,0,0,0,5.219l1,.579h0l-1.488,2.578L18,17.184a3.008,3.008,0,0,0-4.5,2.6V21h-3V19.784a3.006,3.006,0,0,0-4.5-2.6l-1.007.582L3.5,15.188l1-.579a3.024,3.024,0,0,0,0-5.219Z"
+              ></path>
+            </svg>
+          </a>
+          <button id="AI-download-btn">Download conversation with AI</button>
         </div>
+        <div class="AI-chat">
+          <div class="AI-messages"></div>
+          <div class="AI-input">
+            <input
+              type="text"
+              id="AI-user-input"
+              placeholder="Type your message..."
+            />
+            <button id="AI-send-btn">Send</button>
+            <!-- Add the AI-loading icon div -->
+            <div id="AI-loadingIcon" class="AI-loading-icon-hidden">
+              <div class="AI-spinner"></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <div id="deck">
-                <div id="AI-container" class="tabChiDeck">
-                        <div>
-                                <a id="AI-container-settings" class="main_menu_link">
-                                        <svg fill="#000" width="90%" height="90%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,16a4,4,0,1,0-4-4A4,4,0,0,0,12,16Zm0-6a2,2,0,1,1-2,2A2,2,0,0,1,12,10ZM3.5,12.877l-1,.579a2,2,0,0,0-.733,2.732l1.489,2.578A2,2,0,0,0,5.99,19.5L7,18.916a1.006,1.006,0,0,1,1.008.011.992.992,0,0,1,.495.857V21a2,2,0,0,0,2,2h3a2,2,0,0,0,2-2V19.782a1.009,1.009,0,0,1,1.5-.866l1.009.582a2,2,0,0,0,2.732-.732l1.488-2.578a2,2,0,0,0-.733-2.732l-1-.579a1.007,1.007,0,0,1-.5-.89,1,1,0,0,1,.5-.864l1-.579a2,2,0,0,0,.733-2.732L20.742,5.234A2,2,0,0,0,18.01,4.5L17,5.083a1.008,1.008,0,0,1-1.5-.867V3a2,2,0,0,0-2-2h-3a2,2,0,0,0-2,2V4.294a.854.854,0,0,1-.428.74l-.154.089a.864.864,0,0,1-.854,0L5.99,4.5a2,2,0,0,0-2.733.732L1.769,7.813A2,2,0,0,0,2.5,10.544l1,.578a1.011,1.011,0,0,1,.5.891A.994.994,0,0,1,3.5,12.877Zm1-3.487-1-.578L4.99,6.234l1.074.62a2.86,2.86,0,0,0,2.85,0l.154-.088A2.863,2.863,0,0,0,10.5,4.294V3h3V4.216a3.008,3.008,0,0,0,4.5,2.6l1.007-.582L20.5,8.812l-1,.578a3.024,3.024,0,0,0,0,5.219l1,.579h0l-1.488,2.578L18,17.184a3.008,3.008,0,0,0-4.5,2.6V21h-3V19.784a3.006,3.006,0,0,0-4.5-2.6l-1.007.582L3.5,15.188l1-.579a3.024,3.024,0,0,0,0-5.219Z"></path></svg>
-                                </a>
-                                <button id="AI-download-btn">Download conversation with AI</button> 
-                        </div>
-                        <div class="AI-chat">
-                        <div class="AI-messages"></div>
-                        <div class="AI-input">
-                        <input type="text" id="AI-user-input" placeholder="Type your message...">
-                        <button id="AI-send-btn">Send</button>
-                        <!-- Add the AI-loading icon div -->
-                        <div id="AI-loadingIcon" class="AI-loading-icon-hidden">
-                        <div class="AI-spinner"></div>
-                        </div>
-                        </div>
-                        </div>
-                        
-                </div>
-                
-                <textarea id="popup_note_textarea"  class="tabChiDeck">            </textarea>
-                <div id="bookmarksContainer"  class="tabChiDeck">
-                        <h1>Bookmarks</h1>
-                        <ul id="bookmarksList"></ul>
-                </div>
-                <textarea id="customcss_textarea" class="tabChiDeck">
+      <textarea id="popup_note_textarea" class="tabChiDeck"> </textarea>
+      <div id="bookmarksContainer" class="tabChiDeck">
+        <h1>Bookmarks</h1>
+        <ul id="bookmarksList"></ul>
+      </div>
+      <textarea id="customcss_textarea" class="tabChiDeck">
 <!--
 <link rel="stylesheet"
 href="https://fonts.googleapis.com/css?family=Kenia">
@@ -79,167 +91,286 @@ input {
 <!--
         check https://fonts.google.com/ to find more fonts :)
 -->
-                </textarea>
-                <textarea id="jumps_textarea" class="tabChiDeck">
+                </textarea
+      >
+      <textarea id="jumps_textarea" class="tabChiDeck">
 [
         { "shortkey": "news", "url" : "https://news.ycombinator.com/" },
         { "shortkey": "product", "url" : "https://www.producthunt.com/" }
 ]
-                </textarea>
+                </textarea
+      >
+    </div>
+
+    <div
+      id="menu-bar"
+      style="
+        position: fixed;
+        width: 250px;
+        transition: all 300ms ease 0s;
+        height: 100%;
+        top: 0px;
+        right: -250px;
+      "
+      class=""
+    >
+      <div class="handle">
+        <svg
+          width="24px"
+          height="24px"
+          fill="none"
+          stroke="white"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6C12.5523 6 13 5.55228 13 5Z"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19Z"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </div>
+      <h3>
+        <a
+          href="https://chrome.google.com/webstore/detail/tabchi/hejohfomoahmhoiboehdenbolpheiofo"
+          >TabChi</a
+        >
+        <br />
+        <small
+          ><span class="glyphicon glyphicon-info-sign"></span> Press
+          <kbd>ESC</kbd> to close</small
+        >
+      </h3>
+      <div class="flex-container">
+        <div>
+          <input id="clock" type="button" value="Toggle the Clock [C]" />
         </div>
 
-            <div id="menu-bar" style="position: fixed; width: 250px; transition: all 300ms ease 0s; height: 100%; top: 0px; right: -250px;" class="">
-              <div class="handle">
-                <svg width="24px" height="24px" fill="none" stroke="white" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6C12.5523 6 13 5.55228 13 5Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                        
-                          
-              <span class="glyphicon glyphicon-chevron-left"></span></div>
-              <h3>
-                <a href="https://chrome.google.com/webstore/detail/tabchi/hejohfomoahmhoiboehdenbolpheiofo">TabChi</a>
-                <br>
-                <small><span class="glyphicon glyphicon-info-sign"></span> Press <kbd>ESC</kbd> to close</small>
-              </h3>
-              <div class="flex-container">                     
-                        <div><input id="clock" type="button" value="Toggle the Clock [C]"></div>
+        <div>
+          <input id="customcss" type="button" value="Custom CSS" />
+        </div>
 
-                        <div>
-                                <input id="customcss" type="button" value="Custom CSS">
-                        </div>
+        <div>
+          <label for="topsites-setting">Top Sites [S]</label>
 
-                        <div>
-                                <label for="topsites-setting">Top Sites [S]</label>
+          <select name="topsites-setting" id="topsites-setting">
+            <option value="Bottom" selected="selected">Bottom</option>
+            <option value="Left">Left</option>
+            <option value="Hidden">Hidden</option>
+          </select>
+        </div>
 
-                                <select name="topsites-setting" id="topsites-setting">
-                                <option value="Bottom" selected="selected">Bottom</option>
-                                <option value="Left">Left</option>
-                                <option value="Hidden">Hidden</option>
-                                </select>
-                        </div>
+        <div class="weather-container">
+          <div class="weather-switch">
+            <label for="weather-toggle">Weather Status:</label>
+            <input type="checkbox" id="weather-toggle" />
+          </div>
 
-                        <div class="weather-container">
-                                <div class="weather-switch">
-                                    <label for="weather-toggle">Weather Status:</label>
-                                    <input type="checkbox" id="weather-toggle">
-                                </div>
-                        
-                                <div class="weather-options" style="display: none;">
-                                    <div>
-                                        <label for="city">City Name:</label>
-                                        <input type="text" id="city">
-                                    </div>
-                                    <div>
-                                        <label for="unit">Unit:</label>
-                                        <select id="unit">
-                                            <option value="C" selected>Celsius</option>
-                                            <option value="F">Fahrenheit</option>
-                                        </select>
-                                    </div>
-                                </div>
-                        </div>
-
-                        <fieldset>
-                                <legend>Background Settings:</legend>
-                                <select name="background-setting" id="background-setting">
-                                        <option value="Offline"  selected="selected">Use Static Picture</option>
-                                        <option value="Color">Use Color</option>
-                                        <option value="Pexels">Use Pexels.com</option>
-                                </select>
-                                <fieldset id="fieldset-color">
-                                        <legend>Color:</legend>
-                                        <div>
-                                                <input id="colorsPalette" type="color" list="Palette">
-                                                <datalist id="Palette">
-                                                <option>#A5C8E4</option>
-                                                <option>#C0ECCC</option>
-                                                <option>#F9F0C1</option>
-                                                <option>#F4CDA6</option>
-                                                <option>#F6A8A6</option>
-                                                <option>#FDF8E2</option>
-                                                <option>#FFDDD3</option>
-                                                <option>#F3BFB3</option>
-                                                <option>#5EA9BE</option>
-                                                <option>#9ACDE0</option>
-                                                <option>#CBE1EF</option>
-                                                <option>#96ceb4</option>
-                                                <option>#ffeead</option>
-                                                <option>#ffcc5c</option>
-                                                <option>#ff6f69</option>
-                                                </datalist>
-                                        </div>
-                                </fieldset>
-                                <fieldset id="fieldset-pexels">
-                                        <legend>pexels.com:</legend>
-                                        <div>
-                                                <label>
-                                                        Background Search Term:
-                                                </label>
-                                                <input id="focusClimbSearchTerm" type="text" value="sunrise">
-                                        </div>
-                                        <div><input id="pin" type="button" value="Pin the current picture [P]"></div>
-                                        <div><a style="font-size:0.8em; text-decoration: none;" href="https://www.pexels.com/api/new/" target="_blank">
-                                                pexels.com Token:
-                                        </a></div>
-                                        <div><input id="focusClimbPexelsToken" type="text" placeholder="Please get a token"></div>
-                                </fieldset>
-                        </fieldset>
-                </div>
+          <div class="weather-options" style="display: none">
+            <div>
+              <label for="city">City Name:</label>
+              <input type="text" id="city" />
             </div>
+            <div>
+              <label for="unit">Unit:</label>
+              <select id="unit">
+                <option value="C" selected>Celsius</option>
+                <option value="F">Fahrenheit</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-                <div id="pushpin">
-                        <a id="focusClimbPushPin" class="component_link">
-                                <svg fill="#FFF" width="24px" height="24px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M20.5 15h-9c-1.104 0-2 0.896-2 2s0.896 2 2 2h9c1.104 0 2-0.896 2-2s-0.896-2-2-2zM13.583 8l-1.083 6h7l-1.084-6h-4.833zM16 29l1.5-9h-3l1.5 9zM13 7h6c0.828 0 1.5-0.672 1.5-1.5s-0.672-1.5-1.5-1.5h-6c-0.829 0-1.5 0.672-1.5 1.5s0.671 1.5 1.5 1.5z"></path>
-                                </svg>
-                        </a>
-                </div>
-                <div id="photographer">
-                        <a id="photographer_link"  target='_blank' class="component_link">
-                                <svg fill="#FFF" width="24px" height="24px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M29 7h-4.599l-2.401-4h-12l-2.4 4h-4.6c-1 0-3 1-3 2.969v16.031c0 1.657 1.5 3 2.792 3h26.271c1.313 0 2.938-1.406 2.938-2.968v-16.032c0-1-1-3-3-3zM30 26.032c0 0.395-0.639 0.947-0.937 0.969h-26.265c-0.232-0.019-0.797-0.47-0.797-1v-16.031c0-0.634 0.851-0.953 1-0.969h5.732l2.4-4h9.802l1.785 3.030 0.55 0.97h5.731c0.705 0 0.99 0.921 1 1v16.032zM16 10c-3.866 0-7 3.134-7 7s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7zM16 22c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"></path>
-                                </svg>
-                        </a>
-                </div>
-        
-        <div id="main_menu">
-                <div class="main_menu_item">
-                        <a id="focusClimbNotepad" class="main_menu_link"  tabindex="1">
-                        <svg fill="#000" width="90%" height="90%" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
-                                <g fill-rule="evenodd">
-                                <path d="M106.667 267H320v213.333h853.33V267h213.34v160h106.66V160.333h-329.1C1142.26 98.19 1083 53.667 1013.33 53.667H480c-69.665 0-128.931 44.523-150.896 106.666H0V1867h1493.33v-320h-106.66v213.33H106.667V267Zm320 106.667v-160c0-29.456 23.878-53.334 53.333-53.334h533.33c29.46 0 53.34 23.878 53.34 53.334v160H426.667Z"/>
-                                <path d="m1677.57 528.309 225.88 225.883c22.02 22.023 22.02 57.713 0 79.849L1225.8 1511.69c-10.62 10.5-24.96 16.49-39.98 16.49H959.937c-31.171 0-56.47-25.3-56.47-56.47v-225.89c0-15.02 5.986-29.36 16.489-39.86L1597.6 528.309c22.14-22.136 57.83-22.136 79.97 0Zm-155.41 235.144 146.03 146.033 115.43-115.426-146.04-146.033-115.42 115.426Zm-505.75 651.787h146.03l425.9-425.9-146.03-146.038-425.9 425.898v146.04Z"/>
-                                </g>
-                        </svg>                    
-                </a></div>
-                <div class="main_menu_item">
-                        <a id="toggleBookmark" class="main_menu_link" tabindex="2">
-                                <svg fill="#000" width="90%" height="90%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M17,6.5 C17,5.67157288 16.3284271,5 15.5,5 L8.5,5 C7.67157288,5 7,5.67157288 7,6.5 L7,18.6649395 L11.760062,16.0613318 C11.9095691,15.9795561 12.0904309,15.9795561 12.239938,16.0613318 L17,18.6649395 L17,6.5 Z M6.73993801,19.9469992 C6.40673701,20.1292499 6,19.8881181 6,19.508331 L6,6.5 C6,5.11928813 7.11928813,4 8.5,4 L15.5,4 C16.8807119,4 18,5.11928813 18,6.5 L18,19.508331 C18,19.8881181 17.593263,20.1292499 17.260062,19.9469992 L12,17.0699069 L6.73993801,19.9469992 Z"/>
-                                </svg>                                       
-                        </a>
-                </div>
-                <div class="main_menu_item">
-                        <a id="toggleJumps" class="main_menu_link"  tabindex="3">
-                                <svg fill="#000" width="90%" height="90%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M16.3356 6.46177L12.2276 15.4993C12.1388 15.6947 11.8612 15.6947 11.7724 15.4993L7.66444 6.46177C7.46141 6.0151 7.95615 5.57369 8.37687 5.82612L11.8714 7.92282C11.9505 7.97033 12.0495 7.97033 12.1286 7.92282L15.6231 5.82612C16.0439 5.57369 16.5386 6.0151 16.3356 6.46177Z" stroke="#222222" stroke-linecap="round"/>
-                                        <path d="M4 18H9" stroke="#222222" stroke-linecap="round"/>
-                                        <path d="M15 18H20" stroke="#222222" stroke-linecap="round"/>
-                                </svg>
-                                        
-                        </a>
-                </div>
-                <div class="main_menu_item">
-                        <a id="ai_icon"  class="main_menu_link"  tabindex="4">
-                                <svg height="90%" width="90%" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                viewBox="0 0 512 512"  xml:space="preserve">
-                                <style type="text/css">
-                                        .st0{fill:#000;}
-                                </style>
-                                <g>
-                                        <path class="st0" d="M502.472,256.833c-6.491-61.075-40.69-110.46-86.082-144.101c-45.887-34.04-103.296-52.724-157.675-52.76
+        <fieldset>
+          <legend>Background Settings:</legend>
+          <select name="background-setting" id="background-setting">
+            <option value="Offline" selected="selected">
+              Use Static Picture
+            </option>
+            <option value="Color">Use Color</option>
+            <option value="Pexels">Use Pexels.com</option>
+          </select>
+          <fieldset id="fieldset-color">
+            <legend>Color:</legend>
+            <div>
+              <input id="colorsPalette" type="color" list="Palette" />
+              <datalist id="Palette">
+                <option>#A5C8E4</option>
+                <option>#C0ECCC</option>
+                <option>#F9F0C1</option>
+                <option>#F4CDA6</option>
+                <option>#F6A8A6</option>
+                <option>#FDF8E2</option>
+                <option>#FFDDD3</option>
+                <option>#F3BFB3</option>
+                <option>#5EA9BE</option>
+                <option>#9ACDE0</option>
+                <option>#CBE1EF</option>
+                <option>#96ceb4</option>
+                <option>#ffeead</option>
+                <option>#ffcc5c</option>
+                <option>#ff6f69</option>
+              </datalist>
+            </div>
+          </fieldset>
+          <fieldset id="fieldset-pexels">
+            <legend>pexels.com:</legend>
+            <div>
+              <label> Background Search Term: </label>
+              <input id="focusClimbSearchTerm" type="text" value="sunrise" />
+            </div>
+            <div>
+              <input
+                id="pin"
+                type="button"
+                value="Pin the current picture [P]"
+              />
+            </div>
+            <div>
+              <a
+                style="font-size: 0.8em; text-decoration: none"
+                href="https://www.pexels.com/api/new/"
+                target="_blank"
+              >
+                pexels.com Token:
+              </a>
+            </div>
+            <div>
+              <input
+                id="focusClimbPexelsToken"
+                type="text"
+                placeholder="Please get a token"
+              />
+            </div>
+          </fieldset>
+        </fieldset>
+      </div>
+    </div>
+
+    <div id="pushpin">
+      <a id="focusClimbPushPin" class="component_link">
+        <svg
+          fill="#FFF"
+          width="24px"
+          height="24px"
+          viewBox="0 0 32 32"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20.5 15h-9c-1.104 0-2 0.896-2 2s0.896 2 2 2h9c1.104 0 2-0.896 2-2s-0.896-2-2-2zM13.583 8l-1.083 6h7l-1.084-6h-4.833zM16 29l1.5-9h-3l1.5 9zM13 7h6c0.828 0 1.5-0.672 1.5-1.5s-0.672-1.5-1.5-1.5h-6c-0.829 0-1.5 0.672-1.5 1.5s0.671 1.5 1.5 1.5z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+    <div id="photographer">
+      <a id="photographer_link" target="_blank" class="component_link">
+        <svg
+          fill="#FFF"
+          width="24px"
+          height="24px"
+          viewBox="0 0 32 32"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M29 7h-4.599l-2.401-4h-12l-2.4 4h-4.6c-1 0-3 1-3 2.969v16.031c0 1.657 1.5 3 2.792 3h26.271c1.313 0 2.938-1.406 2.938-2.968v-16.032c0-1-1-3-3-3zM30 26.032c0 0.395-0.639 0.947-0.937 0.969h-26.265c-0.232-0.019-0.797-0.47-0.797-1v-16.031c0-0.634 0.851-0.953 1-0.969h5.732l2.4-4h9.802l1.785 3.030 0.55 0.97h5.731c0.705 0 0.99 0.921 1 1v16.032zM16 10c-3.866 0-7 3.134-7 7s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7zM16 22c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+
+    <div id="main_menu">
+      <div class="main_menu_item">
+        <a id="focusClimbNotepad" class="main_menu_link" tabindex="1">
+          <svg
+            fill="#000"
+            width="90%"
+            height="90%"
+            viewBox="0 0 1920 1920"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g fill-rule="evenodd">
+              <path
+                d="M106.667 267H320v213.333h853.33V267h213.34v160h106.66V160.333h-329.1C1142.26 98.19 1083 53.667 1013.33 53.667H480c-69.665 0-128.931 44.523-150.896 106.666H0V1867h1493.33v-320h-106.66v213.33H106.667V267Zm320 106.667v-160c0-29.456 23.878-53.334 53.333-53.334h533.33c29.46 0 53.34 23.878 53.34 53.334v160H426.667Z"
+              />
+              <path
+                d="m1677.57 528.309 225.88 225.883c22.02 22.023 22.02 57.713 0 79.849L1225.8 1511.69c-10.62 10.5-24.96 16.49-39.98 16.49H959.937c-31.171 0-56.47-25.3-56.47-56.47v-225.89c0-15.02 5.986-29.36 16.489-39.86L1597.6 528.309c22.14-22.136 57.83-22.136 79.97 0Zm-155.41 235.144 146.03 146.033 115.43-115.426-146.04-146.033-115.42 115.426Zm-505.75 651.787h146.03l425.9-425.9-146.03-146.038-425.9 425.898v146.04Z"
+              />
+            </g>
+          </svg>
+        </a>
+      </div>
+      <div class="main_menu_item">
+        <a id="toggleBookmark" class="main_menu_link" tabindex="2">
+          <svg
+            fill="#000"
+            width="90%"
+            height="90%"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17,6.5 C17,5.67157288 16.3284271,5 15.5,5 L8.5,5 C7.67157288,5 7,5.67157288 7,6.5 L7,18.6649395 L11.760062,16.0613318 C11.9095691,15.9795561 12.0904309,15.9795561 12.239938,16.0613318 L17,18.6649395 L17,6.5 Z M6.73993801,19.9469992 C6.40673701,20.1292499 6,19.8881181 6,19.508331 L6,6.5 C6,5.11928813 7.11928813,4 8.5,4 L15.5,4 C16.8807119,4 18,5.11928813 18,6.5 L18,19.508331 C18,19.8881181 17.593263,20.1292499 17.260062,19.9469992 L12,17.0699069 L6.73993801,19.9469992 Z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div class="main_menu_item">
+        <a id="toggleJumps" class="main_menu_link" tabindex="3">
+          <svg
+            fill="#000"
+            width="90%"
+            height="90%"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.3356 6.46177L12.2276 15.4993C12.1388 15.6947 11.8612 15.6947 11.7724 15.4993L7.66444 6.46177C7.46141 6.0151 7.95615 5.57369 8.37687 5.82612L11.8714 7.92282C11.9505 7.97033 12.0495 7.97033 12.1286 7.92282L15.6231 5.82612C16.0439 5.57369 16.5386 6.0151 16.3356 6.46177Z"
+              stroke="#222222"
+              stroke-linecap="round"
+            />
+            <path d="M4 18H9" stroke="#222222" stroke-linecap="round" />
+            <path d="M15 18H20" stroke="#222222" stroke-linecap="round" />
+          </svg>
+        </a>
+      </div>
+      <div class="main_menu_item">
+        <a id="ai_icon" class="main_menu_link" tabindex="4">
+          <svg
+            height="90%"
+            width="90%"
+            version="1.1"
+            id="_x32_"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 512 512"
+            xml:space="preserve"
+          >
+            <style type="text/css">
+              .st0 {
+                fill: #000;
+              }
+            </style>
+            <g>
+              <path
+                class="st0"
+                d="M502.472,256.833c-6.491-61.075-40.69-110.46-86.082-144.101c-45.887-34.04-103.296-52.724-157.675-52.76
                                                 c-56.443,0.009-91.262,7.173-114.312,17.082c-22.776,9.644-33.774,22.98-39.813,30.843c-24.68,4.029-49.262,18.348-68.77,38.697
                                                 C15.107,168.343,0.054,197.423,0,229.381c0,34.97,8.112,64.52,24.299,86.498c14.354,19.596,35.288,32.472,60.207,37.148
                                                 c1.638,9.456,5.56,20.003,13.672,29.647c8.412,10.06,19.888,17.383,33.454,22.032c13.584,4.675,29.329,6.836,47.234,6.853h75.084
@@ -257,98 +388,145 @@ input {
                                                 c-0.054-24.422,11.874-48.474,29.443-66.875c17.463-18.454,40.46-30.674,59.419-32.463l4.348-0.452l2.966-3.206
                                                 c1.328-1.452,2.382-2.851,3.294-4.002c5.986-7.474,12.114-15.806,31.002-24.139c18.845-8.156,50.652-15.222,105.174-15.213
                                                 c49.076-0.036,102.278,17.232,143.932,48.217c41.726,31.046,71.78,75.153,77.094,129.578l0.203,2.098l0.922,1.887
-                                                c4.844,9.776,8.094,23.608,8.066,38.414C488.932,319.776,484.992,337.451,475.862,352.849z"/>
-                                        <path class="st0" d="M357.042,146.417h24.059c5.172,0,9.378-4.242,9.378-9.573c0-5.215-4.206-9.43-9.378-9.43h-24.059
-                                                c-5.331,0-9.555,4.216-9.555,9.43C347.488,142.175,351.711,146.417,357.042,146.417z"/>
-                                        <path class="st0" d="M244.21,237.307c0,5.287,4.25,9.564,9.501,9.564c5.162,0,9.475-4.276,9.475-9.564v-51.82
+                                                c4.844,9.776,8.094,23.608,8.066,38.414C488.932,319.776,484.992,337.451,475.862,352.849z"
+              />
+              <path
+                class="st0"
+                d="M357.042,146.417h24.059c5.172,0,9.378-4.242,9.378-9.573c0-5.215-4.206-9.43-9.378-9.43h-24.059
+                                                c-5.331,0-9.555,4.216-9.555,9.43C347.488,142.175,351.711,146.417,357.042,146.417z"
+              />
+              <path
+                class="st0"
+                d="M244.21,237.307c0,5.287,4.25,9.564,9.501,9.564c5.162,0,9.475-4.276,9.475-9.564v-51.82
                                                 c0-2.399,0.709-2.958,0.886-3.179c3.02-2.966,14.274-2.966,22.164-2.966l0.301,0.106h62.226c1.204,0,2.48-0.106,3.906-0.106
                                                 c5.012-0.221,11.202-0.434,13.796,2.072c1.647,1.611,2.604,5.19,2.604,9.988v31.809v1.416c-0.204,6.544-0.24,17.56,7.128,25.042
                                                 c2.869,2.958,8.2,6.464,16.896,6.464h48.89c5.136,0,9.352-4.233,9.352-9.555c0-5.198-4.216-9.519-9.352-9.519h-48.89l-3.418-0.806
                                                 c-1.736-1.797-1.621-8.332-1.621-11.467v-33.385c0-10.307-2.886-18.277-8.394-23.599c-8.484-8.138-20.022-7.801-27.629-7.483
                                                 c-1.258,0-2.302,0.045-3.268,0.045h-31.364c0.372-2.622,0.372-5.26,0.274-7.633v-27.602c0-5.189-4.268-9.476-9.448-9.476
                                                 c-5.286,0-9.43,4.286-9.43,9.476v27.752c0,2.222,0,5.738-0.47,6.65c0,0-1.301,0.832-6.314,0.832c-1.442,0-2.992,0-4.684,0
-                                                c-12.92-0.16-27.778-0.204-36.615,8.474c-2.887,2.922-6.5,8.208-6.5,16.648V237.307z"/>
-                                        <path class="st0" d="M213.677,159.709c5.304,0,9.555-4.348,9.555-9.528v-13.594h15.93c5.154,0,9.413-4.268,9.413-9.554
+                                                c-12.92-0.16-27.778-0.204-36.615,8.474c-2.887,2.922-6.5,8.208-6.5,16.648V237.307z"
+              />
+              <path
+                class="st0"
+                d="M213.677,159.709c5.304,0,9.555-4.348,9.555-9.528v-13.594h15.93c5.154,0,9.413-4.268,9.413-9.554
                                                 c0-5.162-4.259-9.493-9.413-9.493h-15.93v-10.467c0-5.233-4.251-9.528-9.555-9.528c-5.154,0-9.413,4.294-9.413,9.528v43.108
-                                                C204.264,155.361,208.523,159.709,213.677,159.709z"/>
-                                        <path class="st0" d="M110.841,173.682h39.468c6.438-0.229,12.565-0.229,15.452,2.807c2.559,2.498,3.967,8.111,3.967,16.17v37.051
+                                                C204.264,155.361,208.523,159.709,213.677,159.709z"
+              />
+              <path
+                class="st0"
+                d="M110.841,173.682h39.468c6.438-0.229,12.565-0.229,15.452,2.807c2.559,2.498,3.967,8.111,3.967,16.17v37.051
                                                 c0,5.242,4.233,9.546,9.581,9.546c5.154,0,9.458-4.303,9.458-9.546v-7.882h14.886c5.251,0,9.44-4.277,9.44-9.51
                                                 c0-5.251-4.188-9.599-9.44-9.599h-14.886v-10.06c0-13.672-3.135-23.351-9.626-29.736c-8.421-8.448-19.8-8.368-28.877-8.288h-39.423
-                                                c-5.384,0-9.511,4.312-9.511,9.475C101.33,169.387,105.457,173.682,110.841,173.682z"/>
-                                        <path class="st0" d="M135.892,229.099c0-5.251-4.365-9.555-9.483-9.555H59.791c-5.26,0-9.555,4.304-9.555,9.555
+                                                c-5.384,0-9.511,4.312-9.511,9.475C101.33,169.387,105.457,173.682,110.841,173.682z"
+              />
+              <path
+                class="st0"
+                d="M135.892,229.099c0-5.251-4.365-9.555-9.483-9.555H59.791c-5.26,0-9.555,4.304-9.555,9.555
                                                 c0,5.233,4.295,9.528,9.555,9.528h24.148v17.339c0,5.286,4.188,9.519,9.386,9.519c5.402,0,9.59-4.233,9.59-9.519v-17.339h23.494
-                                                C131.527,238.627,135.892,234.331,135.892,229.099z"/>
-                                        <path class="st0" d="M194.576,291.412c1.665,0,3.242,0,4.649,0h76.704c17.498,0,30.772-4.64,39.6-13.884
+                                                C131.527,238.627,135.892,234.331,135.892,229.099z"
+              />
+              <path
+                class="st0"
+                d="M194.576,291.412c1.665,0,3.242,0,4.649,0h76.704c17.498,0,30.772-4.64,39.6-13.884
                                                 c13.566-14.363,12.619-35.634,11.919-49.687c-0.124-2.683-0.248-5.206-0.248-7.323c0-5.296-4.25-9.51-9.608-9.51
                                                 c-5.18,0-9.368,4.215-9.368,9.51c0,2.408,0.124,5.171,0.248,8.111c0.584,12.256,1.24,27.337-6.854,35.873
                                                 c-4.941,5.26-13.682,7.89-25.689,7.89h-76.704c-1.337,0-2.7,0-4.348,0c-15.133-0.23-40.584-0.638-56.753,15.319
                                                 c-9.068,8.944-13.681,21.545-13.681,37.396c0,5.153,4.17,9.52,9.484,9.52c5.18,0,9.51-4.366,9.51-9.52
-                                                c0-10.768,2.594-18.579,8.049-23.918C161.935,290.934,181.612,291.235,194.576,291.412z"/>
-                                        <path class="st0" d="M323.96,332.616c0-5.162-4.171-9.502-9.475-9.502H194.107c-5.19,0-9.538,4.34-9.538,9.502
+                                                c0-10.768,2.594-18.579,8.049-23.918C161.935,290.934,181.612,291.235,194.576,291.412z"
+              />
+              <path
+                class="st0"
+                d="M323.96,332.616c0-5.162-4.171-9.502-9.475-9.502H194.107c-5.19,0-9.538,4.34-9.538,9.502
                                                 c0,5.268,4.348,9.519,9.538,9.519h36.81v18.985c0,5.323,4.225,9.502,9.458,9.502c5.251,0,9.493-4.179,9.493-9.502v-18.985h64.617
-                                                C319.788,342.135,323.96,337.884,323.96,332.616z"/>
-                                        <path class="st0" d="M377.887,370.065h-4.471v-17.693c0-5.384-4.18-9.528-9.475-9.528c-5.26,0-9.502,4.145-9.502,9.528v17.693
+                                                C319.788,342.135,323.96,337.884,323.96,332.616z"
+              />
+              <path
+                class="st0"
+                d="M377.887,370.065h-4.471v-17.693c0-5.384-4.18-9.528-9.475-9.528c-5.26,0-9.502,4.145-9.502,9.528v17.693
                                                 h-32.941c-5.242,0-9.502,4.241-9.502,9.528c0,5.224,4.26,9.448,9.502,9.448h56.39c5.208,0,9.484-4.224,9.484-9.448
-                                                C387.371,374.305,383.095,370.065,377.887,370.065z"/>
-                                        <path class="st0" d="M421.579,323.114v-15.523h3.419c5.357,0,9.599-4.17,9.599-9.43c0-5.251-4.242-9.555-9.599-9.555h-66.459
+                                                C387.371,374.305,383.095,370.065,377.887,370.065z"
+              />
+              <path
+                class="st0"
+                d="M421.579,323.114v-15.523h3.419c5.357,0,9.599-4.17,9.599-9.43c0-5.251-4.242-9.555-9.599-9.555h-66.459
                                                 c-5.225,0-9.511,4.304-9.511,9.555c0,5.26,4.286,9.43,9.511,9.43h43.983v15.523c0,5.358,4.313,9.502,9.556,9.502
-                                                C417.311,332.616,421.579,328.472,421.579,323.114z"/>
-                                        <path class="st0" d="M451.333,347.909h-24.042c-5.304,0-9.546,4.18-9.546,9.467c0,5.286,4.241,9.43,9.546,9.43h24.042
-                                                c5.33,0,9.616-4.144,9.616-9.43C460.95,352.089,456.663,347.909,451.333,347.909z"/>
-                                </g>
-                                </svg>
-                        </a>
-                </div>
-                <div class="main_menu_item" >
-                        <a id="main_menu_settings" class="main_menu_link" tabindex="5">
-                                <svg fill="#000" width="90%" height="90%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,16a4,4,0,1,0-4-4A4,4,0,0,0,12,16Zm0-6a2,2,0,1,1-2,2A2,2,0,0,1,12,10ZM3.5,12.877l-1,.579a2,2,0,0,0-.733,2.732l1.489,2.578A2,2,0,0,0,5.99,19.5L7,18.916a1.006,1.006,0,0,1,1.008.011.992.992,0,0,1,.495.857V21a2,2,0,0,0,2,2h3a2,2,0,0,0,2-2V19.782a1.009,1.009,0,0,1,1.5-.866l1.009.582a2,2,0,0,0,2.732-.732l1.488-2.578a2,2,0,0,0-.733-2.732l-1-.579a1.007,1.007,0,0,1-.5-.89,1,1,0,0,1,.5-.864l1-.579a2,2,0,0,0,.733-2.732L20.742,5.234A2,2,0,0,0,18.01,4.5L17,5.083a1.008,1.008,0,0,1-1.5-.867V3a2,2,0,0,0-2-2h-3a2,2,0,0,0-2,2V4.294a.854.854,0,0,1-.428.74l-.154.089a.864.864,0,0,1-.854,0L5.99,4.5a2,2,0,0,0-2.733.732L1.769,7.813A2,2,0,0,0,2.5,10.544l1,.578a1.011,1.011,0,0,1,.5.891A.994.994,0,0,1,3.5,12.877Zm1-3.487-1-.578L4.99,6.234l1.074.62a2.86,2.86,0,0,0,2.85,0l.154-.088A2.863,2.863,0,0,0,10.5,4.294V3h3V4.216a3.008,3.008,0,0,0,4.5,2.6l1.007-.582L20.5,8.812l-1,.578a3.024,3.024,0,0,0,0,5.219l1,.579h0l-1.488,2.578L18,17.184a3.008,3.008,0,0,0-4.5,2.6V21h-3V19.784a3.006,3.006,0,0,0-4.5-2.6l-1.007.582L3.5,15.188l1-.579a3.024,3.024,0,0,0,0-5.219Z"/></svg>
-                        </a>
-                </div>
-                <div id="main_menu_tips">Press TAB</div>
-                <div tabindex="5"></div>
-        </div>
-              
+                                                C417.311,332.616,421.579,328.472,421.579,323.114z"
+              />
+              <path
+                class="st0"
+                d="M451.333,347.909h-24.042c-5.304,0-9.546,4.18-9.546,9.467c0,5.286,4.241,9.43,9.546,9.43h24.042
+                                                c5.33,0,9.616-4.144,9.616-9.43C460.95,352.089,456.663,347.909,451.333,347.909z"
+              />
+            </g>
+          </svg>
+        </a>
+      </div>
+      <div class="main_menu_item">
+        <a id="main_menu_settings" class="main_menu_link" tabindex="5">
+          <svg
+            fill="#000"
+            width="90%"
+            height="90%"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12,16a4,4,0,1,0-4-4A4,4,0,0,0,12,16Zm0-6a2,2,0,1,1-2,2A2,2,0,0,1,12,10ZM3.5,12.877l-1,.579a2,2,0,0,0-.733,2.732l1.489,2.578A2,2,0,0,0,5.99,19.5L7,18.916a1.006,1.006,0,0,1,1.008.011.992.992,0,0,1,.495.857V21a2,2,0,0,0,2,2h3a2,2,0,0,0,2-2V19.782a1.009,1.009,0,0,1,1.5-.866l1.009.582a2,2,0,0,0,2.732-.732l1.488-2.578a2,2,0,0,0-.733-2.732l-1-.579a1.007,1.007,0,0,1-.5-.89,1,1,0,0,1,.5-.864l1-.579a2,2,0,0,0,.733-2.732L20.742,5.234A2,2,0,0,0,18.01,4.5L17,5.083a1.008,1.008,0,0,1-1.5-.867V3a2,2,0,0,0-2-2h-3a2,2,0,0,0-2,2V4.294a.854.854,0,0,1-.428.74l-.154.089a.864.864,0,0,1-.854,0L5.99,4.5a2,2,0,0,0-2.733.732L1.769,7.813A2,2,0,0,0,2.5,10.544l1,.578a1.011,1.011,0,0,1,.5.891A.994.994,0,0,1,3.5,12.877Zm1-3.487-1-.578L4.99,6.234l1.074.62a2.86,2.86,0,0,0,2.85,0l.154-.088A2.863,2.863,0,0,0,10.5,4.294V3h3V4.216a3.008,3.008,0,0,0,4.5,2.6l1.007-.582L20.5,8.812l-1,.578a3.024,3.024,0,0,0,0,5.219l1,.579h0l-1.488,2.578L18,17.184a3.008,3.008,0,0,0-4.5,2.6V21h-3V19.784a3.006,3.006,0,0,0-4.5-2.6l-1.007.582L3.5,15.188l1-.579a3.024,3.024,0,0,0,0-5.219Z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div id="main_menu_tips">Press TAB</div>
+      <div tabindex="5"></div>
+    </div>
 
-        <div id="my-modal">
-                <div class="modal-content">
-                        <span id="modal-close">&times;</span>
-                        <h2 id="modal-title">Modal Title</h2>
-                        <div id="modal-content">Modal content goes here.</div>
-                </div>
-        </div>
+    <div id="my-modal">
+      <div class="modal-content">
+        <span id="modal-close">&times;</span>
+        <h2 id="modal-title">Modal Title</h2>
+        <div id="modal-content">Modal content goes here.</div>
+      </div>
+    </div>
 
-        <div id="ai_login">
-                <label for="chat_gpt_token">Token:</label>
-                <input type="text" id="chat_gpt_token">
-                <br>
-                <label for="chat_gpt_prompt">Prompt:</label>
-                <textarea id="chat_gpt_prompt"></textarea>
-                <a href="https://github.com/f/awesome-chatgpt-prompts
-">Sample Promts</a>                <br>
-                <button id="ai_login_submit" >Save ChatGPT Settings</button>
-                <p>
-                        You can find your ChatGPT API keys from 
-                        <a href="https://platform.openai.com/account/api-keys" target="_blank">here</a>.
-                </p>
-        </div>
+    <div id="ai_login">
+      <label for="chat_gpt_token">Token:</label>
+      <input type="text" id="chat_gpt_token" />
+      <br />
+      <label for="chat_gpt_prompt">Prompt:</label>
+      <textarea id="chat_gpt_prompt"></textarea>
+      <a
+        href="https://github.com/f/awesome-chatgpt-prompts
+"
+        >Sample Promts</a
+      >
+      <br />
+      <button id="ai_login_submit">Save ChatGPT Settings</button>
+      <p>
+        You can find your ChatGPT API keys from
+        <a href="https://platform.openai.com/account/api-keys" target="_blank"
+          >here</a
+        >.
+      </p>
+    </div>
 
-            <script src="jquery-3.6.0.min.js" ></script>
-            <script src="jquery.slidereveal.min.js"></script>
-            <script src="initialer.js" ></script>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script src="jquery.slidereveal.min.js"></script>
+    <script src="initialer.js"></script>
 
-            
-            <script src="dashboard.js" ></script>
-            <script src="clock.js" ></script>
-            <script src="actions.js" ></script>
-            <script src="keyboard.js" ></script>
-            <script src="ai.js" ></script>
-            <script src="weather.js" ></script>
-            <script src="bookmarks.js" ></script>
-            <dialog id="d">
-                <form method="dialog">
-                        <p>Hi, I'm a dialog.</p>
-                        <button>ok</button>
-                </form>
-            </dialog>
-    </body>
+    <script src="utils.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="dashboard-background.js"></script>
+    <script src="clock.js"></script>
+    <script src="ui-actions.js"></script>
+    <script src="keyboard.js"></script>
+    <script src="ai.js"></script>
+    <script src="weather.js"></script>
+    <script src="bookmarks.js"></script>
+    <dialog id="d">
+      <form method="dialog">
+        <p>Hi, I'm a dialog.</p>
+        <button>ok</button>
+      </form>
+    </dialog>
+  </body>
 </html>

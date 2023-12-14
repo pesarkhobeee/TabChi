@@ -1,7 +1,7 @@
 const textBox = document.getElementById("popup_question");
 textBox.focus();
 
-textBox.addEventListener("keyup", function(event) {
+textBox.addEventListener("keyup", function (event) {
   // Check if the key pressed is "Enter"
   if (event.key === "Enter") {
     const enteredValue = textBox.value;
