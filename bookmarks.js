@@ -1,3 +1,7 @@
+/*
+This file is dedicated to all the functions that are related to bookmarks section.
+*/
+
 function loadBookmarks() {
   chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
     generateBookmarks(bookmarkTreeNodes[0].children, $('#bookmarksList'));
@@ -28,7 +32,7 @@ function createListItem(parent, node) {
       nestedList.toggle();
     });
   } else if (node.url) {
-    const faviconUrl = faveiconURL(node.url, 12);
+    const faviconUrl = getFaveiconURL(node.url, 12);
     const faviconImg = $('<img>', { alt: 'Favicon', src: faviconUrl });
     li.append(faviconImg);
     li.append(node.title);

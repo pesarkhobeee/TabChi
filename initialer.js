@@ -1,3 +1,7 @@
+/*
+main file, all the flow control and functionality logic is starting from here.
+*/
+
 topics = {};
 background_retry_count = 1;
 focus_climb_clock = "show";
@@ -23,7 +27,7 @@ $(document).ready(function() {
   initiateSettings();
   clockUpdate();
   setInterval(clockUpdate, 1000);
-  //changeButtonsStatus();
+  changePinRelatedButtonsStatus();
   getTopSites();
   loadWeatherOptions();
   loadBookmarks();
@@ -91,6 +95,5 @@ function initiateSettings() {
       $("#jumps_textarea").val(result.jumps_textarea);
     }
 
-    changeButtonsStatus();
   });
 }

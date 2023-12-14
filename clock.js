@@ -1,3 +1,7 @@
+/*
+This file is dedicated to all the functions that are related to clock.
+*/
+
 function clockUpdate() {
     var date = new Date();
     function addZero(x) {

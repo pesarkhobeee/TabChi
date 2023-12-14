@@ -1,4 +1,8 @@
-// Listen for messages from NotePad
+/*
+This file is dedicated to all functionalities that have to run in the background.
+*/
+
+// Listen for messages from NotePad and sync all the open tabs' notepads with it
 chrome.runtime.onMessage.addListener(function(message) {
     if (message.action === "updateNotes") {
         // Update the content in all open instances (new tab pages)

@@ -4,11 +4,12 @@
 
 # TabChi
 
+*An simple and highly customizable open source new tab plugin for Geeks.*
+
 Take charge of your new tabs page and create a personalized dashboard that's tailored to your needs.
 
 Lets redefine the meaning of new tab page. You can install TabChi from below links:
 * [Google Chrome](https://chrome.google.com/webstore/detail/tabchi/hejohfomoahmhoiboehdenbolpheiofo)
-* [Firefox](https://addons.mozilla.org/en-US/firefox/addon/focusclimb/)
 
 TabChi is an open-source Google Chrome extension that allows you to customize your new tab page to your heart's content. With TabChi, you can choose from a diverse selection of themes, including travel destinations, cuisines, landscapes, and much more. Each time you open a new tab, you'll be greeted by a stunning image that matches your chosen theme.
 
@@ -30,6 +31,11 @@ But what sets TabChi apart is its highly customizable nature. With TabChi, you c
 Don't settle for a dull new tab page. Install TabChi now and transform your browsing experience with a visually stunning, custom-tailored dashboard that's distinctly yours.
 
 ## Development
+
+Here we are following this rules:
+* I am a newbie in frontend technologies and I like to keep this newbie friendly, so [KISS](https://en.wikipedia.org/wiki/KISS_principle) it :D
+* Using only Jquery and keeping it like the old web of the 90s and 00s :)
+* Enjoy what you are doing and don't think about people opinions ;)  
 
 To develop and test this plugin on Google Chrome please clone this repository on your machine and copy manifest.json from chrome folder to the root folder:
 ```
@@ -53,3 +59,6 @@ Click on `Load unpacked` and choose the gt folder, now you can see the details, 
 * check code qulities
 * Add Community CSS
 * Add tooltip for menu items
+* divide dashboard.js to something better [X]
+* rename actions.js to ui-actions.js [X]
+* update jquery

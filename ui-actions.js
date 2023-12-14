@@ -1,8 +1,13 @@
+/*
+This file is dedicated to all the user interface componenets that are affecting visual components.
+Like revealing the settings menu and all the text arias and ...
+*/
+
 function menu() {
   $("#menu-bar").slideReveal("show");
 }
 
-function changeButtonsStatus() {
+function changePinRelatedButtonsStatus() {
   if (focus_climb_push_pin) {
     $('#changebackground').prop('disabled', true);
     $('#pin').val("UnPin the current picture");
@@ -127,7 +132,7 @@ function togglePin() {
     focus_climb_push_pin = pin;
     chrome.storage.sync.set({ focusClimbPushPin: pin });
   }
-  changeButtonsStatus();
+  changePinRelatedButtonsStatus();
 }
 
 $('#topsites-setting').on('change', function() {

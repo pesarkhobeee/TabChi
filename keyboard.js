@@ -1,3 +1,7 @@
+/*
+This file is dedicated to all functionalities related to altering keyboard keys's default behavior.
+*/
+
 function keyboardManager() {
   // Detect when an element with tabindex 3 receives focus
   $("[tabindex=6]").on("focus", function() {
