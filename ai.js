@@ -6,14 +6,13 @@ const $sendBtn = $("#AI-send-btn");
 const $userInput = $("#AI-user-input");
 const $messages = $(".AI-messages");
 const $downloadBtn = $("#AI-download-btn");
-let conversationHistory = []
+let conversationHistory = [];
 
 chrome.storage.sync.get(["chat_gpt_prompt"]).then((result) => {
-
   if (result.chat_gpt_token) {
     promt = chat_gpt_prompt;
   } else {
-    promt = ""
+    promt = "";
   }
 
   conversationHistory = [
@@ -22,10 +21,9 @@ chrome.storage.sync.get(["chat_gpt_prompt"]).then((result) => {
       content: promt,
     },
   ];
-
 });
 
-$downloadBtn.on("click", function() {
+$downloadBtn.on("click", function () {
   const fileName = "conversation.txt";
   const content = conversationHistory
     .map((message) => `${message.role}: ${message.content}`)
@@ -56,19 +54,23 @@ function receiveMessage(message) {
 
 // Show the AI-loading icon and disable the text box and button
 function AI_showLoadingIcon() {
-  $('#AI-loadingIcon').removeClass('AI-loading-icon-hidden').addClass('AI-loading-icon-visible');
-  $('#AI-user-input').prop('disabled', true);
-  $('#AI-send-btn').prop('disabled', true);
+  $("#AI-loadingIcon")
+    .removeClass("AI-loading-icon-hidden")
+    .addClass("AI-loading-icon-visible");
+  $("#AI-user-input").prop("disabled", true);
+  $("#AI-send-btn").prop("disabled", true);
 }
 
 // Hide the AI-loading icon and enable the text box and button
 function AI_hideLoadingIcon() {
-  $('#AI-loadingIcon').removeClass('AI-loading-icon-visible').addClass('AI-loading-icon-hidden');
-  $('#AI-user-input').prop('disabled', false);
-  $('#AI-send-btn').prop('disabled', false);
+  $("#AI-loadingIcon")
+    .removeClass("AI-loading-icon-visible")
+    .addClass("AI-loading-icon-hidden");
+  $("#AI-user-input").prop("disabled", false);
+  $("#AI-send-btn").prop("disabled", false);
 }
 
-$sendBtn.on("click", function() {
+$sendBtn.on("click", function () {
   const message = $userInput.val().trim();
 
   if (message) {
@@ -97,7 +99,7 @@ $sendBtn.on("click", function() {
 });
 
 // Pressing enter to send the message
-$userInput.on("keydown", function(e) {
+$userInput.on("keydown", function (e) {
   if (e.keyCode === 13) {
     $sendBtn.click();
   }
@@ -127,11 +129,11 @@ function processInput(textIn) {
           Authorization: "Bearer " + apiKey,
         },
         data: JSON.stringify(data),
-        success: function(response) {
+        success: function (response) {
           const chatbotResponse = response.choices[0].message.content;
           resolve(chatbotResponse);
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
           console.error("Error:", errorThrown);
           reject(errorThrown);
         },
