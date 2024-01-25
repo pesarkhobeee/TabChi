@@ -67,11 +67,11 @@ function changeBackground(image) {
       reader.onload = () => {
         if (focus_climb_push_pin == false) {
           const base64Image = reader.result;
-          chrome.storage.sync.set({ backgroundImage: base64Image });
-          chrome.storage.sync.set({
+          chrome.storage.local.set({ backgroundImage: base64Image });
+          chrome.storage.local.set({
             backgroundImagePhotographer: photographer,
           });
-          chrome.storage.sync.set({
+          chrome.storage.local.set({
             backgroundImagePhotographerlink: photographer_url,
           });
         }
@@ -88,7 +88,7 @@ function loadBackgroundFromLocalStorage() {
     return false;
   }
 
-  chrome.storage.sync
+  chrome.storage.local
     .get([
       "backgroundImage",
       "backgroundImagePhotographer",
