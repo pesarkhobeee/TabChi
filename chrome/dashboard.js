@@ -1039,17 +1039,38 @@ function setFavoriteAsBackground(favorite) {
     document.getElementById('like-photo').classList.add('liked');
     document.getElementById('like-photo').title = "Remove from favorites";
     
-    // Save to storage
+    // Save to storage and clear other background settings
     chrome.storage.local.set({
         backgroundImage: favorite.photoUrl,
         photographerName: favorite.photographerName,
         photoUrl: favorite.photoUrl,
         photoTitle: favorite.photoTitle,
-        backgroundType: 'pexels'
+        backgroundType: 'pexels',
+        backgroundColor: null,
+        pexelsSearch: null,
+        pexelsApiKey: null,
+        pexelsAutoRefresh: false,
+        preloadedImage: null,
+        preloadedPhotographerName: null,
+        preloadedPhotoUrl: null,
+        preloadedPhotoTitle: null
     });
     
     // Change the background type select to pexels
     document.getElementById('background-setting').value = 'pexels';
+    
+    // Hide other background settings containers
+    document.getElementById('color-picker-container').style.display = 'none';
+    document.getElementById('image-upload-container').style.display = 'none';
+    document.getElementById('pexels-container').style.display = 'block';
+    
+    // Clear any preloaded image data
+    chrome.storage.local.remove([
+        'preloadedImage',
+        'preloadedPhotographerName',
+        'preloadedPhotoUrl',
+        'preloadedPhotoTitle'
+    ]);
     
     // Close the modal
     closeFavoritesModal();
