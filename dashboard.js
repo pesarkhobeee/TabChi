@@ -1,3 +1,156 @@
+// Initialize dashboard
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize settings toggle
+    initSettings();
+    
+    // Load notes from storage
+    loadNotes();
+    
+    // Load background settings
+    loadBackgroundSettings();
+    
+    // Set up event listeners for notes
+    document.getElementById('notes-textarea').addEventListener('input', saveNotes);
+});
+
+// Toggle settings panel
+function initSettings() {
+    const settingsToggle = document.getElementById('settings-toggle');
+    const settingsContainer = document.getElementById('settings-container');
+    
+    settingsToggle.addEventListener('click', function() {
+        settingsContainer.classList.toggle('settings-open');
+    });
+    
+    // Close settings panel when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!settingsContainer.contains(event.target) && settingsContainer.classList.contains('settings-open')) {
+            settingsContainer.classList.remove('settings-open');
+        }
+    });
+    
+    // Set up background settings
+    const backgroundSetting = document.getElementById('background-setting');
+    const colorPickerContainer = document.getElementById('color-picker-container');
+    const imageUploadContainer = document.getElementById('image-upload-container');
+    
+    backgroundSetting.addEventListener('change', function() {
+        if (this.value === 'color') {
+            colorPickerContainer.style.display = 'block';
+            imageUploadContainer.style.display = 'none';
+        } else {
+            colorPickerContainer.style.display = 'none';
+            imageUploadContainer.style.display = 'block';
+        }
+        saveBackgroundSettings();
+    });
+    
+    // Save background color when changed
+    document.getElementById('background-color').addEventListener('change', saveBackgroundSettings);
+    
+    // Handle image upload
+    document.getElementById('background-image').addEventListener('change', handleImageUpload);
+}
+
+// Load notes from storage
+function loadNotes() {
+    chrome.storage.local.get(['notesContent'], function(result) {
+        const notesTextarea = document.getElementById('notes-textarea');
+        if (result.notesContent) {
+            notesTextarea.value = result.notesContent;
+        }
+    });
+}
+
+// Save notes to storage
+function saveNotes() {
+    const notesContent = document.getElementById('notes-textarea').value;
+    chrome.storage.local.set({ notesContent: notesContent });
+}
+
+// Load background settings
+function loadBackgroundSettings() {
+    chrome.storage.local.get(['backgroundType', 'backgroundColor', 'backgroundImage'], function(result) {
+        const backgroundType = result.backgroundType || 'color';
+        const backgroundColor = result.backgroundColor || '#5EA9BE';
+        const backgroundImage = result.backgroundImage;
+        
+        // Set the select value
+        const backgroundSetting = document.getElementById('background-setting');
+        backgroundSetting.value = backgroundType;
+        
+        // Set the color value
+        const backgroundColorPicker = document.getElementById('background-color');
+        backgroundColorPicker.value = backgroundColor;
+        
+        // Show/hide the appropriate container
+        const colorPickerContainer = document.getElementById('color-picker-container');
+        const imageUploadContainer = document.getElementById('image-upload-container');
+        
+        if (backgroundType === 'color') {
+            colorPickerContainer.style.display = 'block';
+            imageUploadContainer.style.display = 'none';
+            document.body.style.backgroundColor = backgroundColor;
+        } else {
+            colorPickerContainer.style.display = 'none';
+            imageUploadContainer.style.display = 'block';
+            
+            if (backgroundImage) {
+                applyBackgroundImage(backgroundImage);
+            }
+        }
+    });
+}
+
+// Save background settings
+function saveBackgroundSettings() {
+    const backgroundType = document.getElementById('background-setting').value;
+    const backgroundColor = document.getElementById('background-color').value;
+    
+    chrome.storage.local.set({
+        backgroundType: backgroundType,
+        backgroundColor: backgroundColor
+    });
+    
+    // Apply the changes immediately
+    if (backgroundType === 'color') {
+        document.body.style.backgroundColor = backgroundColor;
+        document.getElementById('wallpaper-image').style.backgroundImage = 'none';
+    }
+}
+
+// Handle image upload
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const backgroundImage = e.target.result;
+            chrome.storage.local.set({ backgroundImage: backgroundImage });
+            applyBackgroundImage(backgroundImage);
+        };
+        
+        reader.readAsDataURL(file);
+    }
+}
+
+// Apply background image
+function applyBackgroundImage(imageData) {
+    document.getElementById('wallpaper-image').style.backgroundImage = `url(${imageData})`;
+}
+
+// Show message
+function showMessage(message) {
+    const messageElement = document.getElementById('message');
+    messageElement.textContent = message;
+    messageElement.style.display = 'block';
+    
+    setTimeout(function() {
+        messageElement.style.display = 'none';
+    }, 3000);
+}
+
 function showMessage(content) {
   $("#message").html(content);
   $("#message").fadeIn("slow");

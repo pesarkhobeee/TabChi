@@ -1,24 +1,19 @@
 {
    "manifest_version": 3,
-   "name": "TabChi",
-   "description": "Take charge of your new tab page and create a personalized dashboard that's tailored to your needs.",
-   "version": "0.8.0",
+   "name": "newTab++",
+   "description": "A simple new tab page with background, notes, weather, and customization options",
+   "version": "1.0.0",
    "permissions": [
-      "topSites",
-      "favicon",
-      "bookmarks",
-      "storage"
+      "storage",
+      "tabs"
    ],
-   "web_accessible_resources": [
-   {
-      "resources": ["_favicon/*"],
-      "matches": ["<all_urls>"],
-      "extension_ids": ["*"]
-   }
+   "host_permissions": [
+      "https://api.openweathermap.org/*",
+      "https://api.pexels.com/*",
+      "https://images.pexels.com/*"
    ],
    "background": {
-      "service_worker": "background.js",
-      "type": "module"
+      "service_worker": "background.js"
    },
    "action": {
       "default_popup": "popup.html",
@@ -31,18 +26,7 @@
       "48": "images/icon-32.png",
       "128": "images/icon-192.png"
    },
-   "commands": {
-      "_execute_action": {
-         "suggested_key": {
-            "default": "Ctrl+Shift+E",
-            "mac": "Command+Shift+E"
-         }
-      }
-   },
    "chrome_url_overrides": {
       "newtab": "dashboard.html"
-   },
-   "omnibox": {
-      "keyword": ">"
    }
 }

@@ -7,9 +7,28 @@ chrome.runtime.onMessage.addListener(function(message) {
                 chrome.tabs.sendMessage(tab.id, { action: "updateNotes", notes: message.notes });
             });
         });
-    } else if (message.action === "jumpHosts") {
-        gotoHost(message.host);
     }
+});
+
+// Initialize default values if not already set
+chrome.runtime.onInstalled.addListener(function() {
+    chrome.storage.local.get(['notesContent', 'weatherEnabled', 'cityName', 'unit'], function(result) {
+        if (!result.notesContent) {
+            chrome.storage.local.set({ notesContent: 'Welcome to TabChi Simplified!' });
+        }
+        
+        if (result.weatherEnabled === undefined) {
+            chrome.storage.local.set({ weatherEnabled: false });
+        }
+        
+        if (!result.cityName) {
+            chrome.storage.local.set({ cityName: '' });
+        }
+        
+        if (!result.unit) {
+            chrome.storage.local.set({ unit: 'C' });
+        }
+    });
 });
 
 function gotoHost(text) {

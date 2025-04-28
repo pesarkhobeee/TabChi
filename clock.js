@@ -1,28 +1,24 @@
-function clockUpdate() {
-    var date = new Date();
-    function addZero(x) {
-      if (x < 10) {
-        return x = '0' + x;
-      } else {
-        return x;
-      }
+// Clock functionality
+document.addEventListener('DOMContentLoaded', function() {
+    startClock();
+});
+
+// Function to update the clock
+function startClock() {
+    const clockElement = document.getElementById('digital-clock');
+    
+    // Update time immediately
+    updateClock();
+    
+    // Then update every second
+    setInterval(updateClock, 1000);
+    
+    function updateClock() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        
+        clockElement.textContent = `${hours}:${minutes}:${seconds}`;
     }
-  
-    function twelveHour(x) {
-      if (x > 12) {
-        return x = x - 12;
-      } else if (x == 0) {
-        return x = 12;
-      } else {
-        return x;
-      }
-    }
-  
-    //TODO: make twelveHour optional
-    //var h = addZero(twelveHour(date.getHours()));
-    var h = addZero(date.getHours());
-    var m = addZero(date.getMinutes());
-    var s = addZero(date.getSeconds());
-  
-    $('#digital-clock').text(h + ':' + m)
-  }
+}
