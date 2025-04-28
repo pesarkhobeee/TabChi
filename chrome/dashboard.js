@@ -1024,7 +1024,10 @@ function closeFavoritesModal() {
 
 function setFavoriteAsBackground(favorite) {
     // Apply the image data
-    applyBackgroundImage(favorite.imageData);
+    const wallpaperImage = document.getElementById('wallpaper-image');
+    if (wallpaperImage) {
+        wallpaperImage.style.backgroundImage = `url("${favorite.photoUrl}")`;
+    }
     
     // Update the photographer info
     document.getElementById('photographer-name').textContent = favorite.photographerName;
@@ -1038,7 +1041,7 @@ function setFavoriteAsBackground(favorite) {
     
     // Save to storage
     chrome.storage.local.set({
-        backgroundImage: favorite.imageData,
+        backgroundImage: favorite.photoUrl,
         photographerName: favorite.photographerName,
         photoUrl: favorite.photoUrl,
         photoTitle: favorite.photoTitle,
