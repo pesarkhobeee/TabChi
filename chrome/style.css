@@ -832,3 +832,19 @@ body {
     background-color: #c0392b;
 }
 
+/* Settings footer */
+.settings-footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.installation-path {
+    word-break: break-all;
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: #888;
+}
+

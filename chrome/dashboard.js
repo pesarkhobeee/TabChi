@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Auto-refresh Pexels image if option is enabled and it's a fresh tab load
     autoRefreshPexelsImageOnLoad();
     
+    // Display installation path
+    displayInstallationPath();
+    
     // Listen for messages from other tabs
     chrome.runtime.onMessage.addListener(function(message) {
         if (message.action === "updateNotes") {
@@ -1137,4 +1140,32 @@ async function deleteAllFavorites() {
             showMessage('Error deleting all favorites: ' + error.message);
         }
     }
+}
+
+// Display installation path
+// Attention: This is a best guess based on your operating system and Chrome's default installation layout. The actual path may differ depending on your setup, profile location, or if you're using a Chromium-based browser.
+function displayInstallationPath() {
+    const pathElement = document.querySelector('.installation-path');
+    const extensionId = chrome.runtime.id;
+
+    // Estimate base path based on OS
+    let basePath = '';
+    let platform = navigator.platform;
+
+    if (platform.includes('Win')) {
+        basePath = 'C:\\Users\\<YourUsername>\\AppData\\Local\\Google\\Chrome\\User Data\\';
+    } else if (platform.includes('Mac')) {
+        basePath = '~/Library/Application Support/Google/Chrome/';
+    } else if (platform.includes('Linux')) {
+        basePath = '~/.config/google-chrome/';
+    } else {
+        basePath = '[Unknown OS]';
+    }
+
+    chrome.storage.local.get(['profileName'], function(result) {
+        const profileName = result.profileName || 'Default';
+        const fullPath = `${basePath}${profileName}/Extensions/${extensionId}`;
+
+        pathElement.textContent = `Estimated extension path: ${fullPath}`;
+    });
 }
