@@ -1,62 +1,56 @@
 // Listen for messages from NotePad
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    if (message.action === "updateNotes") {
-        // Update the content in all open instances (new tab pages)
-        chrome.tabs.query({ url: "chrome://newtab/" }, function(tabs) {
-            tabs.forEach(function(tab) {
-                chrome.tabs.sendMessage(tab.id, { action: "updateNotes", notes: message.notes });
-            });
-        });
-    } else if (message.action === "updateMarkdownPreview") {
-        // Sync markdown preview state across tabs
-        chrome.tabs.query({ url: "chrome://newtab/" }, function(tabs) {
-            tabs.forEach(function(tab) {
-                chrome.tabs.sendMessage(tab.id, { 
-                    action: "updateMarkdownPreview", 
-                    isPreviewActive: message.isPreviewActive 
-                });
-            });
-        });
-    } else if (message.action === "updateNotesMinimized") {
-        // Sync notes minimized state across tabs
-        chrome.tabs.query({ url: "chrome://newtab/" }, function(tabs) {
-            tabs.forEach(function(tab) {
-                chrome.tabs.sendMessage(tab.id, { 
-                    action: "updateNotesMinimized", 
-                    isMinimized: message.isMinimized 
-                });
-            });
-        });
-    } else if (message.action === "manageFavoritePhotos") {
-        manageFavoritePhotos(message.photo)
-            .then(result => {
-                if (sendResponse) {
-                    sendResponse(result);
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    (async () => {
+        try {
+            switch (message.action) {
+                case "updateNotes":
+                    // Update the content in all open instances (new tab pages)
+                    await broadcast("updateNotes", { notes: message.notes });
+                    sendResponse({ success: true });
+                    break;
+                case "updateMarkdownPreview":
+                    // Sync markdown preview state across tabs
+                    await broadcast("updateMarkdownPreview", { isPreviewActive: message.isPreviewActive });
+                    sendResponse({ success: true });
+                    break;
+                case "updateNotesMinimized":
+                    // Sync notes minimized state across tabs
+                    await broadcast("updateNotesMinimized", { isMinimized: message.isMinimized });
+                    sendResponse({ success: true });
+                    break;
+                case "manageFavoritePhotos": {
+                    const result = await manageFavoritePhotos(message.photo);
+                    sendResponse({ success: true, ...result });
+                    break;
                 }
-            })
-            .catch(error => {
-                console.error('Error in manageFavoritePhotos:', error);
-                if (sendResponse) {
-                    sendResponse({ success: false, error: error.message });
-                }
-            });
-        return true;
-    } else if (message.action === "getAllFavorites") {
-        getAllFavoritePhotos()
-            .then(favorites => {
-                if (sendResponse) {
+                case "getAllFavorites": {
+                    const favorites = await getAllFavoritePhotos();
                     sendResponse({ success: true, favorites });
+                    break;
                 }
-            })
-            .catch(error => {
-                console.error('Error getting favorites:', error);
-                if (sendResponse) {
-                    sendResponse({ success: false, error: error.message });
-                }
-            });
-        return true;
-    }
+                default:
+                    console.warn("Unknown action:", message.action);
+                    sendResponse({ success: false, error: "Unknown action" });
+            }
+        } catch (error) {
+            console.error("Error handling message:", error);
+            sendResponse({ success: false, error: error.message });
+        }
+    })();
+    return true;
 });
+
+// Helper functions for querying and broadcasting messages to new tab pages
+async function getNewTabTabs() {
+    return await chrome.tabs.query({ url: "chrome://newtab/" });
+}
+
+async function broadcast(action, data = {}) {
+    const tabs = await getNewTabTabs();
+    for (const tab of tabs) {
+        chrome.tabs.sendMessage(tab.id, { action, ...data });
+    }
+}
 
 // Initialize default values in storage when extension is installed
 chrome.runtime.onInstalled.addListener(function(details) {

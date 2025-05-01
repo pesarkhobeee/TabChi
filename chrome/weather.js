@@ -801,8 +801,8 @@ class WeatherForecast {
   }
 }
 
-// Initialize weather forecast
-const weatherForecast = new WeatherForecast();
-document.addEventListener('DOMContentLoaded', () => {
-  weatherForecast.init();
-});
+// Export control functions for dashboard UI
+export { loadWeatherSettings, saveWeatherSettings, toggleWeatherExpand, switchForecastTab };
+
+// Export the module
+export default WeatherForecast;
