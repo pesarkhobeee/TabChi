@@ -9,9 +9,9 @@ import { initFavorites } from './favorites.js';
 document.addEventListener('DOMContentLoaded', () => {
   initSettings();
   initBackgroundUI();
+  initFavorites();
   startClock();
   initNotes();
-  initFavorites();
 
   const wf = new WeatherForecast();
   wf.init();

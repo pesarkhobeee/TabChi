@@ -1,4 +1,4 @@
-import { getStorage, setStorage, removeStorage } from './utils/storage.js';
+import { getStorage, setStorage } from './utils/storage.js';
 import { fetchPexelsPhoto, preloadPhoto } from './utils/api.js';
 import { setStyle, setValue, getValue, addClickHandler, showElement, hideElement, setHTML, setText } from './utils/dom.js';
 
@@ -50,19 +50,12 @@ export function initBackgroundUI() {
   }
 
   function onChange() {
-    // if switching to custom image, disable Pexels auto-refresh and clear any preloaded metadata
-    let auto = pexelsAuto.checked;
-    if (typeSelect.value === 'image') {
-      auto = false;
-      pexelsAuto.checked = false;
-      removeStorage(['preloadedImage','preloadedPhotographerName','preloadedPhotoUrl','preloadedPhotoTitle']);
-    }
     const settings = {
       backgroundType: typeSelect.value,
       backgroundColor: colorInput.value,
       pexelsSearch: pexelsSearch.value,
       pexelsApiKey: pexelsApiKey.value,
-      pexelsAutoRefresh: auto
+      pexelsAutoRefresh: pexelsAuto.checked
     };
     setStorage(settings);
     updateUI();
@@ -93,15 +86,18 @@ export function initBackgroundUI() {
 
   function applyCurrent(s) {
     if (s.backgroundType === 'color') {
-      document.body.style.backgroundColor = s.backgroundColor;
+        document.body.style.backgroundColor = s.backgroundColor;
     } else if (s.backgroundType === 'image' && s.backgroundImage) {
-      applyBackgroundImage(s.backgroundImage);
+        applyBackgroundImage(s.backgroundImage);
     } else if (s.backgroundType === 'pexels') {
-      if (s.preloadedImage) {
-        applyPreloaded(s);
-      } else {
-        loadPexels();
-      }
+        // If a static image is set (favorite), use it
+        if (s.backgroundImage) {
+            applyBackgroundImage(s.backgroundImage);
+        } else if (s.preloadedImage) {
+            applyPreloaded(s);
+        } else {
+            loadPexels();
+        }
     }
   }
 
@@ -140,25 +136,12 @@ export function initBackgroundUI() {
   }
 
   function onFileChange(e) {
-    const f = e.target.files[0];
-    if (!f) return;
+    const f = e.target.files[0]; if (!f) return;
     const reader = new FileReader();
     reader.onloadend = () => {
-      const rawUrl = reader.result;
-      // compress/resize image to avoid storage quota issues
-      const img = new Image(); img.onload = () => {
-        const cw = window.innerWidth, ch = window.innerHeight;
-        const canvas = document.createElement('canvas');
-        canvas.width = cw; canvas.height = ch;
-        canvas.getContext('2d').drawImage(img, 0, 0, cw, ch);
-        const compressedUrl = canvas.toDataURL('image/jpeg', 0.8);
-        // set as custom image and clear Pexels state
-        typeSelect.value = 'image'; pexelsAuto.checked = false;
-        setStorage({ backgroundImage: compressedUrl, backgroundType: 'image', pexelsAutoRefresh: false });
-        removeStorage(['preloadedImage','preloadedPhotographerName','preloadedPhotoUrl','preloadedPhotoTitle']);
-        updateUI(); applyBackgroundImage(compressedUrl);
-      };
-      img.src = rawUrl;
+      const url = reader.result;
+      setStorage({ backgroundImage: url, backgroundType: 'image' });
+      applyBackgroundImage(url);
     };
     reader.readAsDataURL(f);
   }
