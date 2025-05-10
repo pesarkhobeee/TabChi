@@ -164,8 +164,9 @@ chrome.runtime.onInstalled.addListener(function(details) {
     });
 
     if (details.reason === 'install' || details.reason === 'update') {
-        chrome.storage.local.get(['pexelsAutoRefresh'], function(result) {
-            if (result.pexelsAutoRefresh) {
+        chrome.storage.local.get(['pexelsAutoRefresh', 'preloadedImage', 'backgroundType'], function(result) {
+            // Always preload if using Pexels and there's no preloaded image yet
+            if ((result.backgroundType === 'pexels' || result.pexelsAutoRefresh) && !result.preloadedImage) {
                 preloadNextBackground();
             }
         });
@@ -269,9 +270,19 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
             preloadNextBackground();
         }
         
-        // When a new tab is opened and uses the preloaded image, preload the next one
-        if (changes.preloadedImage && changes.preloadedImage.newValue === null) {
-            preloadNextBackground();
+        // When a new tab is opened and uses the preloaded image, preload the next one immediately
+        if (changes.preloadedImage) {
+            // When the preloaded image is used (set to null), preload the next one
+            if (changes.preloadedImage.newValue === null) {
+                preloadNextBackground();
+            }
+            // When a new preloaded image is set, preload the next one in advance
+            else if (changes.preloadedImage.oldValue === null && changes.preloadedImage.newValue) {
+                // Queue up the next image preloading after a short delay
+                setTimeout(() => {
+                    preloadNextBackground();
+                }, 1000);
+            }
         }
     }
 });
@@ -461,10 +472,18 @@ async function getAllFavoritePhotos() {
 // Preload next background image
 async function preloadNextBackground() {
     try {
-        const result = await chrome.storage.local.get(['pexelsAutoRefresh', 'pexelsSearch', 'pexelsApiKey']);
+        const result = await chrome.storage.local.get(['pexelsAutoRefresh', 'pexelsSearch', 'pexelsApiKey', 'preloadedImage']);
+        
+        // If we already have a preloaded image and not in auto-refresh mode, don't fetch another
+        if (!result.pexelsAutoRefresh && result.preloadedImage) {
+            return false;
+        }
         
         if (result.pexelsAutoRefresh && result.pexelsSearch && result.pexelsApiKey) {
-            const response = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(result.pexelsSearch)}&per_page=1&page=${Math.floor(Math.random() * 100) + 1}`, {
+            // Use a random page to get varied images
+            const page = Math.floor(Math.random() * 100) + 1;
+            
+            const response = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(result.pexelsSearch)}&per_page=1&page=${page}`, {
                 headers: {
                     'Authorization': result.pexelsApiKey
                 }
@@ -479,13 +498,17 @@ async function preloadNextBackground() {
                 const photo = data.photos[0];
                 const imageUrl = photo.src.original;
                 
-                // Preload the image
-                const img = new Image();
-                img.src = imageUrl;
+                // Download the image in advance to ensure it's cached
+                const imgBlob = await fetch(imageUrl).then(r => r.blob());
+                const imgDataUrl = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result);
+                    reader.readAsDataURL(imgBlob);
+                });
                 
-                // Store the preloaded image data
+                // Store the fully preloaded image data
                 await chrome.storage.local.set({
-                    preloadedImage: imageUrl,
+                    preloadedImage: imgDataUrl, // Store the data URL instead of just the URL
                     preloadedPhotographerName: photo.photographer,
                     preloadedPhotoUrl: photo.url,
                     preloadedPhotoTitle: photo.alt || result.pexelsSearch

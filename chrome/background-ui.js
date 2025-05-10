@@ -90,12 +90,19 @@ export function initBackgroundUI() {
     } else if (s.backgroundType === 'image' && s.backgroundImage) {
         applyBackgroundImage(s.backgroundImage);
     } else if (s.backgroundType === 'pexels') {
-        // If a static image is set (favorite), use it
-        if (s.backgroundImage) {
-            applyBackgroundImage(s.backgroundImage);
-        } else if (s.preloadedImage) {
+        // For Pexels images, prioritize preloaded images for instant display
+        if (s.preloadedImage) {
+            // Use preloaded image first for best performance
             applyPreloaded(s);
+        } else if (s.backgroundImage) {
+            // Fall back to existing background image if available
+            applyBackgroundImage(s.backgroundImage);
+            setText('photo-title', s.photoTitle || '');
+            setText('photographer-name', s.photographerName || '');
+            if (s.photographerUrl) photographerLink.href = s.photographerUrl;
+            photographerInfo.style.display = 'block';
         } else {
+            // Last resort: load a fresh image
             loadPexels();
         }
     }
@@ -107,29 +114,52 @@ export function initBackgroundUI() {
   }
 
   function applyPreloaded(s) {
+    // Apply the preloaded image immediately
     setStyle('wallpaper-image', { backgroundImage: `url(${s.preloadedImage})` });
-    setText('photo-title', s.preloadedPhotoTitle);
-    setText('photographer-name', s.preloadedPhotographerName);
-    photographerLink.href = s.preloadedPhotoUrl;
+    setText('photo-title', s.preloadedPhotoTitle || '');
+    setText('photographer-name', s.preloadedPhotographerName || '');
+    if (s.preloadedPhotoUrl) photographerLink.href = s.preloadedPhotoUrl;
     photographerInfo.style.display = 'block';
+    
+    // Mark that we've used the preloaded image
+    setStorage({
+      backgroundImage: s.preloadedImage,
+      preloadedImage: null,
+      photographerName: s.preloadedPhotographerName,
+      photographerUrl: s.preloadedPhotoUrl,
+      photoTitle: s.preloadedPhotoTitle
+    });
   }
 
   async function loadPexels() {
     try {
+      // First check if we have a preloaded image we can use immediately
+      const storage = await getStorage(['preloadedImage', 'preloadedPhotographerName', 'preloadedPhotoUrl', 'preloadedPhotoTitle']);
+      
+      if (storage.preloadedImage) {
+        // Use the preloaded image first for instant display
+        applyPreloaded(storage);
+        return;
+      }
+      
+      // If no preloaded image available, fetch a new one
       const photo = await fetchPexelsPhoto(pexelsSearch.value, pexelsApiKey.value);
       const dataUrl = await preloadPhoto(photo);
       setStorage({
         backgroundImage: dataUrl,
-        preloadedImage: null,
         photographerName: photo.photographer,
         photographerUrl: photo.url,
         photoTitle: photo.alt
       });
+      
       applyBackgroundImage(dataUrl);
-      setText('photo-title', photo.alt);
-      setText('photographer-name', photo.photographer);
-      photographerLink.href = photo.url;
+      setText('photo-title', photo.alt || '');
+      setText('photographer-name', photo.photographer || '');
+      if (photo.url) photographerLink.href = photo.url;
       photographerInfo.style.display = 'block';
+      
+      // Trigger preload of the next image
+      chrome.storage.local.set({ preloadedImage: null });
     } catch (e) {
       console.error('Pexels error', e);
     }
