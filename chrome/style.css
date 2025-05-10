@@ -258,7 +258,7 @@ body {
 
 #notes-container {
   position: absolute;
-  bottom: 2rem;
+  bottom: 4rem;
   left: 50%;
   transform: translateX(-50%);
   width: 80%;
@@ -522,7 +522,7 @@ body {
   background-color: var(--background-color);
   padding: 0.5rem;
   border-radius: 0.25rem;
-  font-size: 0.8rem;
+  font-size: 0.5rem;
   z-index: 10;
   display: none;
 }
