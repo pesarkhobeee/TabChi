@@ -111,6 +111,7 @@ export function initBackgroundUI() {
   function applyBackgroundImage(dataUrl) {
     setStyle('wallpaper-image', { backgroundImage: `url(${dataUrl})` });
     photographerInfo.style.display = 'none';
+    updateLikeButtonState(dataUrl);
   }
 
   function applyPreloaded(s) {
@@ -120,6 +121,7 @@ export function initBackgroundUI() {
     setText('photographer-name', s.preloadedPhotographerName || '');
     if (s.preloadedPhotoUrl) photographerLink.href = s.preloadedPhotoUrl;
     photographerInfo.style.display = 'block';
+    updateLikeButtonState(s.preloadedImage);
     
     // Mark that we've used the preloaded image
     setStorage({
@@ -174,6 +176,25 @@ export function initBackgroundUI() {
       applyBackgroundImage(url);
     };
     reader.readAsDataURL(f);
+  }
+
+  // Update the like button to reflect whether the current image is favorited
+  async function updateLikeButtonState(imageUrl) {
+    try {
+      const result = await getStorage(['favoritePhotos']);
+      const favs = result.favoritePhotos || [];
+      const likeBtn = document.getElementById('like-photo');
+      if (!likeBtn) return;
+      if (favs.some(f => f.photoUrl === imageUrl)) {
+        likeBtn.classList.add('liked');
+        likeBtn.title = 'Remove from favorites';
+      } else {
+        likeBtn.classList.remove('liked');
+        likeBtn.title = 'Add to favorites';
+      }
+    } catch (e) {
+      console.error('Error updating like button state', e);
+    }
   }
 
   // Kickstart UI visibility for background controls

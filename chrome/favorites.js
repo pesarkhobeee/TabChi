@@ -18,6 +18,10 @@ export function initFavorites() {
 
   const deleteAllBtn = document.getElementById('delete-all-favorites');
   if (deleteAllBtn) deleteAllBtn.addEventListener('click', deleteAllFavorites);
+
+  // bind like button to toggle favorite for current photo
+  const likeBtn = document.getElementById('like-photo');
+  if (likeBtn) likeBtn.addEventListener('click', toggleLikeCurrentPhoto);
 }
 
 async function showFavoritesModal() {
@@ -133,4 +137,58 @@ function showMessage(msg) {
   el.textContent = msg;
   el.style.display = 'block';
   setTimeout(() => el.style.display = 'none', 4000);
+}
+
+// toggle like/unlike for the current displayed photo
+async function toggleLikeCurrentPhoto() {
+  const likeButton = document.getElementById('like-photo');
+  const backgroundElement = document.getElementById('wallpaper-image');
+  const photoTitle = document.getElementById('photo-title')?.textContent || '';
+  const photographerName = document.getElementById('photographer-name')?.textContent || '';
+
+  if (!backgroundElement) {
+    showMessage('Error: Could not find background element');
+    return;
+  }
+
+  const backgroundImage = backgroundElement.style.backgroundImage;
+  if (!backgroundImage || backgroundImage === 'none') {
+    showMessage('No background image to favorite');
+    return;
+  }
+
+  // extract URL from style
+  const imageUrl = backgroundImage.replace(/^url\(['"](.+)['"]\)$/, '$1');
+
+  const newPhoto = {
+    photoUrl: imageUrl,
+    photoTitle,
+    photographerName
+  };
+
+  try {
+    const response = await new Promise((resolve, reject) => {
+      chrome.runtime.sendMessage({ action: 'manageFavoritePhotos', photo: newPhoto }, res => {
+        if (chrome.runtime.lastError) reject(new Error(chrome.runtime.lastError.message));
+        else resolve(res);
+      });
+    });
+
+    if (response.success) {
+      if (response.action === 'added') {
+        likeButton.classList.add('liked');
+        likeButton.title = 'Remove from favorites';
+        showMessage('Added to favorites');
+      } else {
+        likeButton.classList.remove('liked');
+        likeButton.title = 'Add to favorites';
+        showMessage('Removed from favorites');
+      }
+    } else {
+      throw new Error(response.error || 'Failed to update favorites');
+    }
+  } catch (error) {
+    console.error('Error toggling favorite:', error);
+    showMessage('Error updating favorites: ' + error.message);
+  }
 }
