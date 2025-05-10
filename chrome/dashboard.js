@@ -4,6 +4,8 @@ import WeatherForecast, { loadWeatherSettings, saveWeatherSettings, toggleWeathe
 import { initSettings } from './settings.js';
 import { initBackgroundUI } from './background-ui.js';
 import { initFavorites } from './favorites.js';
+import {initCustomCSS, openCSSEditor, closeCSSEditor, saveCustomCSS} from './custom-css.js';
+
 
 // Main initialization
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFavorites();
   startClock();
   initNotes();
+  initCustomCSS();
 
   const wf = new WeatherForecast();
   wf.init();
@@ -22,8 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('unit').addEventListener('change', saveWeatherSettings);
   document.getElementById('openweather-api-key').addEventListener('change', saveWeatherSettings);
   document.getElementById('weather-expand').addEventListener('click', toggleWeatherExpand);
+  document.getElementById('toggle-css-editor').addEventListener('click', openCSSEditor);
+  document.getElementById('close-css-editor').addEventListener('click', closeCSSEditor);
+  document.getElementById('save-css').addEventListener('click', saveCustomCSS);
   document.getElementById('tab-hourly').addEventListener('click', () => switchForecastTab('hourly'));
   document.getElementById('tab-daily').addEventListener('click', () => switchForecastTab('daily'));
-
-  // TODO: initialize background, CSS, favorites UIs as separate modules
 });
