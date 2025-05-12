@@ -5,13 +5,6 @@ export function initFavorites() {
   // Existing direct bindings
   const showBtn = document.getElementById('show-favorites');
   if (showBtn) showBtn.addEventListener('click', showFavoritesModal);
-  // Delegated handler for reliability
-  document.addEventListener('click', function(e) {
-    if (e.target.id === 'show-favorites' || e.target.closest('#show-favorites')) {
-      e.preventDefault();
-      showFavoritesModal();
-    }
-  });
 
   const closeBtn = document.getElementById('close-favorites');
   if (closeBtn) closeBtn.addEventListener('click', closeFavoritesModal);
