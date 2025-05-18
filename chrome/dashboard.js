@@ -1,6 +1,6 @@
 import { startClock } from './clock.js';
 import { initNotes } from './notes.js';
-import WeatherForecast, { loadWeatherSettings, saveWeatherSettings, toggleWeatherExpand, switchForecastTab } from './weather.js';
+import { loadWeatherSettings, saveWeatherSettings, toggleWeatherExpand, switchForecastTab } from './weather.js';
 import { initSettings } from './settings.js';
 import { initBackgroundUI } from './background-ui.js';
 import { initFavorites } from './favorites.js';
@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initNotes();
   initCustomCSS();
 
-  const wf = new WeatherForecast();
-  wf.init();
   loadWeatherSettings();
   document.getElementById('weather-toggle').addEventListener('change', saveWeatherSettings);
   document.getElementById('weather-forecast-toggle').addEventListener('change', saveWeatherSettings);
