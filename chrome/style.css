@@ -1,0 +1,850 @@
+:root {
+  --primary-color: #5EA9BE;
+  --text-color: #ffffff;
+  --background-color: rgba(0, 0, 0, 0.6);
+  --settings-bg-color: rgba(255, 255, 255, 0.9);
+  --settings-text-color: #333;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--primary-color);
+}
+
+#digital-clock {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 5rem;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+#message {
+  position: absolute;
+  top: 10rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--background-color);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: none;
+  z-index: 100;
+}
+
+#weather {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-radius: 0.5rem;
+  z-index: 10;
+  overflow: hidden;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: height 0.3s ease, max-height 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+}
+
+.weather-main {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem;
+  position: relative;
+}
+
+.weather-current {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.weather-current img {
+  width: 50px;
+  height: 50px;
+  margin-right: 0.75rem;
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+}
+
+#weather-temp {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#weather-desc {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.weather-location {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 0.25rem;
+}
+
+#weather-expand {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.expanded #weather-expand {
+  transform: rotate(180deg);
+}
+
+/* Expanded weather section */
+.weather-expanded {
+  display: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.expanded .weather-expanded {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: auto;
+}
+
+/* Forecast tabs */
+.weather-tabs {
+  display: flex;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.weather-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  padding: 0.5rem;
+  cursor: pointer;
+  opacity: 0.7;
+  font-size: 0.9rem;
+  transition: opacity 0.3s ease;
+}
+
+.weather-tab:hover {
+  opacity: 0.9;
+}
+
+.weather-tab.active {
+  opacity: 1;
+  font-weight: bold;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+/* Forecast containers */
+.forecast-container {
+  height: auto;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  max-height: calc(80vh - 200px); /* Adaptive height based on viewport */
+  flex: 1;
+}
+
+.forecast-container.hidden {
+  display: none;
+}
+
+/* Hourly forecast styles */
+.hourly-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hourly-time {
+  width: 45px;
+  font-size: 0.8rem;
+}
+
+.hourly-icon {
+  width: 35px;
+  height: 35px;
+}
+
+.hourly-temp {
+  margin-left: auto;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* Daily forecast styles */
+.daily-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.daily-day {
+  width: 40px;
+  font-size: 0.8rem;
+}
+
+.daily-icon {
+  width: 35px;
+  height: 35px;
+}
+
+.daily-temp {
+  margin-left: auto;
+  text-align: right;
+}
+
+.daily-high {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.daily-low {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Weather forecast toggle option in settings */
+.weather-forecast-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.weather-forecast-option input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+#wallpaper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+#wallpaper-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#notes-container {
+  position: absolute;
+  bottom: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 800px;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.notes-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+#notes-textarea {
+  width: 100%;
+  height: 200px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  resize: none;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+#notes-textarea:focus {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Fullscreen notes */
+.fullscreen-notes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  padding: 2rem;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.9);
+  transform: translate(0, 0);
+}
+
+.fullscreen-notes #notes-textarea {
+  height: calc(100vh - 6rem);
+  font-size: 1.2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Settings panel */
+#settings-container {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+}
+
+#settings-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#settings-toggle svg {
+  stroke: var(--text-color);
+}
+
+#settings-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+#settings-panel {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 300px;
+  background-color: var(--settings-bg-color);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  color: var(--settings-text-color);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  display: none;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.settings-open #settings-panel {
+  display: block;
+}
+
+.setting-group {
+  margin-bottom: 1.5rem;
+}
+
+.setting-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.setting-group select, 
+.setting-group input[type="text"],
+.setting-group input[type="color"] {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.weather-switch {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.weather-switch label {
+  margin-right: 1rem;
+  margin-bottom: 0;
+}
+
+.weather-options {
+  margin-top: 1rem;
+}
+
+/* Custom CSS editor */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  width: 80%;
+  max-width: 800px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.modal-footer {
+  padding: 1rem;
+  text-align: right;
+  border-top: 1px solid #eee;
+}
+
+#custom-css-textarea {
+  width: 100%;
+  height: 60vh;
+  padding: 1rem;
+  border: none;
+  resize: none;
+  font-family: monospace;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+/* Buttons */
+.button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #4a8a9e;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: 5px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.icon-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.small-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.3s;
+}
+
+.small-button:hover {
+  background-color: #4a8a9e;
+}
+
+.small-text {
+  font-size: 0.75rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 0.25rem;
+}
+
+/* Photographer info */
+#photographer-info {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  background-color: var(--background-color);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.5rem;
+  z-index: 10;
+  display: none;
+}
+
+#photographer-info a {
+  color: white;
+  text-decoration: none;
+}
+
+#photographer-info a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  #digital-clock {
+    font-size: 3rem;
+  }
+  
+  #notes-container {
+    width: 90%;
+  }
+  
+  #settings-panel {
+    width: 250px;
+  }
+}
+
+/* Notes Preview alignment fixes */
+#notes-preview {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    padding: 15px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.5;
+    overflow-y: auto;
+    display: none;
+    border-radius: 8px;
+    height: 200px; /* Match the textarea height */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Minimized notes styles */
+.notes-minimized {
+    height: auto !important;
+}
+
+.notes-minimized #notes-textarea,
+.notes-minimized #notes-preview {
+    display: none !important;
+}
+
+.notes-minimized .notes-header {
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0;
+}
+
+/* Adjusted fullscreen styles for preview */
+.fullscreen-notes #notes-preview {
+    height: calc(100vh - 80px);
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--text-color);
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    color: #222;
+}
+
+.markdown-content h1 {
+    font-size: 1.8em;
+    border-bottom: 1px solid #eaecef;
+    padding-bottom: 0.3em;
+}
+
+.markdown-content h2 {
+    font-size: 1.5em;
+    border-bottom: 1px solid #eaecef;
+    padding-bottom: 0.3em;
+}
+
+.markdown-content h3 {
+    font-size: 1.3em;
+}
+
+.markdown-content h4 {
+    font-size: 1.1em;
+}
+
+.markdown-content p {
+    margin-bottom: 1em;
+}
+
+.markdown-content a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.markdown-content a:hover {
+    text-decoration: underline;
+}
+
+.markdown-content strong {
+    font-weight: bold;
+}
+
+.markdown-content em {
+    font-style: italic;
+}
+
+.markdown-content blockquote {
+    margin: 0;
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+    padding-left: 2em;
+    margin-bottom: 1em;
+}
+
+.markdown-content li {
+    margin-bottom: 0.25em;
+}
+
+.markdown-content table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.markdown-content table th,
+.markdown-content table td {
+    padding: 6px 13px;
+    border: 1px solid #dfe2e5;
+}
+
+.markdown-content table tr {
+    background-color: #fff;
+    border-top: 1px solid #c6cbd1;
+}
+
+.markdown-content table tr:nth-child(2n) {
+    background-color: #f6f8fa;
+}
+
+.markdown-content code {
+    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(27, 31, 35, 0.05);
+    border-radius: 3px;
+}
+
+.markdown-content pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f6f8fa;
+    border-radius: 3px;
+    margin-bottom: 1em;
+}
+
+.markdown-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.markdown-content hr {
+    height: 0.25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #e1e4e8;
+    border: 0;
+}
+
+.markdown-content img {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Add the Pexels auto-refresh styling */
+
+.pexels-auto-refresh {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.pexels-auto-refresh input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+/* Add styles for photo favorites functionality */
+
+/* Photo info container with like button */
+.photo-info-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Liked heart icon */
+.liked svg {
+    fill: #ff4d4d;
+    stroke: #ff4d4d;
+}
+
+/* Favorites section in settings */
+.favorites-section {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Favorites grid */
+.favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    padding: 10px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.favorite-item {
+    position: relative;
+    height: 120px;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.favorite-item:hover {
+    transform: scale(1.05);
+}
+
+.favorite-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.favorite-item .favorite-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.favorite-item .favorite-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: none;
+}
+
+.favorite-item:hover .favorite-actions {
+    display: block;
+}
+
+/* Delete button for favorites */
+.delete-favorite {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.delete-favorite:hover {
+    background: rgba(255, 0, 0, 0.8);
+}
+
+/* Danger button style */
+.danger-button {
+    background-color: #e74c3c;
+}
+
+.danger-button:hover {
+    background-color: #c0392b;
+}
+
+/* Settings footer */
+.settings-footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.installation-path {
+    word-break: break-all;
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: #888;
+}
+
